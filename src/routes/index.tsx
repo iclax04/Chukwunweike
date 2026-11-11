@@ -83,9 +83,7 @@ function Home() {
       <header className="sticky top-0 z-20 border-b border-line bg-card/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <a href="#top" className="flex items-center gap-3">
-            <span className="grid size-10 place-items-center rounded-lg bg-primary font-semibold text-lg text-card">
-              C
-            </span>
+            <img src="/logo.svg" alt="" width={44} height={44} className="size-11 rounded-lg" />
             <span>
               <span className="block font-semibold text-lg leading-none text-ink">Chukwunweike</span>
               <span className="text-xs text-muted">Phone accessories & gadgets</span>
@@ -314,7 +312,10 @@ function Home() {
 
       <footer className="border-t border-line bg-ink text-card">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-8 text-sm md:flex-row md:items-center md:justify-between">
-          <p className="font-semibold text-lg">Chukwunweike</p>
+          <p className="flex items-center gap-2 font-semibold text-lg">
+            <img src="/logo.svg" alt="" width={28} height={28} className="size-7 rounded-md" />
+            Chukwunweike
+          </p>
           <p className="text-paper/80">
             {ADDRESS.shop}, {ADDRESS.city}
           </p>
