@@ -1,9 +1,9 @@
-import { i as __toESM, n as __exportAll } from "../_runtime.mjs";
-import { K as require_react, _ as createFileRoute, b as require_jsx_runtime, d as Scripts, f as HeadContent, g as lazyRouteComponent, h as Outlet, m as createRouter, v as createRootRoute, y as useRouter } from "../_libs/@tanstack/react-router+[...].mjs";
+import { i as __toESM } from "../_runtime.mjs";
+import { _ as createFileRoute, b as require_jsx_runtime, d as Scripts, f as HeadContent, g as lazyRouteComponent, h as Outlet, m as createRouter, q as require_react, v as createRootRoute, y as useRouter } from "../_libs/@tanstack/react-router+[...].mjs";
+import { a as __exportAll, i as getServerFnById, n as createServerFn, r as TSS_SERVER_FUNCTION } from "./ssr.mjs";
 import { n as TriangleAlert } from "../_libs/lucide-react.mjs";
 import { a as union, i as string, n as number, r as object, t as literal } from "../_libs/zod.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-5Q-aCngE.js
-var router_5Q_aCngE_exports = /* @__PURE__ */ __exportAll({ getRouter: () => getRouter });
+//#region node_modules/.nitro/vite/services/ssr/assets/router-CShxFwO2.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var FALLBACK_MESSAGE = "An unexpected error occurred. Try reloading the page.";
@@ -331,8 +331,8 @@ function PreviewHostBridge() {
 	}, [router]);
 	return null;
 }
-var styles_default = "/assets/styles-YSKIF9WG.css";
-var Route$1 = createRootRoute({
+var styles_default = "/assets/styles-Dn8MmCV_.css";
+var Route$3 = createRootRoute({
 	head: () => ({
 		meta: [
 			{ charSet: "utf-8" },
@@ -340,14 +340,38 @@ var Route$1 = createRootRoute({
 				name: "viewport",
 				content: "width=device-width, initial-scale=1"
 			},
-			{ title: "Chukwunweike Phone Accessories & Gadgets" },
+			{ title: "Chukwunweike | Phones, Accessories & Gadgets in Asaba" },
 			{
 				name: "description",
-				content: "Original iPhones, Samsung phones, PlayStation games, and gadgets at Shop 3, City View Mall, Asaba."
+				content: "Original iPhones, Samsung Galaxy phones, PlayStation 5 consoles and games, and gadgets at Shop 3, City View Mall, Nnebisi Road, Asaba. Ask on WhatsApp. No prices listed online."
+			},
+			{
+				name: "robots",
+				content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+			},
+			{
+				name: "googlebot",
+				content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+			},
+			{
+				name: "author",
+				content: "Chukwunweike Phone Accessories & Gadgets"
+			},
+			{
+				name: "application-name",
+				content: "Chukwunweike"
+			},
+			{
+				name: "geo.region",
+				content: "NG-DE"
+			},
+			{
+				name: "geo.placename",
+				content: "Asaba"
 			},
 			{
 				name: "theme-color",
-				content: "#1b6b4a"
+				content: "#0f6b4c"
 			}
 		],
 		links: [
@@ -379,12 +403,12 @@ var Route$1 = createRootRoute({
 			},
 			{
 				rel: "stylesheet",
-				href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,650&family=Source+Sans+3:wght@400;500;600;700&display=swap"
+				href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
 			}
 		]
 	}),
 	component: () => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("html", {
-		lang: "en",
+		lang: "en-NG",
 		suppressHydrationWarning: true,
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("head", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(HeadContent, {}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("body", { children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(PreviewHostBridge, {}),
@@ -393,13 +417,292 @@ var Route$1 = createRootRoute({
 		] })]
 	})
 });
-var $$splitComponentImporter = () => import("./routes-DV8o7ph-.mjs");
-var rootRouteChildren = { IndexRoute: createFileRoute("/")({ component: lazyRouteComponent($$splitComponentImporter, "component") }).update({
-	id: "/",
-	path: "/",
-	getParentRoute: () => Route$1
-}) };
-var routeTree = Route$1._addFileChildren(rootRouteChildren)._addFileTypes();
+var createSsrRpc = (functionId) => {
+	const url = "/_serverFn/" + functionId;
+	const serverFnMeta = { id: functionId };
+	const fn = async (...args) => {
+		return (await getServerFnById(functionId, { origin: "server" }))(...args);
+	};
+	return Object.assign(fn, {
+		url,
+		serverFnMeta,
+		[TSS_SERVER_FUNCTION]: true
+	});
+};
+var $$splitComponentImporter = () => import("./routes-qRLAP52D.mjs");
+var getSiteOrigin = createServerFn({ method: "GET" }).handler(createSsrRpc("e9edbc41c1cdf4994dbd2fcf19b6e13d92d2ac54745f49f139077a3e05a13c24"));
+var Route$2 = createFileRoute("/")({
+	loader: () => getSiteOrigin(),
+	head: ({ loaderData }) => {
+		const origin = loaderData ?? "";
+		const canonical = origin ? `${origin}/` : "/";
+		return {
+			meta: [{ title: "Chukwunweike | Phones, Accessories & Gadgets in Asaba" }, {
+				name: "description",
+				content: "Original iPhones, Samsung Galaxy phones, PlayStation 5 consoles and games, and gadgets at Shop 3, City View Mall, Nnebisi Road, Asaba. Ask on WhatsApp. No prices listed online."
+			}],
+			links: [
+				{
+					rel: "canonical",
+					href: canonical
+				},
+				{
+					rel: "alternate",
+					hrefLang: "en-NG",
+					href: canonical
+				},
+				{
+					rel: "alternate",
+					hrefLang: "x-default",
+					href: canonical
+				}
+			]
+		};
+	},
+	component: lazyRouteComponent($$splitComponentImporter, "component")
+});
+var CATEGORIES = [
+	{
+		id: "all",
+		label: "All"
+	},
+	{
+		id: "iphone",
+		label: "iPhone"
+	},
+	{
+		id: "samsung",
+		label: "Samsung"
+	},
+	{
+		id: "playstation",
+		label: "PlayStation"
+	},
+	{
+		id: "gadgets",
+		label: "Gadgets"
+	}
+];
+var PRODUCTS = [
+	{
+		id: "iphone-17",
+		name: "iPhone 17",
+		category: "iphone",
+		blurb: "The new everyday iPhone, in stock at the shop.",
+		image: "/catalog/iphone.jpg",
+		note: "New arrival"
+	},
+	{
+		id: "iphone-17-pro",
+		name: "iPhone 17 Pro",
+		category: "iphone",
+		blurb: "Pro camera and a brighter display. Ask us which storage we have.",
+		image: "/catalog/iphone-pro.jpg",
+		note: "Pro"
+	},
+	{
+		id: "galaxy-s26",
+		name: "Galaxy S26",
+		category: "samsung",
+		blurb: "The current Galaxy S series. Original and sealed.",
+		image: "/catalog/galaxy-s.jpg",
+		note: "Samsung"
+	},
+	{
+		id: "galaxy-s26-ultra",
+		name: "Galaxy S26 Ultra",
+		category: "samsung",
+		blurb: "Large display, S Pen, and a full camera set.",
+		image: "/catalog/galaxy.jpg",
+		note: "Ultra"
+	},
+	{
+		id: "ps5",
+		name: "PlayStation 5",
+		category: "playstation",
+		blurb: "Disc and digital consoles, plus extra controllers.",
+		image: "/catalog/console.jpg",
+		note: "Console"
+	},
+	{
+		id: "ps-games",
+		name: "PS5 games",
+		category: "playstation",
+		blurb: "New and popular titles. Tell us the game you want.",
+		image: "/catalog/games.jpg",
+		note: "Games"
+	},
+	{
+		id: "earbuds",
+		name: "Wireless earbuds",
+		category: "gadgets",
+		blurb: "Everyday buds for calls, music, and commuting.",
+		image: "/catalog/earbuds.jpg",
+		note: "Audio"
+	},
+	{
+		id: "accessories",
+		name: "Cases, cables & power",
+		category: "gadgets",
+		blurb: "Cases, braided cables, and power banks for iPhone and Galaxy.",
+		image: "/catalog/accessories.jpg",
+		note: "Accessories"
+	}
+];
+var WHATSAPP = "2349132083551";
+function whatsappLink(message) {
+	return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
+}
+var ADDRESS = {
+	shop: "Shop 3, City View Mall",
+	street: "Nnebisi Road, directly opposite Konwea Plaza",
+	city: "Asaba, Delta State"
+};
+var SITE_NAME = "Chukwunweike Phone Accessories & Gadgets";
+var SITE_DESCRIPTION = "Original iPhones, Samsung Galaxy phones, PlayStation 5 consoles and games, and gadgets at Shop 3, City View Mall, Nnebisi Road, Asaba. Ask on WhatsApp. No prices listed online.";
+var MAPS_QUERY = encodeURIComponent("Shop 3, City View Mall, Nnebisi Road, opposite Konwea Plaza, Asaba, Delta State, Nigeria");
+function mapsUrl() {
+	return `https://www.google.com/maps/search/?api=1&query=${MAPS_QUERY}`;
+}
+function structuredData(origin) {
+	const page = `${origin}/`;
+	const images = [`${origin}/catalog/shop.jpg`, ...PRODUCTS.map((product) => `${origin}${product.image}`)];
+	return {
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": "WebSite",
+				"@id": `${page}#website`,
+				url: page,
+				name: SITE_NAME,
+				description: SITE_DESCRIPTION,
+				inLanguage: "en-NG",
+				publisher: { "@id": `${page}#store` }
+			},
+			{
+				"@type": ["MobilePhoneStore", "LocalBusiness"],
+				"@id": `${page}#store`,
+				name: SITE_NAME,
+				description: SITE_DESCRIPTION,
+				url: page,
+				image: images,
+				telephone: `+${WHATSAPP}`,
+				currenciesAccepted: "NGN",
+				address: {
+					"@type": "PostalAddress",
+					streetAddress: `${ADDRESS.shop}, ${ADDRESS.street}`,
+					addressLocality: "Asaba",
+					addressRegion: "Delta",
+					addressCountry: "NG"
+				},
+				hasMap: mapsUrl(),
+				areaServed: {
+					"@type": "City",
+					name: "Asaba"
+				},
+				contactPoint: {
+					"@type": "ContactPoint",
+					telephone: `+${WHATSAPP}`,
+					contactType: "customer service",
+					availableLanguage: ["English"],
+					areaServed: "NG"
+				},
+				sameAs: [`https://wa.me/${WHATSAPP}`]
+			},
+			{
+				"@type": "ItemList",
+				"@id": `${page}#collection`,
+				name: "Phones, games, and gadgets",
+				itemListOrder: "https://schema.org/ItemListOrderAscending",
+				numberOfItems: PRODUCTS.length,
+				itemListElement: PRODUCTS.map((product, index) => ({
+					"@type": "ListItem",
+					position: index + 1,
+					name: product.name,
+					description: product.blurb,
+					url: `${page}#${product.id}`,
+					image: `${origin}${product.image}`
+				}))
+			}
+		]
+	};
+}
+function jsonLd(origin) {
+	return JSON.stringify(structuredData(origin)).replace(/</g, "\\u003c");
+}
+function xmlEscape(value) {
+	return value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;");
+}
+function robotsTxt(origin) {
+	return [
+		"User-agent: *",
+		"Allow: /",
+		"",
+		"User-agent: Googlebot",
+		"Allow: /",
+		"",
+		"User-agent: Googlebot-Image",
+		"Allow: /",
+		"",
+		`Sitemap: ${origin}/sitemap.xml`,
+		""
+	].join("\n");
+}
+function sitemapXml(origin) {
+	const images = [{
+		loc: `${origin}/catalog/shop.jpg`,
+		title: "Chukwunweike shop display"
+	}, ...PRODUCTS.map((product) => ({
+		loc: `${origin}${product.image}`,
+		title: product.name
+	}))].map((image) => `    <image:image>\n      <image:loc>${xmlEscape(image.loc)}</image:loc>\n      <image:title>${xmlEscape(image.title)}</image:title>\n    </image:image>`).join("\n");
+	return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>${xmlEscape(`${origin}/`)}</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+${images}
+  </url>
+</urlset>
+`;
+}
+var Route$1 = createFileRoute("/robots.txt")({ server: { handlers: { GET: async () => {
+	const { getRequestUrl } = await import("./ssr.mjs").then((n) => n.o).then((n) => n.t);
+	const origin = getRequestUrl().origin;
+	return new Response(robotsTxt(origin), { headers: {
+		"content-type": "text/plain; charset=utf-8",
+		"cache-control": "public, max-age=3600"
+	} });
+} } } });
+var Route = createFileRoute("/sitemap.xml")({ server: { handlers: { GET: async () => {
+	const { getRequestUrl } = await import("./ssr.mjs").then((n) => n.o).then((n) => n.t);
+	const origin = getRequestUrl().origin;
+	return new Response(sitemapXml(origin), { headers: {
+		"content-type": "application/xml; charset=utf-8",
+		"cache-control": "public, max-age=3600"
+	} });
+} } } });
+var rootRouteChildren = {
+	IndexRoute: Route$2.update({
+		id: "/",
+		path: "/",
+		getParentRoute: () => Route$3
+	}),
+	RobotsDottxtRoute: Route$1.update({
+		id: "/robots.txt",
+		path: "/robots.txt",
+		getParentRoute: () => Route$3
+	}),
+	SitemapDotxmlRoute: Route.update({
+		id: "/sitemap.xml",
+		path: "/sitemap.xml",
+		getParentRoute: () => Route$3
+	})
+};
+var routeTree = Route$3._addFileChildren(rootRouteChildren)._addFileTypes();
+var router_exports = /* @__PURE__ */ __exportAll({ getRouter: () => getRouter });
 function getRouter() {
 	return createRouter({
 		routeTree,
@@ -408,4 +711,4 @@ function getRouter() {
 	});
 }
 //#endregion
-export { getRouter, router_5Q_aCngE_exports as t };
+export { CATEGORIES as a, whatsappLink as c, ADDRESS as i, Route$2 as l, jsonLd as n, PRODUCTS as o, mapsUrl as r, WHATSAPP as s, router_exports as t };

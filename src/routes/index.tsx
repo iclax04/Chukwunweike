@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
 import { useMemo, useState } from "react";
 import {
   MapPin,
@@ -16,10 +17,39 @@ import {
   whatsappLink,
   type Category,
 } from "@/lib/catalog";
+import { jsonLd, mapsUrl } from "@/lib/seo";
 
-export const Route = createFileRoute("/")({ component: Home });
+const getSiteOrigin = createServerFn({ method: "GET" }).handler(async () => {
+  const { getRequestUrl } = await import("@tanstack/react-start/server");
+  return getRequestUrl().origin;
+});
+
+export const Route = createFileRoute("/")({
+  loader: () => getSiteOrigin(),
+  head: ({ loaderData }) => {
+    const origin = loaderData ?? "";
+    const canonical = origin ? `${origin}/` : "/";
+    return {
+      meta: [
+        { title: "Chukwunweike | Phones, Accessories & Gadgets in Asaba" },
+        {
+          name: "description",
+          content:
+            "Original iPhones, Samsung Galaxy phones, PlayStation 5 consoles and games, and gadgets at Shop 3, City View Mall, Nnebisi Road, Asaba. Ask on WhatsApp. No prices listed online.",
+        },
+      ],
+      links: [
+        { rel: "canonical", href: canonical },
+        { rel: "alternate", hrefLang: "en-NG", href: canonical },
+        { rel: "alternate", hrefLang: "x-default", href: canonical },
+      ],
+    };
+  },
+  component: Home,
+});
 
 function Home() {
+  const origin = Route.useLoaderData();
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState<"all" | Category>("all");
 
@@ -30,6 +60,7 @@ function Home() {
 
   return (
     <div className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(origin) }} />
       <div className="bg-primary text-card">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-2 text-sm">
           <p className="flex items-center gap-2">
@@ -52,11 +83,11 @@ function Home() {
       <header className="sticky top-0 z-20 border-b border-line bg-card/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <a href="#top" className="flex items-center gap-3">
-            <span className="grid size-10 place-items-center rounded-lg bg-primary font-display text-lg text-card">
+            <span className="grid size-10 place-items-center rounded-lg bg-primary font-semibold text-lg text-card">
               C
             </span>
             <span>
-              <span className="block font-display text-lg leading-none text-ink">Chukwunweike</span>
+              <span className="block font-semibold text-lg leading-none text-ink">Chukwunweike</span>
               <span className="text-xs text-muted">Phone accessories & gadgets</span>
             </span>
           </a>
@@ -110,13 +141,13 @@ function Home() {
             <p className="mb-3 text-sm font-semibold tracking-wide text-primary uppercase">
               Asaba · City View Mall
             </p>
-            <h1 className="font-display text-4xl leading-tight text-ink md:text-5xl">
-              Welcome in. Phones, games, and gadgets — ready when you are.
+            <h1 className="text-4xl leading-tight font-semibold text-ink md:text-5xl">
+              Welcome to Chukwunweike
             </h1>
             <p className="mt-4 max-w-lg text-lg text-muted">
-              Chukwunweike stocks new iPhones, Samsung Galaxy phones, PlayStation consoles and games, plus the
-              accessories that go with them. No prices on this page — message us and we will tell you what is
-              available today.
+              A straightforward shop for new iPhones, Samsung Galaxy phones, PlayStation consoles and games, and
+              everyday gadgets. Nothing is priced on this page — send a WhatsApp and we will tell you what is
+              available.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
@@ -172,7 +203,7 @@ function Home() {
         <section id="collection" className="mx-auto max-w-6xl px-4 py-14">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h2 className="font-display text-3xl text-ink">The collection</h2>
+              <h2 className="font-semibold text-3xl text-ink">The collection</h2>
               <p className="mt-1 text-muted">Prices are not listed. Tap Inquire and we will reply on WhatsApp.</p>
             </div>
             <div className="flex flex-wrap gap-2" role="tablist" aria-label="Product categories">
@@ -198,11 +229,11 @@ function Home() {
 
           <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {products.map((product) => (
-              <li key={product.id} className="flex flex-col overflow-hidden rounded-card border border-line bg-card">
+              <li key={product.id} id={product.id} className="flex flex-col overflow-hidden rounded-card border border-line bg-card">
                 <img src={product.image} alt={product.name} className="aspect-[3/4] w-full object-cover" />
                 <div className="flex flex-1 flex-col p-4">
-                  <p className="text-xs font-semibold tracking-wide text-brass uppercase">{product.note}</p>
-                  <h3 className="mt-1 font-display text-xl text-ink">{product.name}</h3>
+                  <p className="text-xs font-semibold tracking-wide text-primary uppercase">{product.note}</p>
+                  <h3 className="mt-1 font-semibold text-xl text-ink">{product.name}</h3>
                   <p className="mt-1 flex-1 text-sm text-muted">{product.blurb}</p>
                   <a
                     href={whatsappLink(`Hello Chukwunweike, I'm interested in the ${product.name}. Is it available?`)}
@@ -221,7 +252,7 @@ function Home() {
         <section id="about" className="bg-card">
           <div className="mx-auto grid max-w-6xl gap-8 px-4 py-14 md:grid-cols-2 md:items-center">
             <div>
-              <h2 className="font-display text-3xl text-ink">A straightforward shop</h2>
+              <h2 className="font-semibold text-3xl text-ink">A straightforward shop</h2>
               <p className="mt-3 text-muted">
                 We are a neighbourhood phone shop in Asaba. Come in, look at the phones, and leave with
                 something that works. If you are not nearby, send a WhatsApp and we will confirm what is on the
@@ -243,7 +274,7 @@ function Home() {
         <section id="visit" className="mx-auto max-w-6xl px-4 py-14">
           <div className="grid gap-6 rounded-card border border-line bg-card p-6 md:grid-cols-2 md:p-8">
             <div>
-              <h2 className="font-display text-3xl text-ink">Visit the shop</h2>
+              <h2 className="font-semibold text-3xl text-ink">Visit the shop</h2>
               <address className="mt-4 not-italic text-lg leading-relaxed text-ink">
                 <strong className="font-semibold">{ADDRESS.shop}</strong>
                 <br />
@@ -257,6 +288,11 @@ function Home() {
                   +234 913 208 3551
                 </a>
               </p>
+              <p className="mt-2 text-sm">
+                <a className="font-semibold text-primary" href={mapsUrl()} target="_blank" rel="noreferrer">
+                  Open in Google Maps
+                </a>
+              </p>
               <a
                 href={whatsappLink("Hello Chukwunweike, I am coming to Shop 3, City View Mall.")}
                 target="_blank"
@@ -268,7 +304,7 @@ function Home() {
               </a>
             </div>
             <div className="flex flex-col justify-center rounded-xl bg-paper p-6">
-              <p className="font-display text-2xl text-ink">City View Mall</p>
+              <p className="font-semibold text-2xl text-ink">City View Mall</p>
               <p className="mt-2 text-muted">Nnebisi Road, Asaba</p>
               <p className="mt-1 text-sm text-muted">Directly opposite Konwea Plaza</p>
             </div>
@@ -278,7 +314,7 @@ function Home() {
 
       <footer className="border-t border-line bg-ink text-card">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-8 text-sm md:flex-row md:items-center md:justify-between">
-          <p className="font-display text-lg">Chukwunweike</p>
+          <p className="font-semibold text-lg">Chukwunweike</p>
           <p className="text-paper/80">
             {ADDRESS.shop}, {ADDRESS.city}
           </p>

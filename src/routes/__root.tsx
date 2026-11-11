@@ -8,13 +8,19 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Chukwunweike Phone Accessories & Gadgets" },
+      { title: "Chukwunweike | Phones, Accessories & Gadgets in Asaba" },
       {
         name: "description",
         content:
-          "Original iPhones, Samsung phones, PlayStation games, and gadgets at Shop 3, City View Mall, Asaba.",
+          "Original iPhones, Samsung Galaxy phones, PlayStation 5 consoles and games, and gadgets at Shop 3, City View Mall, Nnebisi Road, Asaba. Ask on WhatsApp. No prices listed online.",
       },
-      { name: "theme-color", content: "#1b6b4a" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+      { name: "googlebot", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+      { name: "author", content: "Chukwunweike Phone Accessories & Gadgets" },
+      { name: "application-name", content: "Chukwunweike" },
+      { name: "geo.region", content: "NG-DE" },
+      { name: "geo.placename", content: "Asaba" },
+      { name: "theme-color", content: "#0f6b4c" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
@@ -25,12 +31,12 @@ export const Route = createRootRoute({
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,650&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
       },
     ],
   }),
   component: () => (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en-NG" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>

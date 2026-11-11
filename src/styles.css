@@ -1,18 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-paper: #f6f1e8;
-  --color-card: #fffcf7;
-  --color-ink: #1a1714;
-  --color-muted: #6f675f;
-  --color-line: #e4dccf;
-  --color-primary: #1b6b4a;
-  --color-primary-dark: #145338;
-  --color-brass: #c4a15a;
-  --color-whatsapp: #128c4a;
-  --font-sans: "Source Sans 3", "Segoe UI", sans-serif;
-  --font-display: "Fraunces", Georgia, serif;
-  --radius-card: 1rem;
+  --color-paper: #f4f6f8;
+  --color-card: #ffffff;
+  --color-ink: #1c2430;
+  --color-muted: #5c6775;
+  --color-line: #e3e7ee;
+  --color-primary: #0f6b4c;
+  --color-primary-dark: #0b5340;
+  --color-whatsapp: #1a9e4a;
+  --font-sans: "Inter", "Segoe UI", sans-serif;
+  --radius-card: 0.75rem;
 }
 
 @layer base {

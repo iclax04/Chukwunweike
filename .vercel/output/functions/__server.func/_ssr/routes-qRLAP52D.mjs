@@ -1,113 +1,22 @@
 import { i as __toESM } from "../_runtime.mjs";
-import { K as require_react, b as require_jsx_runtime } from "../_libs/@tanstack/react-router+[...].mjs";
+import { b as require_jsx_runtime, q as require_react } from "../_libs/@tanstack/react-router+[...].mjs";
 import { a as MessageCircle, i as ShieldCheck, o as Menu, r as Store, s as MapPin, t as X } from "../_libs/lucide-react.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-DV8o7ph-.js
+import { a as CATEGORIES, c as whatsappLink, i as ADDRESS, l as Route$2, n as jsonLd, o as PRODUCTS, r as mapsUrl, s as WHATSAPP } from "./router-CShxFwO2.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-qRLAP52D.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
-var CATEGORIES = [
-	{
-		id: "all",
-		label: "All"
-	},
-	{
-		id: "iphone",
-		label: "iPhone"
-	},
-	{
-		id: "samsung",
-		label: "Samsung"
-	},
-	{
-		id: "playstation",
-		label: "PlayStation"
-	},
-	{
-		id: "gadgets",
-		label: "Gadgets"
-	}
-];
-var PRODUCTS = [
-	{
-		id: "iphone-17",
-		name: "iPhone 17",
-		category: "iphone",
-		blurb: "The new everyday iPhone, in stock at the shop.",
-		image: "/catalog/iphone.jpg",
-		note: "New arrival"
-	},
-	{
-		id: "iphone-17-pro",
-		name: "iPhone 17 Pro",
-		category: "iphone",
-		blurb: "Pro camera and a brighter display. Ask us which storage we have.",
-		image: "/catalog/iphone-pro.jpg",
-		note: "Pro"
-	},
-	{
-		id: "galaxy-s26",
-		name: "Galaxy S26",
-		category: "samsung",
-		blurb: "The current Galaxy S series. Original and sealed.",
-		image: "/catalog/galaxy-s.jpg",
-		note: "Samsung"
-	},
-	{
-		id: "galaxy-s26-ultra",
-		name: "Galaxy S26 Ultra",
-		category: "samsung",
-		blurb: "Large display, S Pen, and a full camera set.",
-		image: "/catalog/galaxy.jpg",
-		note: "Ultra"
-	},
-	{
-		id: "ps5",
-		name: "PlayStation 5",
-		category: "playstation",
-		blurb: "Disc and digital consoles, plus extra controllers.",
-		image: "/catalog/console.jpg",
-		note: "Console"
-	},
-	{
-		id: "ps-games",
-		name: "PS5 games",
-		category: "playstation",
-		blurb: "New and popular titles. Tell us the game you want.",
-		image: "/catalog/games.jpg",
-		note: "Games"
-	},
-	{
-		id: "earbuds",
-		name: "Wireless earbuds",
-		category: "gadgets",
-		blurb: "Everyday buds for calls, music, and commuting.",
-		image: "/catalog/earbuds.jpg",
-		note: "Audio"
-	},
-	{
-		id: "accessories",
-		name: "Cases, cables & power",
-		category: "gadgets",
-		blurb: "Cases, braided cables, and power banks for iPhone and Galaxy.",
-		image: "/catalog/accessories.jpg",
-		note: "Accessories"
-	}
-];
-var WHATSAPP = "2349132083551";
-function whatsappLink(message) {
-	return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
-}
-var ADDRESS = {
-	shop: "Shop 3, City View Mall",
-	street: "Nnebisi Road, directly opposite Konwea Plaza",
-	city: "Asaba, Delta State"
-};
 function Home() {
+	const origin = Route$2.useLoaderData();
 	const [open, setOpen] = (0, import_react.useState)(false);
 	const [filter, setFilter] = (0, import_react.useState)("all");
 	const products = (0, import_react.useMemo)(() => filter === "all" ? PRODUCTS : PRODUCTS.filter((item) => item.category === filter), [filter]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: "min-h-screen",
 		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("script", {
+				type: "application/ld+json",
+				dangerouslySetInnerHTML: { __html: jsonLd(origin) }
+			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: "bg-primary text-card",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -140,10 +49,10 @@ function Home() {
 							href: "#top",
 							className: "flex items-center gap-3",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "grid size-10 place-items-center rounded-lg bg-primary font-display text-lg text-card",
+								className: "grid size-10 place-items-center rounded-lg bg-primary font-semibold text-lg text-card",
 								children: "C"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "block font-display text-lg leading-none text-ink",
+								className: "block font-semibold text-lg leading-none text-ink",
 								children: "Chukwunweike"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								className: "text-xs text-muted",
@@ -223,12 +132,12 @@ function Home() {
 								children: "Asaba · City View Mall"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
-								className: "font-display text-4xl leading-tight text-ink md:text-5xl",
-								children: "Welcome in. Phones, games, and gadgets — ready when you are."
+								className: "text-4xl leading-tight font-semibold text-ink md:text-5xl",
+								children: "Welcome to Chukwunweike"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 								className: "mt-4 max-w-lg text-lg text-muted",
-								children: "Chukwunweike stocks new iPhones, Samsung Galaxy phones, PlayStation consoles and games, plus the accessories that go with them. No prices on this page — message us and we will tell you what is available today."
+								children: "A straightforward shop for new iPhones, Samsung Galaxy phones, PlayStation consoles and games, and everyday gadgets. Nothing is priced on this page — send a WhatsApp and we will tell you what is available."
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								className: "mt-6 flex flex-wrap gap-3",
@@ -306,7 +215,7 @@ function Home() {
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-								className: "font-display text-3xl text-ink",
+								className: "font-semibold text-3xl text-ink",
 								children: "The collection"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 								className: "mt-1 text-muted",
@@ -330,6 +239,7 @@ function Home() {
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
 							className: "mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4",
 							children: products.map((product) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
+								id: product.id,
 								className: "flex flex-col overflow-hidden rounded-card border border-line bg-card",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
 									src: product.image,
@@ -339,11 +249,11 @@ function Home() {
 									className: "flex flex-1 flex-col p-4",
 									children: [
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											className: "text-xs font-semibold tracking-wide text-brass uppercase",
+											className: "text-xs font-semibold tracking-wide text-primary uppercase",
 											children: product.note
 										}),
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-											className: "mt-1 font-display text-xl text-ink",
+											className: "mt-1 font-semibold text-xl text-ink",
 											children: product.name
 										}),
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
@@ -369,7 +279,7 @@ function Home() {
 							className: "mx-auto grid max-w-6xl gap-8 px-4 py-14 md:grid-cols-2 md:items-center",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-									className: "font-display text-3xl text-ink",
+									className: "font-semibold text-3xl text-ink",
 									children: "A straightforward shop"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
@@ -394,7 +304,7 @@ function Home() {
 							className: "grid gap-6 rounded-card border border-line bg-card p-6 md:grid-cols-2 md:p-8",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-									className: "font-display text-3xl text-ink",
+									className: "font-semibold text-3xl text-ink",
 									children: "Visit the shop"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("address", {
@@ -424,6 +334,16 @@ function Home() {
 										})
 									]
 								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									className: "mt-2 text-sm",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+										className: "font-semibold text-primary",
+										href: mapsUrl(),
+										target: "_blank",
+										rel: "noreferrer",
+										children: "Open in Google Maps"
+									})
+								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
 									href: whatsappLink("Hello Chukwunweike, I am coming to Shop 3, City View Mall."),
 									target: "_blank",
@@ -438,7 +358,7 @@ function Home() {
 								className: "flex flex-col justify-center rounded-xl bg-paper p-6",
 								children: [
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-										className: "font-display text-2xl text-ink",
+										className: "font-semibold text-2xl text-ink",
 										children: "City View Mall"
 									}),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
@@ -460,7 +380,7 @@ function Home() {
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "mx-auto flex max-w-6xl flex-col gap-2 px-4 py-8 text-sm md:flex-row md:items-center md:justify-between",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-						className: "font-display text-lg",
+						className: "font-semibold text-lg",
 						children: "Chukwunweike"
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 						className: "text-paper/80",
