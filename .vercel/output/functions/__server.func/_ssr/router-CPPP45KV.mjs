@@ -1,9 +1,9 @@
 import { i as __toESM } from "../_runtime.mjs";
-import { _ as createFileRoute, b as require_jsx_runtime, d as Scripts, f as HeadContent, g as lazyRouteComponent, h as Outlet, m as createRouter, q as require_react, v as createRootRoute, y as useRouter } from "../_libs/@tanstack/react-router+[...].mjs";
 import { a as __exportAll, i as getServerFnById, n as createServerFn, r as TSS_SERVER_FUNCTION } from "./ssr.mjs";
+import { Vt as require_react, _ as createRootRoute, d as HeadContent, g as createFileRoute, h as lazyRouteComponent, m as Outlet, p as createRouter, u as Scripts, v as useRouter, y as require_jsx_runtime } from "../_libs/@tanstack/react-router+[...].mjs";
 import { n as TriangleAlert } from "../_libs/lucide-react.mjs";
 import { a as union, i as string, n as number, r as object, t as literal } from "../_libs/zod.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-CShxFwO2.js
+// node_modules/.nitro/vite/services/ssr/assets/router-CPPP45KV.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var FALLBACK_MESSAGE = "An unexpected error occurred. Try reloading the page.";
@@ -331,7 +331,7 @@ function PreviewHostBridge() {
 	}, [router]);
 	return null;
 }
-var styles_default = "/assets/styles-Dn8MmCV_.css";
+var styles_default = "/assets/styles-_FJWu5Of.css";
 var Route$3 = createRootRoute({
 	head: () => ({
 		meta: [
@@ -429,7 +429,7 @@ var createSsrRpc = (functionId) => {
 		[TSS_SERVER_FUNCTION]: true
 	});
 };
-var $$splitComponentImporter = () => import("./routes-qRLAP52D.mjs");
+var $$splitComponentImporter = () => import("./routes-U_9o0xYw.mjs");
 var getSiteOrigin = createServerFn({ method: "GET" }).handler(createSsrRpc("e9edbc41c1cdf4994dbd2fcf19b6e13d92d2ac54745f49f139077a3e05a13c24"));
 var Route$2 = createFileRoute("/")({
 	loader: () => getSiteOrigin(),
@@ -710,5 +710,4 @@ function getRouter() {
 		defaultErrorComponent: AppErrorComponent
 	});
 }
-//#endregion
 export { CATEGORIES as a, whatsappLink as c, ADDRESS as i, Route$2 as l, jsonLd as n, PRODUCTS as o, mapsUrl as r, WHATSAPP as s, router_exports as t };

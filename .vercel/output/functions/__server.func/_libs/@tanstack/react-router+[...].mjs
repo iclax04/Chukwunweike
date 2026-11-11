@@ -1,7 +1,7 @@
 import { i as __toESM, r as __require, t as __commonJSMin } from "../../_runtime.mjs";
 import { i as parseHref, r as normalizeProtocolRelative } from "../tanstack__history.mjs";
 import { PassThrough, Readable } from "node:stream";
-//#region node_modules/react/cjs/react.production.js
+// node_modules/react/cjs/react.production.js
 /**
 * @license React
 * react.production.js
@@ -385,25 +385,21 @@ var require_react_production = /* @__PURE__ */ __commonJSMin(((exports) => {
 	exports.useTransition = function() {
 		return ReactSharedInternals.H.useTransition();
 	};
-	exports.version = "19.3.0";
+	exports.version = "19.3.1";
 }));
-//#endregion
-//#region node_modules/react/index.js
+// node_modules/react/index.js
 var require_react = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = require_react_production();
 }));
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/not-found.js
+// node_modules/@tanstack/router-core/dist/esm/not-found.js
 /** Determine if a value is a TanStack Router not-found error. */
 function isNotFound(obj) {
 	return obj?.isNotFound === true;
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/root.js
+// node_modules/@tanstack/router-core/dist/esm/root.js
 /** Stable identifier used for the root route in a route tree. */
 var rootRouteId = "__root__";
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/redirect.js
+// node_modules/@tanstack/router-core/dist/esm/redirect.js
 /**
 * Create a redirect Response understood by TanStack Router.
 *
@@ -441,13 +437,11 @@ function isRedirect(obj) {
 function parseRedirect(obj) {
 	if (obj !== null && typeof obj === "object" && obj.isSerializedRedirect) return redirect(obj);
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/ssr/ssr-match-id.js
+// node_modules/@tanstack/router-core/dist/esm/ssr/ssr-match-id.js
 function dehydrateSsrMatchId(id) {
-	return id.replaceAll("~", "~~").replaceAll("\0", "~0").replaceAll("�", "~r").replaceAll("/", "\0");
+	return id.replaceAll("/", "#");
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/utils.js
+// node_modules/@tanstack/router-core/dist/esm/utils.js
 /**
 * Return the last element of an array.
 * Intended for non-empty arrays used within router internals.
@@ -667,8 +661,7 @@ function arraysEqual(a, b) {
 	for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
 	return true;
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/path.js
+// node_modules/@tanstack/router-core/dist/esm/path.js
 /** Remove repeated slashes from a path string. */
 function cleanPath(path) {
 	return path.replace(/\/{2,}/g, "/");
@@ -724,9 +717,10 @@ function resolvePath(base, to, trailingSlash = "never", cache) {
 			if (value === "") {
 				if (!index) baseSegments = [value];
 				else if (index === length - 1) baseSegments.push(value);
-			} else if (value === "..") if (baseSegments.length > 1) baseSegments.pop();
-			else baseSegments = [""];
-			else if (value === ".") {} else baseSegments.push(value);
+			} else if (value === "..") {
+				if (baseSegments.length > 1) baseSegments.pop();
+				else baseSegments = [""];
+			} else if (value === ".") {} else baseSegments.push(value);
 		}
 	}
 	if (baseSegments.length > 1) {
@@ -786,8 +780,7 @@ function interpolatePath(path, segments, params, decoder, usedParams) {
 	}
 	return joined + trailingSlash || "/";
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/sieve-cache.js
+// node_modules/@tanstack/router-core/dist/esm/sieve-cache.js
 /**
 * A fixed-capacity cache using the SIEVE eviction algorithm
 * (https://cachemon.github.io/SIEVE-website/).
@@ -842,13 +835,11 @@ function createSieveCache(max) {
 		}
 	};
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/invariant.js
+// node_modules/@tanstack/router-core/dist/esm/invariant.js
 function invariant() {
 	throw new Error("Invariant failed");
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/new-process-route-tree.js
+// node_modules/@tanstack/router-core/dist/esm/new-process-route-tree.js
 var SEGMENT_TYPE_INDEX = 4;
 var SEGMENT_TYPE_PATHLESS = 5;
 function getParamNames(data) {
@@ -860,7 +851,7 @@ function getParamNames(data) {
 }
 /** Parse one segment for matching and retain the same record for interpolation. */
 function parseSegment(path, start, end) {
-	const part = path.substring(start, end);
+	const part = path.slice(start, end);
 	if (part.charCodeAt(0) === 36) return part.length === 1 ? [
 		2,
 		"_splat",
@@ -868,7 +859,7 @@ function parseSegment(path, start, end) {
 		void 0
 	] : [
 		1,
-		part.substring(1),
+		part.slice(1),
 		"",
 		""
 	];
@@ -878,12 +869,12 @@ function parseSegment(path, start, end) {
 		const optional = part.charCodeAt(open + 1) === 45;
 		const nameStart = open + (optional ? 3 : 2);
 		if (close >= 0 && part.charCodeAt(nameStart - 1) === 36 && (!optional || nameStart < close)) {
-			const key = part.substring(nameStart, close);
+			const key = part.slice(nameStart, close);
 			return [
 				optional ? 3 : key ? 1 : 2,
 				key || "_splat",
-				part.substring(0, open),
-				path.substring(start + close + 1, key ? end : path.length)
+				part.slice(0, open),
+				path.slice(start + close + 1, key ? end : path.length)
 			];
 		}
 	}
@@ -944,7 +935,7 @@ function parseSegments(defaultCaseSensitive, route, start, node, dynamicListsToS
 				cursor = end + 1;
 			}
 			if (interpolation && literalStart < end) {
-				if (literalStart < start - 1) interpolation.push(path.substring(literalStart, start - 1));
+				if (literalStart < start - 1) interpolation.push(path.slice(literalStart, start - 1));
 				segment[2] = "/" + prefix;
 				if (kind === 2 && segment[3] !== void 0 && literalEnd < length) segment[3] = suffix.slice(0, -1);
 				interpolation.push(segment);
@@ -968,7 +959,7 @@ function parseSegments(defaultCaseSensitive, route, start, node, dynamicListsToS
 		}
 		node = nextNode;
 	}
-	if (interpolation && literalStart < literalEnd) interpolation.push(path.substring(literalStart, literalEnd));
+	if (interpolation && literalStart < literalEnd) interpolation.push(path.slice(literalStart, literalEnd));
 	const segmentData = interpolation?.slice();
 	if (!node) return segmentData;
 	if (parseParams && route.children && !route.isRoot && route.id && route.id.charCodeAt(route.id.lastIndexOf("/") + 1) === 95) {
@@ -1420,8 +1411,7 @@ function isFrameMoreSpecific(prev, next) {
 	if (!prev) return true;
 	return next.statics > prev.statics || next.statics === prev.statics && (next.dynamics > prev.dynamics || next.dynamics === prev.dynamics && (next.optionals > prev.optionals || next.optionals === prev.optionals && ((next.node.kind === SEGMENT_TYPE_INDEX) > (prev.node.kind === SEGMENT_TYPE_INDEX) || next.node.kind === SEGMENT_TYPE_INDEX === (prev.node.kind === SEGMENT_TYPE_INDEX) && next.node.depth > prev.node.depth)));
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/scroll-restoration.js
+// node_modules/@tanstack/router-core/dist/esm/scroll-restoration.js
 function getSafeSessionStorage() {
 	try {
 		return sessionStorage;
@@ -1440,8 +1430,7 @@ getSafeSessionStorage();
 var defaultGetScrollRestorationKey = (location) => {
 	return location.state.__TSR_key || location.href;
 };
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/qss.js
+// node_modules/@tanstack/router-core/dist/esm/qss.js
 /**
 * Program is a reimplementation of the `qss` package:
 * Copyright (c) Luke Edwards luke.edwards05@gmail.com, MIT License
@@ -1506,8 +1495,7 @@ function decode(str) {
 	}
 	return result;
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/searchParams.js
+// node_modules/@tanstack/router-core/dist/esm/searchParams.js
 var jsonStart = /^(?:\s|["[{\d-]|fa|nu|tr)/;
 /** Default `parseSearch` that strips leading '?' and JSON-parses values. */
 var defaultParseSearch = parseSearchWith(JSON.parse);
@@ -1526,7 +1514,7 @@ var defaultStringifySearch = stringifySearchWith(JSON.stringify, JSON.parse);
 function parseSearchWith(parser) {
 	const isJsonParser = parser === JSON.parse;
 	return (searchStr) => {
-		if (searchStr[0] === "?") searchStr = searchStr.substring(1);
+		if (searchStr[0] === "?") searchStr = searchStr.slice(1);
 		const query = decode(searchStr);
 		for (const key in query) {
 			const value = query[key];
@@ -1572,8 +1560,7 @@ function stringifySearchWith(stringify, parser) {
 		return searchStr ? `?${searchStr}` : "";
 	};
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/rewrite.js
+// node_modules/@tanstack/router-core/dist/esm/rewrite.js
 /** Create a rewrite pair that strips/adds a basepath on input/output. */
 function rewriteBasepath(basepath, caseSensitive, rewrite) {
 	const trimmedBasepath = trimPath(basepath);
@@ -1615,8 +1602,7 @@ function executeRewriteOutput(rewrite, url) {
 	}
 	return url;
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/stores.js
+// node_modules/@tanstack/router-core/dist/esm/stores.js
 /** SSR non-reactive createMutableStore */
 function createNonReactiveMutableStore(initialValue) {
 	let value = initialValue;
@@ -1683,8 +1669,7 @@ function createRouterStores(initialLocation, config) {
 	}
 	return store;
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/router.js
+// node_modules/@tanstack/router-core/dist/esm/router.js
 function isExternalUrl(url, origin) {
 	return url.protocol !== "http:" && url.protocol !== "https:" || url.origin !== origin || !!url.username || !!url.password;
 }
@@ -1754,7 +1739,9 @@ var RouterCore = class {
 			};
 			this.isServer = this.options.isServer ?? true ?? typeof document === "undefined";
 			this.protocolAllowlist = new Set(this.options.protocolAllowlist);
-			if (!this.history || this.options.history && this.options.history !== this.history) if (!this.options.history) {} else this.history = this.options.history;
+			if (!this.history || this.options.history && this.options.history !== this.history) {
+				if (!this.options.history) {} else this.history = this.options.history;
+			}
 			this.origin = this.options.origin;
 			if (!this.origin) this.origin = "http://localhost";
 			const nextBasepath = this.options.basepath ?? "/";
@@ -1888,14 +1875,12 @@ var RouterCore = class {
 						hash: parsed.hash.slice(1)
 					};
 				}
-				const currentLocation = dest._fromLocation || this._pendingLocation || this.latestLocation;
+				const currentLocation = opts._fromLocation || this._pendingLocation || this.latestLocation;
 				let lightweight;
 				const current = () => {
 					return currentLocation;
 				};
-				const currentMatch = () => {
-					return lightweight ??= this.matchRoutesLightweight(currentLocation);
-				};
+				const currentMatch = () => lightweight ??= this.matchRoutesLightweight(current());
 				const to = dest.to ? `${dest.to}` : ".";
 				const nextTo = resolvePath(to[0] === "/" ? "" : dest.unsafeRelative === "path" ? current().pathname : dest.from ?? currentMatch()[1], to, this.options.trailingSlash, this.resolvePathCache);
 				const destRoute = this.routesByPath[trimPathRight(nextTo)];
@@ -2160,8 +2145,10 @@ var RouterCore = class {
 		const [initialMatchedRoutes, rawParams, foundRoute] = this.getMatchedRoutes(next.pathname);
 		let matchedRoutes = initialMatchedRoutes;
 		let isGlobalNotFound = false;
-		if (foundRoute ? foundRoute.path !== "/" && rawParams["**"] : trimPathRight(next.pathname)) if (this.options.notFoundRoute) matchedRoutes = [...matchedRoutes, this.options.notFoundRoute];
-		else isGlobalNotFound = true;
+		if (foundRoute ? foundRoute.path !== "/" && rawParams["**"] : trimPathRight(next.pathname)) {
+			if (this.options.notFoundRoute) matchedRoutes = [...matchedRoutes, this.options.notFoundRoute];
+			else isGlobalNotFound = true;
+		}
 		const _notFoundRouteId = isGlobalNotFound ? findGlobalNotFoundRouteId(this.options.notFoundMode, matchedRoutes) : void 0;
 		const matches = new Array(matchedRoutes.length);
 		const committed = this._committed;
@@ -2416,16 +2403,17 @@ function extractStrictParams(route, accumulatedParams) {
 	const parseParams = route.options.params?.parse ?? route.options.parseParams;
 	if (parseParams) Object.assign(accumulatedParams, parseParams(accumulatedParams));
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/load-client.js
+// node_modules/@tanstack/router-core/dist/esm/load-client.js
 function preloadComponent(route, type) {
 	return route.options[type]?.preload?.();
 }
 function loadComponents(route, onPendingReady) {
 	const component = preloadComponent(route, "component");
 	let pending = preloadComponent(route, "pendingComponent");
-	if (onPendingReady) if (pending) pending = pending.then(onPendingReady);
-	else onPendingReady();
+	if (onPendingReady) {
+		if (pending) pending = pending.then(onPendingReady);
+		else onPendingReady();
+	}
 	if (component && pending) return Promise.all([component, pending]).then(() => {});
 	return component ?? pending;
 }
@@ -2736,10 +2724,12 @@ function createLoaderTask$1(router, lane, index, tasks, semanticParent, options,
 			if (typeof configured === "function") configured = configured(getLoaderContext$1(router, lane, match, route, options[0], semanticParent, preload));
 			if (options[0].signal.aborted) reloadFailure = CANCELED_OUTCOME;
 		}
-		if (!reloadFailure) if (match.status !== "success") reload = true;
-		else {
-			const staleAge = preload || match.preload ? route.options.preloadStaleTime ?? router.options.defaultPreloadStaleTime ?? 3e4 : route.options.staleTime ?? router.options.defaultStaleTime ?? 0;
-			reload = !!(match.invalid || configured || configured === void 0 && Date.now() - match.updatedAt >= staleAge && (options[5] || match.cause === "enter" || options[2].some((candidate) => candidate.routeId === match.routeId && candidate.id !== match.id)));
+		if (!reloadFailure) {
+			if (match.status !== "success") reload = true;
+			else {
+				const staleAge = preload || match.preload ? route.options.preloadStaleTime ?? router.options.defaultPreloadStaleTime ?? 3e4 : route.options.staleTime ?? router.options.defaultStaleTime ?? 0;
+				reload = !!(match.invalid || configured || configured === void 0 && Date.now() - match.updatedAt >= staleAge && (options[5] || match.cause === "enter" || options[2].some((candidate) => candidate.routeId === match.routeId && candidate.id !== match.id)));
+			}
 		}
 	} catch (cause) {
 		match.invalid = true;
@@ -3110,8 +3100,7 @@ async function preloadClientRoute(router, opts) {
 		}
 	}
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/await-signal.js
+// node_modules/@tanstack/router-core/dist/esm/await-signal.js
 function observeLate(callback, value) {
 	if (!callback) return;
 	try {
@@ -3146,8 +3135,7 @@ function waitForReason(value, signal, onLate, onLateError) {
 		});
 	});
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/load-server.js
+// node_modules/@tanstack/router-core/dist/esm/load-server.js
 var SUCCESS = 0;
 var ERROR = 1;
 var NOT_FOUND = 2;
@@ -3680,7 +3668,7 @@ async function executeServerLane(router, location, matchedMatches, signal) {
 	}
 }
 async function loadServerRoute(router, opts) {
-	router.updateLatestLocation();
+	if (!opts?._skipLocationUpdate) router.updateLatestLocation();
 	const next = router.latestLocation;
 	const previous = router._committed;
 	const previousEnd = router._lifecycleEnd;
@@ -3732,8 +3720,7 @@ async function loadServerRoute(router, opts) {
 	router._commitPromise?.resolve();
 	router._commitPromise = void 0;
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/utils.js
+// node_modules/@tanstack/react-router/dist/esm/utils.js
 var import_react = /* @__PURE__ */ __toESM(require_react(), 1);
 /**
 * React.use if available (React 19+), undefined otherwise.
@@ -3741,8 +3728,7 @@ var import_react = /* @__PURE__ */ __toESM(require_react(), 1);
 */
 var reactUse = import_react.use;
 var useLayoutEffect = import_react.useEffect;
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/manifest.js
+// node_modules/@tanstack/router-core/dist/esm/manifest.js
 function getAssetCrossOrigin(assetCrossOrigin, kind) {
 	if (!assetCrossOrigin) return;
 	if (typeof assetCrossOrigin === "string") return assetCrossOrigin;
@@ -3760,6 +3746,7 @@ function getScriptPreloadAttrs(manifest, link, assetCrossOrigin) {
 			as: "script"
 		} : { rel: "modulepreload" },
 		href: preloadLink.href,
+		fetchPriority: "low",
 		...crossOrigin ? { crossOrigin } : {}
 	};
 }
@@ -3803,8 +3790,7 @@ function createInlineCssStyleAsset(css) {
 function createInlineCssPlaceholderAsset() {
 	return { attrs: { suppressHydrationWarning: true } };
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/ssr/bodyScripts.js
+// node_modules/@tanstack/router-core/dist/esm/ssr/bodyScripts.js
 function getSsrBodyScriptParts(matches, manifest, nonce, routeScriptAttrs) {
 	const assetMatches = _getAssetMatches(matches);
 	const routeScripts = [];
@@ -3841,8 +3827,7 @@ function composeSsrBodyScripts([routeScripts, manifestScripts], initialHydration
 		initialHydrationScripts.boundary
 	];
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/route.js
+// node_modules/@tanstack/router-core/dist/esm/route.js
 var BaseRoute = class {
 	get to() {
 		return this._to;
@@ -3913,440 +3898,34 @@ var BaseRootRoute = class extends BaseRoute {
 		super(options);
 	}
 };
-//#endregion
-//#region node_modules/seroval/dist/index.js
-var SYM_ASYNC_ITERATOR = Symbol.asyncIterator;
-var SYM_HAS_INSTANCE = Symbol.hasInstance;
-var SYM_IS_CONCAT_SPREADABLE = Symbol.isConcatSpreadable;
-var SYM_ITERATOR = Symbol.iterator;
-var SYM_MATCH = Symbol.match;
-var SYM_MATCH_ALL = Symbol.matchAll;
-var SYM_REPLACE = Symbol.replace;
-var SYM_SEARCH = Symbol.search;
-var SYM_SPECIES = Symbol.species;
-var SYM_SPLIT = Symbol.split;
-var SYM_TO_PRIMITIVE = Symbol.toPrimitive;
-var SYM_TO_STRING_TAG = Symbol.toStringTag;
-var SYM_UNSCOPABLES = Symbol.unscopables;
-var SYMBOL_STRING = {
-	[0]: "Symbol.asyncIterator",
-	[1]: "Symbol.hasInstance",
-	[2]: "Symbol.isConcatSpreadable",
-	[3]: "Symbol.iterator",
-	[4]: "Symbol.match",
-	[5]: "Symbol.matchAll",
-	[6]: "Symbol.replace",
-	[7]: "Symbol.search",
-	[8]: "Symbol.species",
-	[9]: "Symbol.split",
-	[10]: "Symbol.toPrimitive",
-	[11]: "Symbol.toStringTag",
-	[12]: "Symbol.unscopables"
-};
-var INV_SYMBOL_REF = {
-	[SYM_ASYNC_ITERATOR]: 0,
-	[SYM_HAS_INSTANCE]: 1,
-	[SYM_IS_CONCAT_SPREADABLE]: 2,
-	[SYM_ITERATOR]: 3,
-	[SYM_MATCH]: 4,
-	[SYM_MATCH_ALL]: 5,
-	[SYM_REPLACE]: 6,
-	[SYM_SEARCH]: 7,
-	[SYM_SPECIES]: 8,
-	[SYM_SPLIT]: 9,
-	[SYM_TO_PRIMITIVE]: 10,
-	[SYM_TO_STRING_TAG]: 11,
-	[SYM_UNSCOPABLES]: 12
-};
-var SYMBOL_REF = {
-	[0]: SYM_ASYNC_ITERATOR,
-	[1]: SYM_HAS_INSTANCE,
-	[2]: SYM_IS_CONCAT_SPREADABLE,
-	[3]: SYM_ITERATOR,
-	[4]: SYM_MATCH,
-	[5]: SYM_MATCH_ALL,
-	[6]: SYM_REPLACE,
-	[7]: SYM_SEARCH,
-	[8]: SYM_SPECIES,
-	[9]: SYM_SPLIT,
-	[10]: SYM_TO_PRIMITIVE,
-	[11]: SYM_TO_STRING_TAG,
-	[12]: SYM_UNSCOPABLES
-};
-var CONSTANT_STRING = {
-	[2]: "!0",
-	[3]: "!1",
-	[1]: "void 0",
-	[0]: "null",
-	[4]: "-0",
-	[5]: "1/0",
-	[6]: "-1/0",
-	[7]: "0/0"
-};
-var CONSTANT_VAL = {
-	[2]: true,
-	[3]: false,
-	[1]: void 0,
-	[0]: null,
-	[4]: -0,
-	[5]: Number.POSITIVE_INFINITY,
-	[6]: Number.NEGATIVE_INFINITY,
-	[7]: NaN
-};
-var ERROR_CONSTRUCTOR_STRING = {
-	[0]: "Error",
-	[1]: "EvalError",
-	[2]: "RangeError",
-	[3]: "ReferenceError",
-	[4]: "SyntaxError",
-	[5]: "TypeError",
-	[6]: "URIError"
-};
-var ERROR_CONSTRUCTOR = {
-	[0]: Error,
-	[1]: EvalError,
-	[2]: RangeError,
-	[3]: ReferenceError,
-	[4]: SyntaxError,
-	[5]: TypeError,
-	[6]: URIError
-};
-function createSerovalNode(t, i, s, c, m, p, e, a, f, b, o, l) {
-	return {
-		t,
-		i,
-		s,
-		c,
-		m,
-		p,
-		e,
-		a,
-		f,
-		b,
-		o,
-		l
-	};
+// node_modules/seroval/dist/validator.js
+var string = (value) => typeof value === "string";
+var number = (value) => typeof value === "number";
+var boolean = (value) => typeof value === "boolean";
+/** Matches an instance of the given constructor. */
+function instanceOf(ctor) {
+	return (value) => value instanceof ctor;
 }
-function createConstantNode(value) {
-	return createSerovalNode(2, void 0, value, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-var TRUE_NODE = /* @__PURE__ */ createConstantNode(2);
-var FALSE_NODE = /* @__PURE__ */ createConstantNode(3);
-var UNDEFINED_NODE = /* @__PURE__ */ createConstantNode(1);
-var NULL_NODE = /* @__PURE__ */ createConstantNode(0);
-var NEG_ZERO_NODE = /* @__PURE__ */ createConstantNode(4);
-var INFINITY_NODE = /* @__PURE__ */ createConstantNode(5);
-var NEG_INFINITY_NODE = /* @__PURE__ */ createConstantNode(6);
-var NAN_NODE = /* @__PURE__ */ createConstantNode(7);
-var MIN_JSON_STRINGIFY_LENGTH = 64;
-var JSON_ESCAPE_DIFFERENCES = /[\x00-\x07\x0b\x0e-\x1f<\u2028\u2029\ud800-\udfff]/;
-function serializeChar(str) {
-	switch (str) {
-		case "\"": return "\\\"";
-		case "\\": return "\\\\";
-		case "\n": return "\\n";
-		case "\r": return "\\r";
-		case "\b": return "\\b";
-		case "	": return "\\t";
-		case "\f": return "\\f";
-		case "<": return "\\x3C";
-		case "\u2028": return "\\u2028";
-		case "\u2029": return "\\u2029";
-		default: return;
-	}
-}
-function serializeString(str) {
-	if (str.length >= MIN_JSON_STRINGIFY_LENGTH && !JSON_ESCAPE_DIFFERENCES.test(str)) return JSON.stringify(str).slice(1, -1);
-	let result = "";
-	let lastPos = 0;
-	let replacement;
-	for (let i = 0, len = str.length; i < len; i++) {
-		replacement = serializeChar(str[i]);
-		if (replacement) {
-			result += str.slice(lastPos, i) + replacement;
-			lastPos = i + 1;
-		}
-	}
-	if (lastPos === 0) result = str;
-	else result += str.slice(lastPos);
-	return result;
-}
-function deserializeReplacer(str) {
-	switch (str) {
-		case "\\\\": return "\\";
-		case "\\\"": return "\"";
-		case "\\n": return "\n";
-		case "\\r": return "\r";
-		case "\\b": return "\b";
-		case "\\t": return "	";
-		case "\\f": return "\f";
-		case "\\x3C": return "<";
-		case "\\u2028": return "\u2028";
-		case "\\u2029": return "\u2029";
-		default: return str;
-	}
-}
-function deserializeString(str) {
-	if (typeof str === "string" && !str.includes("\\")) return str;
-	return str.replace(/(\\\\|\\"|\\n|\\r|\\b|\\t|\\f|\\u2028|\\u2029|\\x3C)/g, deserializeReplacer);
-}
-var { toString: objectToString } = Object.prototype;
-var STEP_ERROR_CODES = {
-	parsing: 1,
-	serialization: 2,
-	deserialization: 3
-};
-function getErrorMessageProd(type) {
-	return `Seroval Error (step: ${STEP_ERROR_CODES[type]})`;
-}
-var getErrorMessage = (type, cause) => getErrorMessageProd(type);
-var SerovalError = class extends Error {
-	constructor(type, cause) {
-		super(getErrorMessage(type, cause));
-		this.cause = cause;
-	}
-};
-var SerovalParserError = class extends SerovalError {
-	constructor(cause) {
-		super("parsing", cause);
-	}
-};
-var SerovalDeserializationError = class extends SerovalError {
-	constructor(cause) {
-		super("deserialization", cause);
-	}
-};
-function getSpecificErrorMessage(code) {
-	return `Seroval Error (specific: ${code})`;
-}
-var SerovalUnsupportedTypeError = class extends Error {
-	constructor(value) {
-		super(getSpecificErrorMessage(1));
-		this.value = value;
-	}
-};
-var SerovalUnsupportedNodeError = class extends Error {
-	constructor(node) {
-		super(getSpecificErrorMessage(2));
-	}
-};
-var SerovalMissingPluginError = class extends Error {
-	constructor(tag) {
-		super(getSpecificErrorMessage(3));
-	}
-};
-var SerovalMissingInstanceError = class extends Error {
-	constructor(tag) {
-		super(getSpecificErrorMessage(4));
-	}
-};
-var SerovalMissingReferenceError = class extends Error {
-	constructor(value) {
-		super(getSpecificErrorMessage(5));
-		this.value = value;
-	}
-};
-var SerovalMissingReferenceForIdError = class extends Error {
-	constructor(id) {
-		super(getSpecificErrorMessage(6));
-	}
-};
-var SerovalUnknownTypedArrayError = class extends Error {
-	constructor(name) {
-		super(getSpecificErrorMessage(7));
-	}
-};
-var SerovalMalformedNodeError = class extends Error {
-	constructor(node) {
-		super(getSpecificErrorMessage(8));
-	}
-};
-var SerovalDepthLimitError = class extends Error {
-	constructor(limit) {
-		super(getSpecificErrorMessage(9));
-	}
-};
-var REFERENCES_KEY = "__SEROVAL_REFS__";
-var GLOBAL_CONTEXT_R = `self.\$R`;
-function getCrossReferenceHeader(id) {
-	if (id == null) return `${GLOBAL_CONTEXT_R}=${GLOBAL_CONTEXT_R}||[]`;
-	return `(${GLOBAL_CONTEXT_R}=${GLOBAL_CONTEXT_R}||{})["${serializeString(id)}"]=[]`;
-}
-var REFERENCE = /* @__PURE__ */ new Map();
-var INV_REFERENCE = /* @__PURE__ */ new Map();
-function hasReferenceID(value) {
-	return REFERENCE.has(value);
-}
-function hasReference(id) {
-	return INV_REFERENCE.has(id);
-}
-function getReferenceID(value) {
-	if (hasReferenceID(value)) return REFERENCE.get(value);
-	throw new SerovalMissingReferenceError(value);
-}
-function getReference(id) {
-	if (hasReference(id)) return INV_REFERENCE.get(id);
-	throw new SerovalMissingReferenceForIdError(id);
-}
-if (typeof globalThis !== "undefined") Object.defineProperty(globalThis, REFERENCES_KEY, {
-	value: INV_REFERENCE,
-	configurable: true,
-	writable: false,
-	enumerable: false
-});
-else if (typeof window !== "undefined") Object.defineProperty(window, REFERENCES_KEY, {
-	value: INV_REFERENCE,
-	configurable: true,
-	writable: false,
-	enumerable: false
-});
-else if (typeof self !== "undefined") Object.defineProperty(self, REFERENCES_KEY, {
-	value: INV_REFERENCE,
-	configurable: true,
-	writable: false,
-	enumerable: false
-});
-else if (typeof global !== "undefined") Object.defineProperty(global, REFERENCES_KEY, {
-	value: INV_REFERENCE,
-	configurable: true,
-	writable: false,
-	enumerable: false
-});
-function getErrorConstructor(error) {
-	if (error instanceof EvalError) return 1;
-	if (error instanceof RangeError) return 2;
-	if (error instanceof ReferenceError) return 3;
-	if (error instanceof SyntaxError) return 4;
-	if (error instanceof TypeError) return 5;
-	if (error instanceof URIError) return 6;
-	return 0;
-}
-function getInitialErrorOptions(error) {
-	const construct = ERROR_CONSTRUCTOR_STRING[getErrorConstructor(error)];
-	if (error.name !== construct) return { name: error.name };
-	if (error.constructor.name !== construct) return { name: error.constructor.name };
-	return {};
-}
-function getErrorOptions(error, features) {
-	let options = getInitialErrorOptions(error);
-	const names = Object.getOwnPropertyNames(error);
-	for (let i = 0, len = names.length, name; i < len; i++) {
-		name = names[i];
-		if (name !== "name" && name !== "message") {
-			if (name === "stack") {
-				if (features & 4) {
-					options = options || {};
-					options[name] = error[name];
-				}
-			} else {
-				options = options || {};
-				options[name] = error[name];
-			}
-		}
-	}
-	return options;
-}
-function getObjectFlag(obj) {
-	if (Object.isFrozen(obj)) return 3;
-	if (Object.isSealed(obj)) return 2;
-	if (Object.isExtensible(obj)) return 0;
-	return 1;
-}
-function createNumberNode(value) {
-	switch (value) {
-		case Number.POSITIVE_INFINITY: return INFINITY_NODE;
-		case Number.NEGATIVE_INFINITY: return NEG_INFINITY_NODE;
-	}
-	if (value !== value) return NAN_NODE;
-	if (Object.is(value, -0)) return NEG_ZERO_NODE;
-	return createSerovalNode(0, void 0, value, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-function createStringNode(value) {
-	return createSerovalNode(1, void 0, serializeString(value), void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-function createBigIntNode(current) {
-	return createSerovalNode(3, void 0, "" + current, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-function createIndexedValueNode(id) {
-	return createSerovalNode(4, id, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-function createDateNode(id, current) {
-	const timestamp = current.valueOf();
-	return createSerovalNode(5, id, timestamp !== timestamp ? "" : current.toISOString(), void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-function createTemporalNode(id, type, current) {
-	return createSerovalNode(36, id, current.toString(), type, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-function createRegExpNode(id, current) {
-	return createSerovalNode(6, id, void 0, serializeString(current.source), current.flags, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-function createWKSymbolNode(id, current) {
-	return createSerovalNode(17, id, INV_SYMBOL_REF[current], void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-function createReferenceNode(id, ref) {
-	return createSerovalNode(18, id, serializeString(getReferenceID(ref)), void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-function createPluginNode(id, tag, value) {
-	return createSerovalNode(25, id, value, serializeString(tag), void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-function createArrayNode(id, current, parsedItems) {
-	return createSerovalNode(9, id, void 0, void 0, void 0, void 0, void 0, parsedItems, void 0, void 0, getObjectFlag(current), void 0);
-}
-function createBoxedNode(id, boxed) {
-	return createSerovalNode(21, id, void 0, void 0, void 0, void 0, void 0, void 0, boxed, void 0, void 0, void 0);
-}
-var MAX_TYPED_ARRAY_LENGTH = 1e6;
-function createTypedArrayNode(id, current, buffer) {
-	if (current.length > MAX_TYPED_ARRAY_LENGTH) throw new SerovalUnsupportedTypeError(current);
-	return createSerovalNode(15, id, void 0, current.constructor.name, void 0, void 0, void 0, void 0, buffer, current.byteOffset, void 0, current.length);
-}
-function createBigIntTypedArrayNode(id, current, buffer) {
-	if (current.length > MAX_TYPED_ARRAY_LENGTH) throw new SerovalUnsupportedTypeError(current);
-	return createSerovalNode(16, id, void 0, current.constructor.name, void 0, void 0, void 0, void 0, buffer, current.byteOffset, void 0, current.length);
-}
-function createDataViewNode(id, current, buffer) {
-	if (current.byteLength > MAX_TYPED_ARRAY_LENGTH) throw new SerovalUnsupportedTypeError(current);
-	return createSerovalNode(20, id, void 0, void 0, void 0, void 0, void 0, void 0, buffer, current.byteOffset, void 0, current.byteLength);
-}
-function createErrorNode(id, current, options) {
-	return createSerovalNode(13, id, getErrorConstructor(current), void 0, serializeString(current.message), options, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-function createAggregateErrorNode(id, current, options) {
-	return createSerovalNode(14, id, getErrorConstructor(current), void 0, serializeString(current.message), options, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-function createSetNode(id, items) {
-	return createSerovalNode(7, id, void 0, void 0, void 0, void 0, void 0, items, void 0, void 0, void 0, void 0);
-}
-function createIteratorFactoryInstanceNode(factory, items) {
-	return createSerovalNode(28, void 0, void 0, void 0, void 0, void 0, void 0, [factory, items], void 0, void 0, void 0, void 0);
-}
-function createAsyncIteratorFactoryInstanceNode(factory, items) {
-	return createSerovalNode(30, void 0, void 0, void 0, void 0, void 0, void 0, [factory, items], void 0, void 0, void 0, void 0);
-}
-function createStreamConstructorNode(id, factory, sequence) {
-	return createSerovalNode(31, id, void 0, void 0, void 0, void 0, void 0, sequence, factory, void 0, void 0, void 0);
-}
-function createStreamNextNode(id, parsed) {
-	return createSerovalNode(32, id, void 0, void 0, void 0, void 0, void 0, void 0, parsed, void 0, void 0, void 0);
-}
-function createStreamThrowNode(id, parsed) {
-	return createSerovalNode(33, id, void 0, void 0, void 0, void 0, void 0, void 0, parsed, void 0, void 0, void 0);
-}
-function createStreamReturnNode(id, parsed) {
-	return createSerovalNode(34, id, void 0, void 0, void 0, void 0, void 0, void 0, parsed, void 0, void 0, void 0);
-}
-function createSequenceNode(id, sequence, throwAt, doneAt) {
-	return createSerovalNode(35, id, throwAt, void 0, void 0, void 0, void 0, sequence, void 0, void 0, void 0, doneAt);
+/** Matches the given validator or `undefined`. */
+function optional(validator) {
+	return (value) => value === void 0 || validator(value);
 }
 /**
-* An opaque reference allows hiding values from the serializer.
+* Matches an object whose declared keys each pass their validator. Extra keys
+* are not checked.
 */
-var OpaqueReference = class {
-	constructor(value, replacement) {
-		this.value = value;
-		this.replacement = replacement;
-	}
-};
+function object(shape) {
+	const keys = Object.keys(shape);
+	return (value) => {
+		if (value == null || typeof value !== "object") return false;
+		for (let i = 0, len = keys.length; i < len; i++) {
+			const key = keys[i];
+			if (!shape[key](Reflect.get(value, key))) return false;
+		}
+		return true;
+	};
+}
+// node_modules/seroval/dist/shared-DJIVyqa9.js
 var PROMISE_CONSTRUCTOR = () => {
 	const resolver = {
 		p: 0,
@@ -4372,7 +3951,7 @@ var PROMISE_FAILURE = (resolver, data) => {
 var SERIALIZED_PROMISE_CONSTRUCTOR = /* @__PURE__ */ PROMISE_CONSTRUCTOR.toString();
 var SERIALIZED_PROMISE_SUCCESS = /* @__PURE__ */ PROMISE_SUCCESS.toString();
 var SERIALIZED_PROMISE_FAILURE = /* @__PURE__ */ PROMISE_FAILURE.toString();
-var STREAM_CONSTRUCTOR = () => {
+var STREAM_CONSTRUCTOR = (live) => {
 	const buffer = [];
 	const listeners = [];
 	let alive = true;
@@ -4380,6 +3959,7 @@ var STREAM_CONSTRUCTOR = () => {
 	let count = 0;
 	const internal = {
 		flush(value, mode, x) {
+			live > 1 || buffer.push(value);
 			for (x = 0; x < count; x++) {
 				const listener = listeners[x];
 				if (listener) listener[mode](value);
@@ -4393,6 +3973,7 @@ var STREAM_CONSTRUCTOR = () => {
 			}
 		},
 		on(listener, temp = 0) {
+			if (live > 1) throw new Error("Stream consumed");
 			let subscribed = alive;
 			if (alive) {
 				for (temp = 0; temp < count; temp++) if (!listeners[temp]) break;
@@ -4400,6 +3981,10 @@ var STREAM_CONSTRUCTOR = () => {
 				listeners[temp] = listener;
 			}
 			internal.up(listener);
+			if (live) {
+				live = 2;
+				buffer.length = 0;
+			}
 			return () => {
 				if (alive && subscribed) {
 					subscribed = false;
@@ -4416,14 +4001,10 @@ var STREAM_CONSTRUCTOR = () => {
 			return internal.on(listener);
 		},
 		next(value) {
-			if (alive) {
-				buffer.push(value);
-				internal.flush(value, "next");
-			}
+			if (alive) internal.flush(value, "next");
 		},
 		throw(value) {
 			if (alive) {
-				buffer.push(value);
 				internal.flush(value, "throw");
 				alive = false;
 				success = false;
@@ -4432,7 +4013,6 @@ var STREAM_CONSTRUCTOR = () => {
 		},
 		return(value) {
 			if (alive) {
-				buffer.push(value);
 				internal.flush(value, "return");
 				alive = false;
 				success = true;
@@ -4550,9 +4130,298 @@ var ARRAY_BUFFER_CONSTRUCTOR = (b64) => {
 	return arr.buffer;
 };
 var SERIALIZED_ARRAY_BUFFER_CONSTRUCTOR = /* @__PURE__ */ ARRAY_BUFFER_CONSTRUCTOR.toString();
+var SYM_ASYNC_ITERATOR = Symbol.asyncIterator;
+var SYM_HAS_INSTANCE = Symbol.hasInstance;
+var SYM_IS_CONCAT_SPREADABLE = Symbol.isConcatSpreadable;
+var SYM_ITERATOR = Symbol.iterator;
+var SYM_MATCH = Symbol.match;
+var SYM_MATCH_ALL = Symbol.matchAll;
+var SYM_REPLACE = Symbol.replace;
+var SYM_SEARCH = Symbol.search;
+var SYM_SPECIES = Symbol.species;
+var SYM_SPLIT = Symbol.split;
+var SYM_TO_PRIMITIVE = Symbol.toPrimitive;
+var SYM_TO_STRING_TAG = Symbol.toStringTag;
+var SYM_UNSCOPABLES = Symbol.unscopables;
+var TEMPORAL_TYPE_NAME = {
+	[0]: "Instant",
+	[1]: "Duration",
+	[2]: "PlainDate",
+	[3]: "PlainDateTime",
+	[4]: "PlainMonthDay",
+	[5]: "PlainTime",
+	[6]: "PlainYearMonth",
+	[7]: "ZonedDateTime"
+};
+var SYMBOL_REF = {
+	[0]: SYM_ASYNC_ITERATOR,
+	[1]: SYM_HAS_INSTANCE,
+	[2]: SYM_IS_CONCAT_SPREADABLE,
+	[3]: SYM_ITERATOR,
+	[4]: SYM_MATCH,
+	[5]: SYM_MATCH_ALL,
+	[6]: SYM_REPLACE,
+	[7]: SYM_SEARCH,
+	[8]: SYM_SPECIES,
+	[9]: SYM_SPLIT,
+	[10]: SYM_TO_PRIMITIVE,
+	[11]: SYM_TO_STRING_TAG,
+	[12]: SYM_UNSCOPABLES
+};
+function createSymbolStringTable() {
+	const result = {};
+	for (let i = 0; i <= 12; i++) result[i] = SYMBOL_REF[i].description;
+	return result;
+}
+var SYMBOL_STRING = /* @__PURE__ */ createSymbolStringTable();
+function createInverseSymbolTable() {
+	const result = {};
+	for (let i = 0; i <= 12; i++) result[SYMBOL_REF[i]] = i;
+	return result;
+}
+var INV_SYMBOL_REF = /* @__PURE__ */ createInverseSymbolTable();
+var CONSTANT_STRING = {
+	[2]: "!0",
+	[3]: "!1",
+	[1]: "void 0",
+	[0]: "null",
+	[4]: "-0",
+	[5]: "1/0",
+	[6]: "-1/0",
+	[7]: "0/0"
+};
+var CONSTANT_VAL = {
+	[2]: true,
+	[3]: false,
+	[1]: void 0,
+	[0]: null,
+	[4]: -0,
+	[5]: Infinity,
+	[6]: -Infinity,
+	[7]: NaN
+};
+var ERROR_CONSTRUCTOR = {
+	[0]: Error,
+	[1]: EvalError,
+	[2]: RangeError,
+	[3]: ReferenceError,
+	[4]: SyntaxError,
+	[5]: TypeError,
+	[6]: URIError
+};
+function createErrorConstructorStringTable() {
+	const result = {};
+	for (let i = 0; i <= 6; i++) result[i] = ERROR_CONSTRUCTOR[i].name;
+	return result;
+}
+var ERROR_CONSTRUCTOR_STRING = /* @__PURE__ */ createErrorConstructorStringTable();
+var MIN_JSON_STRINGIFY_LENGTH = 64;
+var NEEDS_ESCAPE = /["\\\n\r\b\t\f<\u2028\u2029]/;
+var JSON_ESCAPE_DIFFERENCES = /[\x00-\x07\x0b\x0e-\x1f\ud800-\udfff]/;
+var LESS_THAN = /</g;
+var LINE_SEPARATOR = /\u2028/g;
+var PARAGRAPH_SEPARATOR = /\u2029/g;
+function escapeCharCode(code) {
+	switch (code) {
+		case 34: return "\\\"";
+		case 92: return "\\\\";
+		case 10: return "\\n";
+		case 13: return "\\r";
+		case 8: return "\\b";
+		case 9: return "\\t";
+		case 12: return "\\f";
+		case 60: return "\\x3C";
+		case 8232: return "\\u2028";
+		case 8233: return "\\u2029";
+		default: return;
+	}
+}
+function serializeString(input) {
+	const str = "" + input;
+	if (!NEEDS_ESCAPE.test(str)) return str;
+	if (str.length >= MIN_JSON_STRINGIFY_LENGTH && !JSON_ESCAPE_DIFFERENCES.test(str)) {
+		let result = JSON.stringify(str).slice(1, -1);
+		if (result.includes("<")) result = result.replace(LESS_THAN, "\\x3C");
+		if (result.includes("\u2028")) result = result.replace(LINE_SEPARATOR, "\\u2028");
+		if (result.includes("\u2029")) result = result.replace(PARAGRAPH_SEPARATOR, "\\u2029");
+		return result;
+	}
+	let result = "";
+	let lastPos = 0;
+	let replacement;
+	for (let i = 0, len = str.length; i < len; i++) {
+		replacement = escapeCharCode(str.charCodeAt(i));
+		if (replacement) {
+			result += str.slice(lastPos, i) + replacement;
+			lastPos = i + 1;
+		}
+	}
+	return result + str.slice(lastPos);
+}
+var JSON_COMPATIBLE = /^(?:[^"\\\x00-\x1f]|\\["\\nrbtf])*$/;
+var ESCAPE_SEQUENCE = /(\\\\|\\"|\\n|\\r|\\b|\\t|\\f|\\u2028|\\u2029|\\x3C)/g;
+function deserializeString(str) {
+	if (typeof str !== "string") return str.replace(ESCAPE_SEQUENCE, deserializeString);
+	let index = str.indexOf("\\");
+	if (index === -1) return str;
+	if (JSON_COMPATIBLE.test(str)) return JSON.parse("\"" + str + "\"");
+	let result = "";
+	let lastPos = 0;
+	const last = str.length - 1;
+	while (index !== -1 && index < last) {
+		let replacement;
+		let length = 2;
+		switch (str.charCodeAt(index + 1)) {
+			case 92:
+				replacement = "\\";
+				break;
+			case 34:
+				replacement = "\"";
+				break;
+			case 110:
+				replacement = "\n";
+				break;
+			case 114:
+				replacement = "\r";
+				break;
+			case 98:
+				replacement = "\b";
+				break;
+			case 116:
+				replacement = "	";
+				break;
+			case 102:
+				replacement = "\f";
+				break;
+			case 120:
+				if (str.startsWith("3C", index + 2)) {
+					replacement = "<";
+					length = 4;
+				}
+				break;
+			case 117: if (str.startsWith("2028", index + 2)) {
+				replacement = "\u2028";
+				length = 6;
+			} else if (str.startsWith("2029", index + 2)) {
+				replacement = "\u2029";
+				length = 6;
+			}
+		}
+		if (replacement) {
+			result += str.slice(lastPos, index) + replacement;
+			lastPos = index + length;
+			index = str.indexOf("\\", lastPos);
+		} else index = str.indexOf("\\", index + 1);
+	}
+	return result + str.slice(lastPos);
+}
+var STEP_ERROR_CODES = {
+	parsing: 1,
+	serialization: 2,
+	deserialization: 3
+};
+function getErrorMessageProd(type) {
+	return `Seroval Error (step: ${STEP_ERROR_CODES[type]})`;
+}
+var SerovalError = class extends Error {
+	constructor(type, cause) {
+		super(getErrorMessageProd(type));
+		this.cause = cause;
+	}
+};
+var SerovalParserError = class extends SerovalError {
+	constructor(cause) {
+		super("parsing", cause);
+	}
+};
+var SerovalSerializationError = class extends SerovalError {
+	constructor(cause) {
+		super("serialization", cause);
+	}
+};
+var SerovalDeserializationError = class extends SerovalError {
+	constructor(cause) {
+		super("deserialization", cause);
+	}
+};
+function getSpecificErrorMessage(code) {
+	return `Seroval Error (specific: ${code})`;
+}
+var SerovalUnsupportedTypeError = class extends Error {
+	constructor(value) {
+		super(getSpecificErrorMessage(1));
+		this.value = value;
+	}
+};
+var SerovalUnsupportedNodeError = class extends Error {
+	constructor(node) {
+		super(getSpecificErrorMessage(2));
+	}
+};
+var SerovalMissingPluginError = class extends Error {
+	constructor(tag) {
+		super(getSpecificErrorMessage(3));
+	}
+};
+var SerovalPluginValidationError = class extends Error {
+	constructor(tag, field) {
+		super(getSpecificErrorMessage(13));
+		this.tag = tag;
+		this.field = field;
+	}
+};
+var SerovalMissingInstanceError = class extends Error {
+	constructor(tag) {
+		super(getSpecificErrorMessage(4));
+	}
+};
+var SerovalMissingReferenceForIdError = class extends Error {
+	constructor(id) {
+		super(getSpecificErrorMessage(6));
+	}
+};
+var SerovalUnknownTypedArrayError = class extends Error {
+	constructor(name) {
+		super(getSpecificErrorMessage(7));
+	}
+};
+var SerovalMalformedNodeError = class extends Error {
+	constructor(node) {
+		super(getSpecificErrorMessage(8));
+	}
+};
+var SerovalConflictedNodeIdError = class extends Error {
+	constructor(node) {
+		super(getSpecificErrorMessage(9));
+	}
+};
+var SerovalDepthLimitError = class extends Error {
+	constructor(limit) {
+		super(getSpecificErrorMessage(10));
+	}
+};
+var REFERENCES_KEY = "__SEROVAL_REFS__";
+var GLOBAL_CONTEXT_R = `self.\$R`;
+function getCrossReferenceHeader(id) {
+	if (id == null) return `${GLOBAL_CONTEXT_R}=${GLOBAL_CONTEXT_R}||[]`;
+	return `(${GLOBAL_CONTEXT_R}=${GLOBAL_CONTEXT_R}||{})["${serializeString(id)}"]=[]`;
+}
+var REFERENCE = /* @__PURE__ */ new Map();
+var INV_REFERENCE = /* @__PURE__ */ new Map();
+function hasReference(id) {
+	return INV_REFERENCE.has(id);
+}
+function getReferenceID(value) {
+	return REFERENCE.get(value);
+}
+function getReference(id) {
+	if (hasReference(id)) return INV_REFERENCE.get(id);
+	throw new SerovalMissingReferenceForIdError(id);
+}
 /**
 * An internal class rather than a tagged POJO: identity is checked with
-* `instanceof`, which untrusted input cannot forge (the class is not exported).
+* `instanceof`, which untrusted input cannot forge. The class is exported
+* because bundlers cannot drop an unexported top-level class.
 * The eval-based `deserialize` path still rebuilds a `{__SEROVAL_SEQUENCE__…}`
 * POJO from embedded source - it has no access to this class - so a value read
 * back through `deserialize` is not an instance and, by design, is not treated
@@ -4576,7 +4445,7 @@ function createSequenceFromIterable(source) {
 	let throwsAt = -1;
 	let doneAt = -1;
 	const iterator = source[SYM_ITERATOR]();
-	while (true) try {
+	for (;;) try {
 		const value = iterator.next();
 		values.push(value.value);
 		if (value.done) {
@@ -4591,34 +4460,18 @@ function createSequenceFromIterable(source) {
 	}
 	return createSequence(values, throwsAt, doneAt);
 }
-var createIterator = ITERATOR_CONSTRUCTOR(SYM_ITERATOR);
+var createIterator = /* @__PURE__ */ ITERATOR_CONSTRUCTOR(SYM_ITERATOR);
 function sequenceToIterator(sequence) {
 	return createIterator(sequence);
 }
-var ITERATOR = {};
-var ASYNC_ITERATOR = {};
-/**
-* Placeholder references
-*/
-var SPECIAL_REFS = {
-	[0]: {},
-	[1]: {},
-	[2]: {},
-	[3]: {},
-	[4]: {},
-	[5]: {}
-};
-var SPECIAL_REF_STRING = {
-	[0]: "[]",
-	[1]: SERIALIZED_PROMISE_CONSTRUCTOR,
-	[2]: SERIALIZED_PROMISE_SUCCESS,
-	[3]: SERIALIZED_PROMISE_FAILURE,
-	[4]: SERIALIZED_STREAM_CONSTRUCTOR,
-	[5]: SERIALIZED_ARRAY_BUFFER_CONSTRUCTOR
-};
+var BRAND = /* @__PURE__ */ Symbol("LiveStream");
+function isLiveStream(value) {
+	return value != null && value[BRAND] === true;
+}
 /**
 * An internal class rather than a tagged POJO: identity is checked with
-* `instanceof`, which untrusted input cannot forge (the class is not exported).
+* `instanceof`, which untrusted input cannot forge. The class is exported
+* because bundlers cannot drop an unexported top-level class.
 *
 * The behavior is intentionally duplicated from `STREAM_CONSTRUCTOR`. That
 * constructor's source is embedded verbatim into the eval-based `deserialize`
@@ -4628,18 +4481,17 @@ var SPECIAL_REF_STRING = {
 * implementations in sync.
 */
 var Stream = class {
-	constructor() {
+	constructor(live) {
 		this.buffer = [];
 		this.listeners = [];
 		this.alive = true;
 		this.success = false;
 		this.count = 0;
+		this.live = live;
 	}
 	flush(value, mode) {
-		for (let x = 0; x < this.count; x++) {
-			var _this$listeners$x;
-			(_this$listeners$x = this.listeners[x]) === null || _this$listeners$x === void 0 || _this$listeners$x[mode](value);
-		}
+		this.live > 1 || this.buffer.push(value);
+		for (let x = 0; x < this.count; x++) this.listeners[x]?.[mode](value);
 	}
 	replay(listener) {
 		for (let x = 0, z = this.buffer.length; x < z; x++) {
@@ -4649,6 +4501,7 @@ var Stream = class {
 		}
 	}
 	on(listener) {
+		if (this.live > 1) throw new Error("Stream consumed");
 		let subscribed = this.alive;
 		let temp = 0;
 		if (subscribed) {
@@ -4657,6 +4510,10 @@ var Stream = class {
 			this.listeners[temp] = listener;
 		}
 		this.replay(listener);
+		if (this.live) {
+			this.live = 2;
+			this.buffer.length = 0;
+		}
 		return () => {
 			if (this.alive && subscribed) {
 				subscribed = false;
@@ -4666,15 +4523,25 @@ var Stream = class {
 			}
 		};
 	}
+	/**
+	* Returns the events of a stream that has ended, without subscribing, so a
+	* live receiver is not consumed. The last value is the `return` or `throw`
+	* value. Returns `undefined` while the stream is open, or when a live
+	* receiver was already consumed and has no events left.
+	* @internal
+	*/
+	endedEvents() {
+		if (this.alive || this.live > 1) return void 0;
+		return {
+			values: this.buffer.slice(),
+			success: this.success
+		};
+	}
 	next(value) {
-		if (this.alive) {
-			this.buffer.push(value);
-			this.flush(value, "next");
-		}
+		if (this.alive) this.flush(value, "next");
 	}
 	throw(value) {
 		if (this.alive) {
-			this.buffer.push(value);
 			this.flush(value, "throw");
 			this.alive = false;
 			this.success = false;
@@ -4683,7 +4550,6 @@ var Stream = class {
 	}
 	return(value) {
 		if (this.alive) {
-			this.buffer.push(value);
 			this.flush(value, "return");
 			this.alive = false;
 			this.success = true;
@@ -4692,405 +4558,14 @@ var Stream = class {
 	}
 };
 function isStream(value) {
-	return value instanceof Stream;
+	return value instanceof Stream || isLiveStream(value);
 }
 function createStream() {
 	return new Stream();
 }
-function createStreamFromAsyncIterable(iterable, cleanups) {
-	const stream = createStream();
-	const iterator = iterable[SYM_ASYNC_ITERATOR]();
-	let cancelled = false;
-	let done = false;
-	cleanups === null || cleanups === void 0 || cleanups.push(() => {
-		if (!(done || cancelled)) {
-			cancelled = true;
-			Promise.resolve().then(() => {
-				var _iterator$return;
-				return (_iterator$return = iterator.return) === null || _iterator$return === void 0 ? void 0 : _iterator$return.call(iterator);
-			}).catch(() => {});
-		}
-	});
-	async function push() {
-		try {
-			while (!cancelled) {
-				const value = await iterator.next();
-				if (cancelled) return;
-				if (value.done) {
-					done = true;
-					stream.return(value.value);
-					break;
-				}
-				stream.next(value.value);
-			}
-		} catch (error) {
-			done = true;
-			if (!cancelled) stream.throw(error);
-		}
-	}
-	push().catch(() => {});
-	return stream;
-}
-var createAsyncIterable = ASYNC_ITERATOR_CONSTRUCTOR(SYM_ASYNC_ITERATOR, PROMISE_CONSTRUCTOR);
+var createAsyncIterable = /* @__PURE__ */ ASYNC_ITERATOR_CONSTRUCTOR(SYM_ASYNC_ITERATOR, PROMISE_CONSTRUCTOR);
 function streamToAsyncIterable(stream) {
 	return createAsyncIterable(stream);
-}
-async function promiseToResult(current) {
-	try {
-		return [1, await current];
-	} catch (e) {
-		return [0, e];
-	}
-}
-function createBaseParserContext(mode, options) {
-	var _options$compactArray;
-	return {
-		plugins: options.plugins,
-		mode,
-		marked: /* @__PURE__ */ new Set(),
-		features: 127 ^ (options.disabledFeatures || 0),
-		refs: options.refs || /* @__PURE__ */ new Map(),
-		depthLimit: options.depthLimit || 1e3,
-		compactArrayBufferViews: (_options$compactArray = options.compactArrayBufferViews) !== null && _options$compactArray !== void 0 ? _options$compactArray : false
-	};
-}
-/**
-* Ensures that the value (based on an identifier) has been visited by the parser.
-* @param ctx
-* @param id
-*/
-function markParserRef(ctx, id) {
-	ctx.marked.add(id);
-}
-/**
-* Creates an identifier for a value
-* @param ctx
-* @param current
-*/
-function createIndexForValue(ctx, current) {
-	const id = ctx.refs.size;
-	ctx.refs.set(current, id);
-	return id;
-}
-function getNodeForIndexedValue(ctx, current) {
-	const registeredId = ctx.refs.get(current);
-	if (registeredId != null) {
-		markParserRef(ctx, registeredId);
-		return {
-			type: 1,
-			value: createIndexedValueNode(registeredId)
-		};
-	}
-	return {
-		type: 0,
-		value: createIndexForValue(ctx, current)
-	};
-}
-function getReferenceNode(ctx, current) {
-	const indexed = getNodeForIndexedValue(ctx, current);
-	if (indexed.type === 1) return indexed;
-	if (hasReferenceID(current)) return {
-		type: 2,
-		value: createReferenceNode(indexed.value, current)
-	};
-	return indexed;
-}
-/**
-* Parsing methods
-*/
-function parseWellKnownSymbol(ctx, current) {
-	const ref = getReferenceNode(ctx, current);
-	if (ref.type !== 0) return ref.value;
-	if (current in INV_SYMBOL_REF) return createWKSymbolNode(ref.value, current);
-	throw new SerovalUnsupportedTypeError(current);
-}
-function parseSpecialReference(ctx, ref) {
-	const result = getNodeForIndexedValue(ctx, SPECIAL_REFS[ref]);
-	if (result.type === 1) return result.value;
-	return createSerovalNode(26, result.value, ref, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0);
-}
-function parseIteratorFactory(ctx) {
-	const result = getNodeForIndexedValue(ctx, ITERATOR);
-	if (result.type === 1) return result.value;
-	return createSerovalNode(27, result.value, void 0, void 0, void 0, void 0, void 0, void 0, parseWellKnownSymbol(ctx, SYM_ITERATOR), void 0, void 0, void 0);
-}
-function parseAsyncIteratorFactory(ctx) {
-	const result = getNodeForIndexedValue(ctx, ASYNC_ITERATOR);
-	if (result.type === 1) return result.value;
-	return createSerovalNode(29, result.value, void 0, void 0, void 0, void 0, void 0, [parseSpecialReference(ctx, 1), parseWellKnownSymbol(ctx, SYM_ASYNC_ITERATOR)], void 0, void 0, void 0, void 0);
-}
-function createObjectNode(id, current, empty, record) {
-	return createSerovalNode(empty ? 11 : 10, id, void 0, void 0, void 0, record, void 0, void 0, void 0, void 0, getObjectFlag(current), void 0);
-}
-function createMapNode(ctx, id, k, v) {
-	return createSerovalNode(8, id, void 0, void 0, void 0, void 0, {
-		k,
-		v
-	}, void 0, parseSpecialReference(ctx, 0), void 0, void 0, void 0);
-}
-function createPromiseConstructorNode(ctx, id, resolver) {
-	return createSerovalNode(22, id, resolver, void 0, void 0, void 0, void 0, void 0, parseSpecialReference(ctx, 1), void 0, void 0, void 0);
-}
-function getArrayBufferView(ctx, current) {
-	if (!ctx.compactArrayBufferViews) return current;
-	const buffer = new Uint8Array(current.buffer, current.byteOffset, current.byteLength).slice().buffer;
-	const Constructor = current.constructor;
-	return new Constructor(buffer);
-}
-function encodeArrayBuffer(current) {
-	if (typeof Buffer !== "undefined") return Buffer.from(current).toString("base64");
-	const bytes = new Uint8Array(current);
-	if (typeof bytes.toBase64 === "function") return bytes.toBase64();
-	let result = "";
-	for (let i = 0, len = bytes.length; i < len; i++) result += String.fromCharCode(bytes[i]);
-	return btoa(result);
-}
-function createArrayBufferNode(ctx, id, current) {
-	return createSerovalNode(19, id, encodeArrayBuffer(current), void 0, void 0, void 0, void 0, void 0, parseSpecialReference(ctx, 5), void 0, void 0, void 0);
-}
-function createAsyncParserContext(mode, options) {
-	return {
-		base: createBaseParserContext(mode, options),
-		child: void 0
-	};
-}
-var AsyncParsePluginContext = class {
-	constructor(_p, depth) {
-		this._p = _p;
-		this.depth = depth;
-	}
-	parse(current) {
-		return parseAsync(this._p, this.depth, current);
-	}
-};
-async function parseItems$1(ctx, depth, current) {
-	const nodes = [];
-	for (let i = 0, len = current.length; i < len; i++) if (i in current) nodes[i] = await parseAsync(ctx, depth, current[i]);
-	else nodes[i] = 0;
-	return nodes;
-}
-async function parseArray$1(ctx, depth, id, current) {
-	return createArrayNode(id, current, await parseItems$1(ctx, depth, current));
-}
-async function parseProperties$1(ctx, depth, properties) {
-	const entries = Object.entries(properties);
-	const keyNodes = [];
-	const valueNodes = [];
-	for (let i = 0, len = entries.length; i < len; i++) {
-		keyNodes.push(serializeString(entries[i][0]));
-		valueNodes.push(await parseAsync(ctx, depth, entries[i][1]));
-	}
-	if (SYM_ITERATOR in properties) {
-		keyNodes.push(parseWellKnownSymbol(ctx.base, SYM_ITERATOR));
-		valueNodes.push(createIteratorFactoryInstanceNode(parseIteratorFactory(ctx.base), await parseAsync(ctx, depth, createSequenceFromIterable(properties))));
-	}
-	if (SYM_ASYNC_ITERATOR in properties) {
-		keyNodes.push(parseWellKnownSymbol(ctx.base, SYM_ASYNC_ITERATOR));
-		valueNodes.push(createAsyncIteratorFactoryInstanceNode(parseAsyncIteratorFactory(ctx.base), await parseAsync(ctx, depth, createStreamFromAsyncIterable(properties))));
-	}
-	if (SYM_TO_STRING_TAG in properties) {
-		keyNodes.push(parseWellKnownSymbol(ctx.base, SYM_TO_STRING_TAG));
-		valueNodes.push(createStringNode(properties[SYM_TO_STRING_TAG]));
-	}
-	if (SYM_IS_CONCAT_SPREADABLE in properties) {
-		keyNodes.push(parseWellKnownSymbol(ctx.base, SYM_IS_CONCAT_SPREADABLE));
-		valueNodes.push(properties[SYM_IS_CONCAT_SPREADABLE] ? TRUE_NODE : FALSE_NODE);
-	}
-	return {
-		k: keyNodes,
-		v: valueNodes
-	};
-}
-async function parsePlainObject$1(ctx, depth, id, current, empty) {
-	return createObjectNode(id, current, empty, await parseProperties$1(ctx, depth, current));
-}
-async function parseBoxed$1(ctx, depth, id, current) {
-	return createBoxedNode(id, await parseAsync(ctx, depth, current.valueOf()));
-}
-async function parseTypedArray$1(ctx, depth, id, current) {
-	current = getArrayBufferView(ctx.base, current);
-	return createTypedArrayNode(id, current, await parseAsync(ctx, depth, current.buffer));
-}
-async function parseBigIntTypedArray$1(ctx, depth, id, current) {
-	current = getArrayBufferView(ctx.base, current);
-	return createBigIntTypedArrayNode(id, current, await parseAsync(ctx, depth, current.buffer));
-}
-async function parseDataView$1(ctx, depth, id, current) {
-	current = getArrayBufferView(ctx.base, current);
-	return createDataViewNode(id, current, await parseAsync(ctx, depth, current.buffer));
-}
-async function parseError$1(ctx, depth, id, current) {
-	const options = getErrorOptions(current, ctx.base.features);
-	return createErrorNode(id, current, options ? await parseProperties$1(ctx, depth, options) : void 0);
-}
-async function parseAggregateError$1(ctx, depth, id, current) {
-	const options = getErrorOptions(current, ctx.base.features);
-	return createAggregateErrorNode(id, current, options ? await parseProperties$1(ctx, depth, options) : void 0);
-}
-async function parseMap$1(ctx, depth, id, current) {
-	const keyNodes = [];
-	const valueNodes = [];
-	for (const [key, value] of current.entries()) {
-		keyNodes.push(await parseAsync(ctx, depth, key));
-		valueNodes.push(await parseAsync(ctx, depth, value));
-	}
-	return createMapNode(ctx.base, id, keyNodes, valueNodes);
-}
-async function parseSet$1(ctx, depth, id, current) {
-	const items = [];
-	for (const item of current.keys()) items.push(await parseAsync(ctx, depth, item));
-	return createSetNode(id, items);
-}
-async function parsePlugin$1(ctx, depth, id, current) {
-	const currentPlugins = ctx.base.plugins;
-	if (currentPlugins) for (let i = 0, len = currentPlugins.length; i < len; i++) {
-		const plugin = currentPlugins[i];
-		if (plugin.parse.async && plugin.test(current)) return createPluginNode(id, plugin.tag, await plugin.parse.async(current, new AsyncParsePluginContext(ctx, depth), { id }));
-	}
-}
-async function parsePromise$1(ctx, depth, id, current) {
-	const [status, result] = await promiseToResult(current);
-	return createSerovalNode(12, id, status, void 0, void 0, void 0, void 0, void 0, await parseAsync(ctx, depth, result), void 0, void 0, void 0);
-}
-function parseStreamHandle(depth, id, current, resolve, reject) {
-	const sequence = [];
-	const cleanup = current.on({
-		next: (value) => {
-			markParserRef(this.base, id);
-			parseAsync(this, depth, value).then((data) => {
-				sequence.push(createStreamNextNode(id, data));
-			}, (data) => {
-				reject(data);
-				cleanup();
-			});
-		},
-		throw: (value) => {
-			markParserRef(this.base, id);
-			parseAsync(this, depth, value).then((data) => {
-				sequence.push(createStreamThrowNode(id, data));
-				resolve(sequence);
-				cleanup();
-			}, (data) => {
-				reject(data);
-				cleanup();
-			});
-		},
-		return: (value) => {
-			markParserRef(this.base, id);
-			parseAsync(this, depth, value).then((data) => {
-				sequence.push(createStreamReturnNode(id, data));
-				resolve(sequence);
-				cleanup();
-			}, (data) => {
-				reject(data);
-				cleanup();
-			});
-		}
-	});
-}
-async function parseStream$1(ctx, depth, id, current) {
-	return createStreamConstructorNode(id, parseSpecialReference(ctx.base, 4), await new Promise(parseStreamHandle.bind(ctx, depth, id, current)));
-}
-async function parseSequence$1(ctx, depth, id, current) {
-	const nodes = [];
-	for (let i = 0, len = current.v.length; i < len; i++) nodes[i] = await parseAsync(ctx, depth, current.v[i]);
-	return createSequenceNode(id, nodes, current.t, current.d);
-}
-async function parseObjectAsync(ctx, depth, id, current) {
-	if (Array.isArray(current)) return parseArray$1(ctx, depth, id, current);
-	if (isStream(current)) return parseStream$1(ctx, depth, id, current);
-	if (isSequence(current)) return parseSequence$1(ctx, depth, id, current);
-	let currentClass = current.constructor;
-	if (currentClass !== void 0 && typeof currentClass !== "function") {
-		const proto = Object.getPrototypeOf(current);
-		currentClass = proto === null ? void 0 : proto.constructor;
-	}
-	if (currentClass === OpaqueReference) return parseAsync(ctx, depth, current.replacement);
-	const parsed = await parsePlugin$1(ctx, depth, id, current);
-	if (parsed) return parsed;
-	switch (currentClass) {
-		case Object: return parsePlainObject$1(ctx, depth, id, current, false);
-		case void 0: return parsePlainObject$1(ctx, depth, id, current, true);
-		case Date: return createDateNode(id, current);
-		case Error:
-		case EvalError:
-		case RangeError:
-		case ReferenceError:
-		case SyntaxError:
-		case TypeError:
-		case URIError: return parseError$1(ctx, depth, id, current);
-		case Number:
-		case Boolean:
-		case String:
-		case BigInt: return parseBoxed$1(ctx, depth, id, current);
-		case ArrayBuffer: return createArrayBufferNode(ctx.base, id, current);
-		case Int8Array:
-		case Int16Array:
-		case Int32Array:
-		case Uint8Array:
-		case Uint16Array:
-		case Uint32Array:
-		case Uint8ClampedArray:
-		case Float32Array:
-		case Float64Array: return parseTypedArray$1(ctx, depth, id, current);
-		case DataView: return parseDataView$1(ctx, depth, id, current);
-		case Map: return parseMap$1(ctx, depth, id, current);
-		case Set: return parseSet$1(ctx, depth, id, current);
-	}
-	if (currentClass === Promise || current instanceof Promise) return parsePromise$1(ctx, depth, id, current);
-	const currentFeatures = ctx.base.features;
-	if (currentFeatures & 32 && currentClass === RegExp) return createRegExpNode(id, current);
-	if (currentFeatures & 16) switch (currentClass) {
-		case BigInt64Array:
-		case BigUint64Array: return parseBigIntTypedArray$1(ctx, depth, id, current);
-	}
-	if (currentFeatures & 1 && typeof AggregateError !== "undefined" && (currentClass === AggregateError || current instanceof AggregateError)) return parseAggregateError$1(ctx, depth, id, current);
-	if (currentFeatures & 64 && typeof Temporal !== "undefined") switch (currentClass) {
-		case Temporal.Instant: return createTemporalNode(id, 0, current);
-		case Temporal.Duration: return createTemporalNode(id, 1, current);
-		case Temporal.PlainDate: return createTemporalNode(id, 2, current);
-		case Temporal.PlainDateTime: return createTemporalNode(id, 3, current);
-		case Temporal.PlainMonthDay: return createTemporalNode(id, 4, current);
-		case Temporal.PlainTime: return createTemporalNode(id, 5, current);
-		case Temporal.PlainYearMonth: return createTemporalNode(id, 6, current);
-		case Temporal.ZonedDateTime: return createTemporalNode(id, 7, current);
-	}
-	if (current instanceof Error) return parseError$1(ctx, depth, id, current);
-	if (SYM_ITERATOR in current || SYM_ASYNC_ITERATOR in current) return parsePlainObject$1(ctx, depth, id, current, !!currentClass);
-	throw new SerovalUnsupportedTypeError(current);
-}
-async function parseFunctionAsync(ctx, depth, current) {
-	const ref = getReferenceNode(ctx.base, current);
-	if (ref.type !== 0) return ref.value;
-	const plugin = await parsePlugin$1(ctx, depth, ref.value, current);
-	if (plugin) return plugin;
-	throw new SerovalUnsupportedTypeError(current);
-}
-async function parseAsync(ctx, depth, current) {
-	if (depth >= ctx.base.depthLimit) throw new SerovalDepthLimitError(ctx.base.depthLimit);
-	switch (typeof current) {
-		case "boolean": return current ? TRUE_NODE : FALSE_NODE;
-		case "undefined": return UNDEFINED_NODE;
-		case "string": return createStringNode(current);
-		case "number": return createNumberNode(current);
-		case "bigint": return createBigIntNode(current);
-		case "object":
-			if (current) {
-				const ref = getReferenceNode(ctx.base, current);
-				return ref.type === 0 ? await parseObjectAsync(ctx, depth + 1, ref.value, current) : ref.value;
-			}
-			return NULL_NODE;
-		case "symbol": return parseWellKnownSymbol(ctx.base, current);
-		case "function": return parseFunctionAsync(ctx, depth, current);
-		default: throw new SerovalUnsupportedTypeError(current);
-	}
-}
-async function parseTopAsync(ctx, current) {
-	try {
-		return await parseAsync(ctx, 0, current);
-	} catch (error) {
-		throw error instanceof SerovalParserError ? error : new SerovalParserError(error);
-	}
 }
 function createPlugin(plugin) {
 	return plugin;
@@ -5104,1580 +4579,57 @@ function dedupePlugins(deduped, plugins) {
 		}
 	}
 }
+var RESOLVED_PLUGINS = /* @__PURE__ */ new WeakMap();
+function matchResolved(resolved, plugins, added) {
+	for (let i = 0, len = plugins.length; i < len; i++) {
+		const current = plugins[i];
+		if (current === resolved[added]) {
+			added++;
+			if (current.extends) {
+				added = matchResolved(resolved, current.extends, added);
+				if (added === -1) return -1;
+			}
+		} else {
+			const index = resolved.indexOf(current);
+			if (index === -1 || index >= added) return -1;
+		}
+	}
+	return added;
+}
 function resolvePlugins(plugins) {
 	if (plugins) {
+		const cached = RESOLVED_PLUGINS.get(plugins);
+		if (cached && matchResolved(cached, plugins, 0) === cached.length) return cached;
 		const deduped = /* @__PURE__ */ new Set();
 		dedupePlugins(deduped, plugins);
-		return [...deduped];
+		const resolved = [...deduped];
+		RESOLVED_PLUGINS.set(plugins, resolved);
+		return resolved;
 	}
-}
-function getTypedArrayConstructor(name) {
-	switch (name) {
-		case "Int8Array": return Int8Array;
-		case "Int16Array": return Int16Array;
-		case "Int32Array": return Int32Array;
-		case "Uint8Array": return Uint8Array;
-		case "Uint16Array": return Uint16Array;
-		case "Uint32Array": return Uint32Array;
-		case "Uint8ClampedArray": return Uint8ClampedArray;
-		case "Float32Array": return Float32Array;
-		case "Float64Array": return Float64Array;
-		case "BigInt64Array": return BigInt64Array;
-		case "BigUint64Array": return BigUint64Array;
-		default: throw new SerovalUnknownTypedArrayError(name);
-	}
-}
-function isValidKey(key) {
-	switch (key) {
-		case "constructor":
-		case "__proto__":
-		case "prototype":
-		case "__defineGetter__":
-		case "__defineSetter__":
-		case "__lookupGetter__":
-		case "__lookupSetter__": return false;
-		default: return true;
-	}
-}
-function isValidSymbol(symbol) {
-	switch (symbol) {
-		case SYM_ASYNC_ITERATOR:
-		case SYM_IS_CONCAT_SPREADABLE:
-		case SYM_TO_STRING_TAG:
-		case SYM_ITERATOR: return true;
-		default: return false;
-	}
-}
-var DEFAULT_MAX_BASE64_LENGTH = 1e6;
-var MIN_NATIVE_BASE64_LENGTH = 512;
-var MAX_BIGINT_LENGTH = 1e4;
-var MAX_REGEXP_SOURCE_LENGTH = 2e4;
-function applyObjectFlag(obj, flag) {
-	switch (flag) {
-		case 3: return Object.freeze(obj);
-		case 1: return Object.preventExtensions(obj);
-		case 2: return Object.seal(obj);
-		default: return obj;
-	}
-}
-var DEFAULT_DEPTH_LIMIT = 1e3;
-function createBaseDeserializerContext(mode, options) {
-	var _options$maxBase64Len, _options$features;
-	const maxBase64Length = (_options$maxBase64Len = options.maxBase64Length) !== null && _options$maxBase64Len !== void 0 ? _options$maxBase64Len : DEFAULT_MAX_BASE64_LENGTH;
-	if (!Number.isSafeInteger(maxBase64Length) || maxBase64Length < 0) throw new RangeError("maxBase64Length must be a non-negative safe integer");
-	const refs = options.refs || /* @__PURE__ */ new Map();
-	if (!("types" in refs)) Object.assign(refs, { types: /* @__PURE__ */ new Map() });
-	return {
-		mode,
-		plugins: options.plugins,
-		refs,
-		features: (_options$features = options.features) !== null && _options$features !== void 0 ? _options$features : 127 ^ (options.disabledFeatures || 0),
-		depthLimit: options.depthLimit || DEFAULT_DEPTH_LIMIT,
-		maxBase64Length
-	};
-}
-function createVanillaDeserializerContext(options) {
-	return {
-		mode: 1,
-		base: createBaseDeserializerContext(1, options),
-		child: void 0,
-		state: { marked: new Set(options.markedRefs) }
-	};
-}
-var DeserializePluginContext = class {
-	constructor(_p, depth) {
-		this._p = _p;
-		this.depth = depth;
-	}
-	deserialize(node) {
-		return deserialize$1(this._p, this.depth, node);
-	}
-};
-function guardIndexedValue(ctx, id) {
-	if (id < 0 || !Number.isFinite(id) || !Number.isInteger(id)) throw new SerovalMalformedNodeError({
-		t: 4,
-		i: id
-	});
-	if (ctx.refs.has(id)) throw new Error("Conflicted ref id: " + id);
-}
-function isThennable(value) {
-	return !!value && (typeof value === "object" || typeof value === "function") && "then" in value && typeof value.then === "function";
-}
-function assignIndexedValueVanilla(ctx, id, value) {
-	guardIndexedValue(ctx.base, id);
-	if (ctx.state.marked.has(id)) ctx.base.refs.set(id, value);
-	return value;
-}
-function assignIndexedValueCross(ctx, id, value) {
-	guardIndexedValue(ctx.base, id);
-	ctx.base.refs.set(id, value);
-	return value;
-}
-function assignIndexedValue$1(ctx, id, value) {
-	return ctx.mode === 1 ? assignIndexedValueVanilla(ctx, id, value) : assignIndexedValueCross(ctx, id, value);
-}
-function deserializeKnownValue(node, record, key) {
-	if (Object.hasOwn(record, key)) return record[key];
-	throw new SerovalMalformedNodeError(node);
-}
-function deserializeReference(ctx, node) {
-	return assignIndexedValue$1(ctx, node.i, getReference(deserializeString(node.s)));
-}
-function validateNodeList(node, list) {
-	if (!Array.isArray(list)) throw new SerovalMalformedNodeError(node);
-}
-function deserializeArray(ctx, depth, node) {
-	const items = node.a;
-	validateNodeList(node, items);
-	const len = items.length;
-	const result = assignIndexedValue$1(ctx, node.i, new Array(len));
-	for (let i = 0, item; i < len; i++) {
-		item = items[i];
-		if (item) result[i] = deserialize$1(ctx, depth, item);
-	}
-	applyObjectFlag(result, node.o);
-	return result;
-}
-function assignStringProperty(object, key, value) {
-	if (isValidKey(key)) object[key] = value;
-	else Object.defineProperty(object, key, {
-		value,
-		configurable: true,
-		enumerable: true,
-		writable: true
-	});
-}
-function assignProperty(ctx, depth, object, key, value) {
-	if (typeof key === "string") assignStringProperty(object, deserializeString(key), deserialize$1(ctx, depth, value));
-	else {
-		const actual = deserialize$1(ctx, depth, key);
-		switch (typeof actual) {
-			case "string":
-				assignStringProperty(object, actual, deserialize$1(ctx, depth, value));
-				break;
-			case "symbol":
-				if (isValidSymbol(actual)) object[actual] = deserialize$1(ctx, depth, value);
-				break;
-			default: throw new SerovalMalformedNodeError(key);
-		}
-	}
-}
-function assignNodeType(ctx, id, type) {
-	ctx.base.refs.types.set(id, type);
-}
-function validateNodeType(ctx, node, id, type) {
-	if (ctx.base.refs.types.get(id) !== type) throw new SerovalMalformedNodeError(node);
-}
-function deserializeProperties(ctx, depth, node, result) {
-	const keys = node.k;
-	validateNodeList(node, keys);
-	validateNodeList(node, node.v);
-	if (keys.length > 0) for (let i = 0, vals = node.v, len = keys.length; i < len; i++) assignProperty(ctx, depth, result, keys[i], vals[i]);
-	return result;
-}
-function deserializeObject(ctx, depth, node) {
-	const result = assignIndexedValue$1(ctx, node.i, node.t === 10 ? {} : Object.create(null));
-	deserializeProperties(ctx, depth, node.p, result);
-	applyObjectFlag(result, node.o);
-	return result;
-}
-function deserializeDate(ctx, node) {
-	return assignIndexedValue$1(ctx, node.i, new Date(node.s));
-}
-function deserializeTemporal(ctx, node) {
-	if (!(ctx.base.features & 64)) throw new SerovalUnsupportedNodeError(node);
-	let value;
-	switch (node.c) {
-		case 0:
-			value = Temporal.Instant.from(node.s);
-			break;
-		case 1:
-			value = Temporal.Duration.from(node.s);
-			break;
-		case 2:
-			value = Temporal.PlainDate.from(node.s);
-			break;
-		case 3:
-			value = Temporal.PlainDateTime.from(node.s);
-			break;
-		case 4:
-			value = Temporal.PlainMonthDay.from(node.s);
-			break;
-		case 5:
-			value = Temporal.PlainTime.from(node.s);
-			break;
-		case 6:
-			value = Temporal.PlainYearMonth.from(node.s);
-			break;
-		case 7:
-			value = Temporal.ZonedDateTime.from(node.s);
-			break;
-		default: throw new SerovalMalformedNodeError(node);
-	}
-	return assignIndexedValue$1(ctx, node.i, value);
-}
-function deserializeRegExp(ctx, node) {
-	if (ctx.base.features & 32) {
-		const source = deserializeString(node.c);
-		if (source.length > MAX_REGEXP_SOURCE_LENGTH) throw new SerovalMalformedNodeError(node);
-		return assignIndexedValue$1(ctx, node.i, new RegExp(source, node.m));
-	}
-	throw new SerovalUnsupportedNodeError(node);
-}
-function deserializeSet(ctx, depth, node) {
-	const result = assignIndexedValue$1(ctx, node.i, /* @__PURE__ */ new Set());
-	validateNodeList(node, node.a);
-	for (let i = 0, items = node.a, len = items.length; i < len; i++) result.add(deserialize$1(ctx, depth, items[i]));
-	return result;
-}
-function deserializeMap(ctx, depth, node) {
-	const result = assignIndexedValue$1(ctx, node.i, /* @__PURE__ */ new Map());
-	validateNodeList(node, node.e.k);
-	validateNodeList(node, node.e.v);
-	for (let i = 0, keys = node.e.k, vals = node.e.v, len = keys.length; i < len; i++) result.set(deserialize$1(ctx, depth, keys[i]), deserialize$1(ctx, depth, vals[i]));
-	return result;
-}
-function deserializeArrayBuffer(ctx, node) {
-	if (typeof node.s !== "string") throw new SerovalMalformedNodeError(node);
-	if (node.s.length > ctx.base.maxBase64Length) throw new RangeError("ArrayBuffer exceeds maxBase64Length (" + ctx.base.maxBase64Length + ")");
-	const source = deserializeString(node.s);
-	let buffer;
-	if (source.length < MIN_NATIVE_BASE64_LENGTH || typeof Buffer === "undefined") buffer = ARRAY_BUFFER_CONSTRUCTOR(source);
-	else {
-		const decoded = atob(source);
-		buffer = new ArrayBuffer(decoded.length);
-		Buffer.from(buffer).write(decoded, "latin1");
-	}
-	return assignIndexedValue$1(ctx, node.i, buffer);
-}
-function deserializeTypedArray(ctx, depth, node) {
-	var _node$b;
-	const construct = getTypedArrayConstructor(node.c);
-	const source = deserialize$1(ctx, depth, node.f);
-	if (!(source instanceof ArrayBuffer)) throw new SerovalMalformedNodeError(node);
-	const offset = (_node$b = node.b) !== null && _node$b !== void 0 ? _node$b : 0;
-	if (offset < 0 || offset > source.byteLength) throw new SerovalMalformedNodeError(node);
-	return assignIndexedValue$1(ctx, node.i, new construct(source, offset, node.l));
-}
-function deserializeDataView(ctx, depth, node) {
-	var _node$b2;
-	const source = deserialize$1(ctx, depth, node.f);
-	if (!(source instanceof ArrayBuffer)) throw new SerovalMalformedNodeError(node);
-	const offset = (_node$b2 = node.b) !== null && _node$b2 !== void 0 ? _node$b2 : 0;
-	if (offset < 0 || offset > source.byteLength) throw new SerovalMalformedNodeError(node);
-	return assignIndexedValue$1(ctx, node.i, new DataView(source, offset, node.l));
-}
-function deserializeDictionary(ctx, depth, node, result) {
-	if (node.p) {
-		const fields = deserializeProperties(ctx, depth, node.p, {});
-		Object.defineProperties(result, Object.getOwnPropertyDescriptors(fields));
-	}
-	return result;
-}
-function deserializeAggregateError(ctx, depth, node) {
-	return deserializeDictionary(ctx, depth, node, assignIndexedValue$1(ctx, node.i, new AggregateError([], deserializeString(node.m))));
-}
-function deserializeError(ctx, depth, node) {
-	const construct = deserializeKnownValue(node, ERROR_CONSTRUCTOR, node.s);
-	return deserializeDictionary(ctx, depth, node, assignIndexedValue$1(ctx, node.i, new construct(deserializeString(node.m))));
-}
-function deserializePromise(ctx, depth, node) {
-	const deferred = PROMISE_CONSTRUCTOR();
-	const result = assignIndexedValue$1(ctx, node.i, deferred.p);
-	const deserialized = deserialize$1(ctx, depth, node.f);
-	if (isThennable(deserialized)) throw new SerovalMalformedNodeError(node.f);
-	if (node.s) deferred.s(deserialized);
-	else deferred.f(deserialized);
-	return result;
-}
-function deserializeBoxed(ctx, depth, node) {
-	return assignIndexedValue$1(ctx, node.i, Object(deserialize$1(ctx, depth, node.f)));
-}
-function deserializePlugin(ctx, depth, node) {
-	const currentPlugins = ctx.base.plugins;
-	if (currentPlugins) {
-		const tag = deserializeString(node.c);
-		for (let i = 0, len = currentPlugins.length; i < len; i++) {
-			const plugin = currentPlugins[i];
-			if (plugin.tag === tag) return assignIndexedValue$1(ctx, node.i, plugin.deserialize(node.s, new DeserializePluginContext(ctx, depth), { id: node.i }));
-		}
-	}
-	throw new SerovalMissingPluginError(node.c);
-}
-function deserializePromiseConstructor(ctx, node) {
-	const value = assignIndexedValue$1(ctx, node.i, assignIndexedValue$1(ctx, node.s, PROMISE_CONSTRUCTOR()).p);
-	assignNodeType(ctx, node.s, 22);
-	return value;
-}
-function deserializePromiseFulfill(ctx, depth, node) {
-	const deferred = ctx.base.refs.get(node.i);
-	if (deferred) {
-		validateNodeType(ctx, node, node.i, 22);
-		const deserialized = deserialize$1(ctx, depth, node.a[1]);
-		if (isThennable(deserialized)) throw new SerovalMalformedNodeError(node.a[1]);
-		if (node.t === 23) deferred.s(deserialized);
-		else deferred.f(deserialized);
-		return;
-	}
-	throw new SerovalMissingInstanceError("Promise");
-}
-function deserializeIteratorFactoryInstance(ctx, depth, node) {
-	deserialize$1(ctx, depth, node.a[0]);
-	const source = deserialize$1(ctx, depth, node.a[1]);
-	if (!isSequence(source)) throw new SerovalMalformedNodeError(node.a[1]);
-	return sequenceToIterator(source);
-}
-function deserializeAsyncIteratorFactoryInstance(ctx, depth, node) {
-	deserialize$1(ctx, depth, node.a[0]);
-	const source = deserialize$1(ctx, depth, node.a[1]);
-	if (!isStream(source)) throw new SerovalMalformedNodeError(node.a[1]);
-	return streamToAsyncIterable(source);
-}
-function deserializeStreamConstructor(ctx, depth, node) {
-	const result = assignIndexedValue$1(ctx, node.i, createStream());
-	assignNodeType(ctx, node.i, 31);
-	const items = node.a;
-	validateNodeList(node, items);
-	const len = items.length;
-	if (len) for (let i = 0; i < len; i++) deserialize$1(ctx, depth, items[i]);
-	return result;
-}
-function deserializeStreamNext(ctx, depth, node) {
-	const deferred = ctx.base.refs.get(node.i);
-	if (deferred) {
-		validateNodeType(ctx, node, node.i, 31);
-		deferred.next(deserialize$1(ctx, depth, node.f));
-		return;
-	}
-	throw new SerovalMissingInstanceError("Stream");
-}
-function deserializeStreamThrow(ctx, depth, node) {
-	const deferred = ctx.base.refs.get(node.i);
-	if (deferred) {
-		validateNodeType(ctx, node, node.i, 31);
-		deferred.throw(deserialize$1(ctx, depth, node.f));
-		return;
-	}
-	throw new SerovalMissingInstanceError("Stream");
-}
-function deserializeStreamReturn(ctx, depth, node) {
-	const deferred = ctx.base.refs.get(node.i);
-	if (deferred) {
-		validateNodeType(ctx, node, node.i, 31);
-		deferred.return(deserialize$1(ctx, depth, node.f));
-		return;
-	}
-	throw new SerovalMissingInstanceError("Stream");
-}
-function deserializeIteratorFactory(ctx, depth, node) {
-	deserialize$1(ctx, depth, node.f);
-}
-function deserializeAsyncIteratorFactory(ctx, depth, node) {
-	deserialize$1(ctx, depth, node.a[1]);
-}
-function isSequenceIndex(value, size) {
-	return Number.isInteger(value) && value >= -1 && value < size;
-}
-function deserializeSequence(ctx, depth, node) {
-	validateNodeList(node, node.a);
-	const size = node.a.length;
-	if (!(isSequenceIndex(node.s, size) && isSequenceIndex(node.l, size))) throw new SerovalMalformedNodeError(node);
-	const result = assignIndexedValue$1(ctx, node.i, createSequence([], node.s, node.l));
-	for (let i = 0; i < size; i++) result.v[i] = deserialize$1(ctx, depth, node.a[i]);
-	return result;
-}
-function deserialize$1(ctx, depth, node) {
-	if (depth > ctx.base.depthLimit) throw new SerovalDepthLimitError(ctx.base.depthLimit);
-	depth += 1;
-	switch (node.t) {
-		case 2: return deserializeKnownValue(node, CONSTANT_VAL, node.s);
-		case 0: return Number(node.s);
-		case 1: return deserializeString(String(node.s));
-		case 3:
-			if (String(node.s).length > MAX_BIGINT_LENGTH) throw new SerovalMalformedNodeError(node);
-			return BigInt(node.s);
-		case 4: return ctx.base.refs.get(node.i);
-		case 18: return deserializeReference(ctx, node);
-		case 9: return deserializeArray(ctx, depth, node);
-		case 10:
-		case 11: return deserializeObject(ctx, depth, node);
-		case 5: return deserializeDate(ctx, node);
-		case 6: return deserializeRegExp(ctx, node);
-		case 7: return deserializeSet(ctx, depth, node);
-		case 8: return deserializeMap(ctx, depth, node);
-		case 19: return deserializeArrayBuffer(ctx, node);
-		case 16:
-		case 15: return deserializeTypedArray(ctx, depth, node);
-		case 20: return deserializeDataView(ctx, depth, node);
-		case 14: return deserializeAggregateError(ctx, depth, node);
-		case 13: return deserializeError(ctx, depth, node);
-		case 12: return deserializePromise(ctx, depth, node);
-		case 17: return deserializeKnownValue(node, SYMBOL_REF, node.s);
-		case 21: return deserializeBoxed(ctx, depth, node);
-		case 25: return deserializePlugin(ctx, depth, node);
-		case 22: return deserializePromiseConstructor(ctx, node);
-		case 23:
-		case 24: return deserializePromiseFulfill(ctx, depth, node);
-		case 28: return deserializeIteratorFactoryInstance(ctx, depth, node);
-		case 30: return deserializeAsyncIteratorFactoryInstance(ctx, depth, node);
-		case 31: return deserializeStreamConstructor(ctx, depth, node);
-		case 32: return deserializeStreamNext(ctx, depth, node);
-		case 33: return deserializeStreamThrow(ctx, depth, node);
-		case 34: return deserializeStreamReturn(ctx, depth, node);
-		case 27: return deserializeIteratorFactory(ctx, depth, node);
-		case 29: return deserializeAsyncIteratorFactory(ctx, depth, node);
-		case 35: return deserializeSequence(ctx, depth, node);
-		case 36: return deserializeTemporal(ctx, node);
-		default: throw new SerovalUnsupportedNodeError(node);
-	}
-}
-function deserializeTop(ctx, node) {
-	try {
-		return deserialize$1(ctx, 0, node);
-	} catch (error) {
-		throw new SerovalDeserializationError(error);
-	}
-}
-var RETURN = () => T;
-var SERIALIZED_RETURN = /* @__PURE__ */ RETURN.toString();
-var IS_MODERN = /* @__PURE__ */ /=>/.test(SERIALIZED_RETURN);
-function createFunction(parameters, body) {
-	if (IS_MODERN) return (parameters.length === 1 ? parameters[0] : "(" + parameters.join(",") + ")") + "=>" + (body.startsWith("{") ? "(" + body + ")" : body);
-	return "function(" + parameters.join(",") + "){return " + body + "}";
-}
-function createEffectfulFunction(parameters, body) {
-	if (IS_MODERN) return (parameters.length === 1 ? parameters[0] : "(" + parameters.join(",") + ")") + "=>{" + body + "}";
-	return "function(" + parameters.join(",") + "){" + body + "}";
-}
-var REF_START_CHARS = "hjkmoquxzABCDEFGHIJKLNPQRTUVWXYZ$_";
-var REF_START_CHARS_LEN = 34;
-var REF_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$_";
-var REF_CHARS_LEN = 64;
-function getIdentifier(index) {
-	let mod = index % REF_START_CHARS_LEN;
-	let ref = REF_START_CHARS[mod];
-	index = (index - mod) / REF_START_CHARS_LEN;
-	while (index > 0) {
-		mod = index % REF_CHARS_LEN;
-		ref += REF_CHARS[mod];
-		index = (index - mod) / REF_CHARS_LEN;
-	}
-	return ref;
-}
-var IDENTIFIER_CHECK = /^[$A-Z_][0-9A-Z_$]*$/i;
-function isValidIdentifier(name) {
-	const char = name[0];
-	return (char === "$" || char === "_" || char >= "A" && char <= "Z" || char >= "a" && char <= "z") && IDENTIFIER_CHECK.test(name);
-}
-function getAssignmentExpression(assignment) {
-	switch (assignment.t) {
-		case 0: return assignment.s + "=" + assignment.v;
-		case 2: return assignment.s + ".set(" + assignment.k + "," + assignment.v + ")";
-		case 1: return assignment.s + ".add(" + assignment.v + ")";
-		case 3: return assignment.s + ".delete(" + assignment.k + ")";
-		case 4: return "Object.defineProperty(" + assignment.s + ",\"__proto__\",{value:" + assignment.k + ",configurable:!0,enumerable:!0,writable:!0})";
-	}
-}
-function mergeAssignments(assignments) {
-	const newAssignments = [];
-	let current = assignments[0];
-	for (let i = 1, len = assignments.length, item, prev = current; i < len; i++) {
-		item = assignments[i];
-		if (item.t === 0 && item.v === prev.v) current = {
-			t: 0,
-			s: item.s,
-			k: void 0,
-			v: getAssignmentExpression(current)
-		};
-		else if (item.t === 2 && item.s === prev.s) current = {
-			t: 2,
-			s: getAssignmentExpression(current),
-			k: item.k,
-			v: item.v
-		};
-		else if (item.t === 1 && item.s === prev.s) current = {
-			t: 1,
-			s: getAssignmentExpression(current),
-			k: void 0,
-			v: item.v
-		};
-		else if (item.t === 3 && item.s === prev.s) current = {
-			t: 3,
-			s: getAssignmentExpression(current),
-			k: item.k,
-			v: void 0
-		};
-		else {
-			newAssignments.push(current);
-			current = item;
-		}
-		prev = item;
-	}
-	newAssignments.push(current);
-	return newAssignments;
-}
-function resolveAssignments(assignments) {
-	if (assignments.length) {
-		let result = "";
-		const merged = mergeAssignments(assignments);
-		for (let i = 0, len = merged.length; i < len; i++) result += getAssignmentExpression(merged[i]) + ",";
-		return result;
-	}
-}
-var NULL_CONSTRUCTOR = "Object.create(null)";
-var SET_CONSTRUCTOR = "new Set";
-var MAP_CONSTRUCTOR = "new Map";
-var PROMISE_RESOLVE = "Promise.resolve";
-var PROMISE_REJECT = "Promise.reject";
-var OBJECT_FLAG_CONSTRUCTOR = {
-	[3]: "Object.freeze",
-	[2]: "Object.seal",
-	[1]: "Object.preventExtensions",
-	[0]: void 0
-};
-function createBaseSerializerContext(mode, options) {
-	return {
-		mode,
-		plugins: options.plugins,
-		features: options.features,
-		marked: new Set(options.markedRefs),
-		stack: [],
-		flags: [],
-		assignments: []
-	};
-}
-function createCrossSerializerContext(options) {
-	return {
-		mode: 2,
-		base: createBaseSerializerContext(2, options),
-		state: options,
-		child: void 0
-	};
-}
-var SerializePluginContext = class {
-	constructor(_p) {
-		this._p = _p;
-	}
-	serialize(node) {
-		return serialize$1(this._p, node);
-	}
-};
-/**
-* Creates the reference param (identifier) from the given reference ID
-* Calling this function means the value has been referenced somewhere
-*/
-function getVanillaRefParam(state, index) {
-	/**
-	* Creates a new reference ID from a given reference ID
-	* This new reference ID means that the reference itself
-	* has been referenced at least once, and is used to generate
-	* the variables
-	*/
-	let actualIndex = state.valid.get(index);
-	if (actualIndex == null) {
-		actualIndex = state.valid.size;
-		state.valid.set(index, actualIndex);
-	}
-	let identifier = state.vars[actualIndex];
-	if (identifier == null) {
-		identifier = getIdentifier(actualIndex);
-		state.vars[actualIndex] = identifier;
-	}
-	return identifier;
-}
-function getCrossRefParam(id) {
-	return "$R[" + id + "]";
 }
 /**
-* Converts the ID of a reference into a identifier string
-* that is used to refer to the object instance in the
-* generated script.
+* Returns the plugins that are tested for plain objects. It is the same array
+* when no plugin sets `skipPlainObjects`.
 */
-function getRefParam(ctx, id) {
-	return ctx.mode === 1 ? getVanillaRefParam(ctx.state, id) : getCrossRefParam(id);
-}
-function markSerializerRef(ctx, id) {
-	ctx.marked.add(id);
-}
-function isSerializerRefMarked(ctx, id) {
-	return ctx.marked.has(id);
-}
-function pushObjectFlag(ctx, flag, id) {
-	if (flag !== 0) {
-		markSerializerRef(ctx.base, id);
-		ctx.base.flags.push({
-			type: flag,
-			value: getRefParam(ctx, id)
-		});
+function getPlainObjectPlugins(plugins) {
+	if (plugins) {
+		for (let i = 0, len = plugins.length; i < len; i++) if (plugins[i].skipPlainObjects) {
+			const result = plugins.filter((plugin) => !plugin.skipPlainObjects);
+			return result.length ? result : void 0;
+		}
 	}
-}
-function resolveFlags(ctx) {
-	let result = "";
-	for (let i = 0, current = ctx.flags, len = current.length; i < len; i++) {
-		const flag = current[i];
-		result += OBJECT_FLAG_CONSTRUCTOR[flag.type] + "(" + flag.value + "),";
-	}
-	return result;
-}
-function resolvePatches(ctx) {
-	const assignments = resolveAssignments(ctx.assignments);
-	const flags = resolveFlags(ctx);
-	if (assignments) {
-		if (flags) return assignments + flags;
-		return assignments;
-	}
-	return flags;
+	return plugins;
 }
 /**
-* Generates the inlined assignment for the reference
-* This is different from the assignments array as this one
-* signifies creation rather than mutation
+* An opaque reference allows hiding values from the serializer.
 */
-function createAssignment(ctx, source, value) {
-	ctx.assignments.push({
-		t: 0,
-		s: source,
-		k: void 0,
-		v: value
-	});
-}
-function createAddAssignment(ctx, ref, value) {
-	ctx.base.assignments.push({
-		t: 1,
-		s: getRefParam(ctx, ref),
-		k: void 0,
-		v: value
-	});
-}
-function createSetAssignment(ctx, ref, key, value) {
-	ctx.base.assignments.push({
-		t: 2,
-		s: getRefParam(ctx, ref),
-		k: key,
-		v: value
-	});
-}
-function createDeleteAssignment(ctx, ref, key) {
-	ctx.base.assignments.push({
-		t: 3,
-		s: getRefParam(ctx, ref),
-		k: key,
-		v: void 0
-	});
-}
-function createArrayAssign(ctx, ref, index, value) {
-	createAssignment(ctx.base, getRefParam(ctx, ref) + "[" + index + "]", value);
-}
-function createObjectAssign(ctx, ref, key, value) {
-	if (!isValidKey(key)) {
-		ctx.base.assignments.push({
-			t: 4,
-			s: getRefParam(ctx, ref),
-			k: value,
-			v: void 0
-		});
-		return;
-	}
-	createAssignment(ctx.base, getRefParam(ctx, ref) + "." + key, value);
-}
-function createSequenceAssign(ctx, ref, index, value) {
-	createAssignment(ctx.base, getRefParam(ctx, ref) + ".v[" + index + "]", value);
-}
-/**
-* Checks if the value is in the stack. Stack here is a reference
-* structure to know if a object is to be accessed in a TDZ.
-*/
-function isIndexedValueInStack(ctx, node) {
-	return node.t === 4 && ctx.stack.includes(node.i);
-}
-/**
-* Produces an assignment expression. `id` generates a reference
-* parameter (through `getRefParam`) and has the option to
-* return the reference parameter directly or assign a value to
-* it.
-*/
-function assignIndexedValue(ctx, index, value) {
-	if (ctx.mode === 1 && !isSerializerRefMarked(ctx.base, index)) return value;
-	/**
-	* In cross-reference, we have to assume that
-	* every reference are going to be referenced
-	* in the future, and so we need to store
-	* all of it into the reference array.
-	*
-	* otherwise in vanilla, we only do this if it
-	* is actually referenced
-	*/
-	return getRefParam(ctx, index) + "=" + value;
-}
-function serializeReference(node) {
-	return "__SEROVAL_REFS__.get(\"" + node.s + "\")";
-}
-function serializeArrayItem(ctx, id, item, index) {
-	if (item) {
-		if (isIndexedValueInStack(ctx.base, item)) {
-			markSerializerRef(ctx.base, id);
-			createArrayAssign(ctx, id, index, getRefParam(ctx, item.i));
-			return "";
-		}
-		return serialize$1(ctx, item);
-	}
-	return "";
-}
-function serializeArray(ctx, node) {
-	const id = node.i;
-	const list = node.a;
-	const len = list.length;
-	if (len > 0) {
-		ctx.base.stack.push(id);
-		let values = serializeArrayItem(ctx, id, list[0], 0);
-		let isHoley = values === "";
-		for (let i = 1, item; i < len; i++) {
-			item = serializeArrayItem(ctx, id, list[i], i);
-			values += "," + item;
-			isHoley = item === "";
-		}
-		ctx.base.stack.pop();
-		pushObjectFlag(ctx, node.o, node.i);
-		return "[" + values + (isHoley ? ",]" : "]");
-	}
-	return "[]";
-}
-function serializeProperty(ctx, source, key, val) {
-	if (typeof key === "string") {
-		const check = Number(key);
-		const isIdentifier = check >= 0 && check.toString() === key || isValidIdentifier(key);
-		if (isIndexedValueInStack(ctx.base, val)) {
-			const refParam = getRefParam(ctx, val.i);
-			markSerializerRef(ctx.base, source.i);
-			if (isIdentifier && check !== check) createObjectAssign(ctx, source.i, key, refParam);
-			else createArrayAssign(ctx, source.i, isIdentifier ? key : "\"" + key + "\"", refParam);
-			return "";
-		}
-		if (isValidKey(key)) return (isIdentifier ? key : "\"" + key + "\"") + ":" + serialize$1(ctx, val);
-		return "[\"" + key + "\"]:" + serialize$1(ctx, val);
-	}
-	return "[" + serialize$1(ctx, key) + "]:" + serialize$1(ctx, val);
-}
-function serializeProperties(ctx, source, record) {
-	const keys = record.k;
-	const len = keys.length;
-	if (len > 0) {
-		const values = record.v;
-		ctx.base.stack.push(source.i);
-		let result = serializeProperty(ctx, source, keys[0], values[0]);
-		for (let i = 1, item = result; i < len; i++) {
-			item = serializeProperty(ctx, source, keys[i], values[i]);
-			result += (item && result && ",") + item;
-		}
-		ctx.base.stack.pop();
-		return "{" + result + "}";
-	}
-	return "{}";
-}
-function serializeObject(ctx, node) {
-	pushObjectFlag(ctx, node.o, node.i);
-	return serializeProperties(ctx, node, node.p);
-}
-function serializeWithObjectAssign(ctx, source, value, serialized) {
-	const fields = serializeProperties(ctx, source, value);
-	if (fields !== "{}") return "Object.assign(" + serialized + "," + fields + ")";
-	return serialized;
-}
-function serializeStringKeyAssignment(ctx, source, mainAssignments, key, value) {
-	const base = ctx.base;
-	const serialized = serialize$1(ctx, value);
-	const check = Number(key);
-	const isIdentifier = check >= 0 && check.toString() === key || isValidIdentifier(key);
-	if (isIndexedValueInStack(base, value)) {
-		if (isIdentifier && check !== check) createObjectAssign(ctx, source.i, key, serialized);
-		else createArrayAssign(ctx, source.i, isIdentifier ? key : "\"" + key + "\"", serialized);
-	} else {
-		const parentAssignment = base.assignments;
-		base.assignments = mainAssignments;
-		if (isIdentifier && check !== check) createObjectAssign(ctx, source.i, key, serialized);
-		else createArrayAssign(ctx, source.i, isIdentifier ? key : "\"" + key + "\"", serialized);
-		base.assignments = parentAssignment;
-	}
-}
-function serializeAssignment(ctx, source, mainAssignments, key, value) {
-	if (typeof key === "string") serializeStringKeyAssignment(ctx, source, mainAssignments, key, value);
-	else {
-		const base = ctx.base;
-		const parent = base.stack;
-		base.stack = [];
-		const serialized = serialize$1(ctx, value);
-		base.stack = parent;
-		const parentAssignment = base.assignments;
-		base.assignments = mainAssignments;
-		createArrayAssign(ctx, source.i, serialize$1(ctx, key), serialized);
-		base.assignments = parentAssignment;
-	}
-}
-function serializeAssignments(ctx, source, node) {
-	const keys = node.k;
-	const len = keys.length;
-	if (len > 0) {
-		const mainAssignments = [];
-		const values = node.v;
-		ctx.base.stack.push(source.i);
-		for (let i = 0; i < len; i++) serializeAssignment(ctx, source, mainAssignments, keys[i], values[i]);
-		ctx.base.stack.pop();
-		return resolveAssignments(mainAssignments);
-	}
-}
-function serializeDictionary(ctx, node, init) {
-	if (node.p) {
-		const base = ctx.base;
-		if (base.features & 8) init = serializeWithObjectAssign(ctx, node, node.p, init);
-		else {
-			markSerializerRef(base, node.i);
-			const assignments = serializeAssignments(ctx, node, node.p);
-			if (assignments) return "(" + assignIndexedValue(ctx, node.i, init) + "," + assignments + getRefParam(ctx, node.i) + ")";
-		}
-	}
-	return init;
-}
-function serializeNullConstructor(ctx, node) {
-	pushObjectFlag(ctx, node.o, node.i);
-	return serializeDictionary(ctx, node, NULL_CONSTRUCTOR);
-}
-function serializeDate(node) {
-	return "new Date(\"" + node.s + "\")";
-}
-var TEMPORAL_CONSTRUCTOR = {
-	[0]: "Temporal.Instant",
-	[1]: "Temporal.Duration",
-	[2]: "Temporal.PlainDate",
-	[3]: "Temporal.PlainDateTime",
-	[4]: "Temporal.PlainMonthDay",
-	[5]: "Temporal.PlainTime",
-	[6]: "Temporal.PlainYearMonth",
-	[7]: "Temporal.ZonedDateTime"
-};
-function serializeTemporal(ctx, node) {
-	if (ctx.base.features & 64) return TEMPORAL_CONSTRUCTOR[node.c] + ".from(\"" + node.s + "\")";
-	throw new SerovalUnsupportedNodeError(node);
-}
-function serializeRegExp(ctx, node) {
-	if (ctx.base.features & 32) return "/" + deserializeString(node.c) + "/" + node.m;
-	throw new SerovalUnsupportedNodeError(node);
-}
-function serializeSetItem(ctx, id, item) {
-	const base = ctx.base;
-	if (isIndexedValueInStack(base, item)) {
-		markSerializerRef(base, id);
-		createAddAssignment(ctx, id, getRefParam(ctx, item.i));
-		return "";
-	}
-	return serialize$1(ctx, item);
-}
-function serializeSet(ctx, node) {
-	let serialized = SET_CONSTRUCTOR;
-	const items = node.a;
-	const size = items.length;
-	const id = node.i;
-	if (size > 0) {
-		ctx.base.stack.push(id);
-		let result = serializeSetItem(ctx, id, items[0]);
-		for (let i = 1, item = result; i < size; i++) {
-			item = serializeSetItem(ctx, id, items[i]);
-			result += (item && result && ",") + item;
-		}
-		ctx.base.stack.pop();
-		if (result) serialized += "([" + result + "])";
-	}
-	return serialized;
-}
-function serializeMapEntry(ctx, id, key, val, sentinel) {
-	const base = ctx.base;
-	if (isIndexedValueInStack(base, key)) {
-		const keyRef = getRefParam(ctx, key.i);
-		markSerializerRef(base, id);
-		if (isIndexedValueInStack(base, val)) {
-			createSetAssignment(ctx, id, keyRef, getRefParam(ctx, val.i));
-			return "";
-		}
-		if (val.t !== 4 && val.i != null && isSerializerRefMarked(base, val.i)) {
-			const serialized = "(" + serialize$1(ctx, val) + ",[" + sentinel + "," + sentinel + "])";
-			createSetAssignment(ctx, id, keyRef, getRefParam(ctx, val.i));
-			createDeleteAssignment(ctx, id, sentinel);
-			return serialized;
-		}
-		const parent = base.stack;
-		base.stack = [];
-		createSetAssignment(ctx, id, keyRef, serialize$1(ctx, val));
-		base.stack = parent;
-		return "";
-	}
-	if (isIndexedValueInStack(base, val)) {
-		const valueRef = getRefParam(ctx, val.i);
-		markSerializerRef(base, id);
-		if (key.t !== 4 && key.i != null && isSerializerRefMarked(base, key.i)) {
-			const serialized = "(" + serialize$1(ctx, key) + ",[" + sentinel + "," + sentinel + "])";
-			createSetAssignment(ctx, id, getRefParam(ctx, key.i), valueRef);
-			createDeleteAssignment(ctx, id, sentinel);
-			return serialized;
-		}
-		const parent = base.stack;
-		base.stack = [];
-		createSetAssignment(ctx, id, serialize$1(ctx, key), valueRef);
-		base.stack = parent;
-		return "";
-	}
-	return "[" + serialize$1(ctx, key) + "," + serialize$1(ctx, val) + "]";
-}
-function serializeMap(ctx, node) {
-	let serialized = MAP_CONSTRUCTOR;
-	const keys = node.e.k;
-	const size = keys.length;
-	const id = node.i;
-	const sentinel = node.f;
-	const sentinelId = getRefParam(ctx, sentinel.i);
-	const base = ctx.base;
-	if (size > 0) {
-		const vals = node.e.v;
-		base.stack.push(id);
-		let result = serializeMapEntry(ctx, id, keys[0], vals[0], sentinelId);
-		for (let i = 1, item = result; i < size; i++) {
-			item = serializeMapEntry(ctx, id, keys[i], vals[i], sentinelId);
-			result += (item && result && ",") + item;
-		}
-		base.stack.pop();
-		if (result) serialized += "([" + result + "])";
-	}
-	if (sentinel.t === 26) {
-		markSerializerRef(base, sentinel.i);
-		serialized = "(" + serialize$1(ctx, sentinel) + "," + serialized + ")";
-	}
-	return serialized;
-}
-function serializeArrayBuffer(ctx, node) {
-	return getConstructor(ctx, node.f) + "(\"" + node.s + "\")";
-}
-function serializeTypedArray(ctx, node) {
-	return "new " + node.c + "(" + serialize$1(ctx, node.f) + "," + node.b + "," + node.l + ")";
-}
-function serializeDataView(ctx, node) {
-	return "new DataView(" + serialize$1(ctx, node.f) + "," + node.b + "," + node.l + ")";
-}
-function serializeAggregateError(ctx, node) {
-	const id = node.i;
-	ctx.base.stack.push(id);
-	const serialized = serializeDictionary(ctx, node, "new AggregateError([],\"" + node.m + "\")");
-	ctx.base.stack.pop();
-	return serialized;
-}
-function serializeError(ctx, node) {
-	return serializeDictionary(ctx, node, "new " + ERROR_CONSTRUCTOR_STRING[node.s] + "(\"" + node.m + "\")");
-}
-function serializePromise(ctx, node) {
-	let serialized;
-	const fulfilled = node.f;
-	const id = node.i;
-	const promiseConstructor = node.s ? PROMISE_RESOLVE : PROMISE_REJECT;
-	const base = ctx.base;
-	if (isIndexedValueInStack(base, fulfilled)) {
-		const ref = getRefParam(ctx, fulfilled.i);
-		serialized = promiseConstructor + (node.s ? "().then(" + createFunction([], ref) + ")" : "().catch(" + createEffectfulFunction([], "throw " + ref) + ")");
-	} else {
-		base.stack.push(id);
-		const result = serialize$1(ctx, fulfilled);
-		base.stack.pop();
-		serialized = promiseConstructor + "(" + result + ")";
-	}
-	return serialized;
-}
-function serializeBoxed(ctx, node) {
-	return "Object(" + serialize$1(ctx, node.f) + ")";
-}
-function getConstructor(ctx, node) {
-	const current = serialize$1(ctx, node);
-	return node.t === 4 ? current : "(" + current + ")";
-}
-function serializePromiseConstructor(ctx, node) {
-	if (ctx.mode === 1) throw new SerovalUnsupportedNodeError(node);
-	return "(" + assignIndexedValue(ctx, node.s, getConstructor(ctx, node.f) + "()") + ").p";
-}
-function serializePromiseResolve(ctx, node) {
-	if (ctx.mode === 1) throw new SerovalUnsupportedNodeError(node);
-	return getConstructor(ctx, node.a[0]) + "(" + getRefParam(ctx, node.i) + "," + serialize$1(ctx, node.a[1]) + ")";
-}
-function serializePromiseReject(ctx, node) {
-	if (ctx.mode === 1) throw new SerovalUnsupportedNodeError(node);
-	return getConstructor(ctx, node.a[0]) + "(" + getRefParam(ctx, node.i) + "," + serialize$1(ctx, node.a[1]) + ")";
-}
-function serializePlugin(ctx, node) {
-	const currentPlugins = ctx.base.plugins;
-	if (currentPlugins) for (let i = 0, len = currentPlugins.length; i < len; i++) {
-		const plugin = currentPlugins[i];
-		if (plugin.tag === node.c) {
-			if (ctx.child == null) ctx.child = new SerializePluginContext(ctx);
-			return plugin.serialize(node.s, ctx.child, { id: node.i });
-		}
-	}
-	throw new SerovalMissingPluginError(node.c);
-}
-function serializeIteratorFactory(ctx, node) {
-	let result = "";
-	let initialized = false;
-	if (node.f.t !== 4) {
-		markSerializerRef(ctx.base, node.f.i);
-		result = "(" + serialize$1(ctx, node.f) + ",";
-		initialized = true;
-	}
-	result += assignIndexedValue(ctx, node.i, "(" + SERIALIZED_ITERATOR_CONSTRUCTOR + ")(" + getRefParam(ctx, node.f.i) + ")");
-	if (initialized) result += ")";
-	return result;
-}
-function serializeIteratorFactoryInstance(ctx, node) {
-	return getConstructor(ctx, node.a[0]) + "(" + serialize$1(ctx, node.a[1]) + ")";
-}
-function serializeAsyncIteratorFactory(ctx, node) {
-	const promise = node.a[0];
-	const symbol = node.a[1];
-	const base = ctx.base;
-	let result = "";
-	if (promise.t !== 4) {
-		markSerializerRef(base, promise.i);
-		result += "(" + serialize$1(ctx, promise);
-	}
-	if (symbol.t !== 4) {
-		markSerializerRef(base, symbol.i);
-		result += (result ? "," : "(") + serialize$1(ctx, symbol);
-	}
-	if (result) result += ",";
-	const iterator = assignIndexedValue(ctx, node.i, "(" + SERIALIZED_ASYNC_ITERATOR_CONSTRUCTOR + ")(" + getRefParam(ctx, symbol.i) + "," + getRefParam(ctx, promise.i) + ")");
-	if (result) return result + iterator + ")";
-	return iterator;
-}
-function serializeAsyncIteratorFactoryInstance(ctx, node) {
-	return getConstructor(ctx, node.a[0]) + "(" + serialize$1(ctx, node.a[1]) + ")";
-}
-function serializeStreamConstructor(ctx, node) {
-	const result = assignIndexedValue(ctx, node.i, getConstructor(ctx, node.f) + "()");
-	const len = node.a.length;
-	if (len) {
-		let values = serialize$1(ctx, node.a[0]);
-		for (let i = 1; i < len; i++) values += "," + serialize$1(ctx, node.a[i]);
-		return "(" + result + "," + values + "," + getRefParam(ctx, node.i) + ")";
-	}
-	return result;
-}
-function serializeStreamNext(ctx, node) {
-	return getRefParam(ctx, node.i) + ".next(" + serialize$1(ctx, node.f) + ")";
-}
-function serializeStreamThrow(ctx, node) {
-	return getRefParam(ctx, node.i) + ".throw(" + serialize$1(ctx, node.f) + ")";
-}
-function serializeStreamReturn(ctx, node) {
-	return getRefParam(ctx, node.i) + ".return(" + serialize$1(ctx, node.f) + ")";
-}
-function serializeSequenceItem(ctx, id, index, item) {
-	const base = ctx.base;
-	if (isIndexedValueInStack(base, item)) {
-		markSerializerRef(base, id);
-		createSequenceAssign(ctx, id, index, getRefParam(ctx, item.i));
-		return "";
-	}
-	return serialize$1(ctx, item);
-}
-function serializeSequence(ctx, node) {
-	const items = node.a;
-	const size = items.length;
-	const id = node.i;
-	if (size > 0) {
-		ctx.base.stack.push(id);
-		let result = serializeSequenceItem(ctx, id, 0, items[0]);
-		for (let i = 1, item = result; i < size; i++) {
-			item = serializeSequenceItem(ctx, id, i, items[i]);
-			result += (item && result && ",") + item;
-		}
-		ctx.base.stack.pop();
-		if (result) return "{__SEROVAL_SEQUENCE__:!0,v:[" + result + "],t:" + node.s + ",d:" + node.l + "}";
-	}
-	return "{__SEROVAL_SEQUENCE__:!0,v:[],t:-1,d:0}";
-}
-function serializeAssignable(ctx, node) {
-	switch (node.t) {
-		case 17: return SYMBOL_STRING[node.s];
-		case 18: return serializeReference(node);
-		case 9: return serializeArray(ctx, node);
-		case 10: return serializeObject(ctx, node);
-		case 11: return serializeNullConstructor(ctx, node);
-		case 5: return serializeDate(node);
-		case 6: return serializeRegExp(ctx, node);
-		case 7: return serializeSet(ctx, node);
-		case 8: return serializeMap(ctx, node);
-		case 19: return serializeArrayBuffer(ctx, node);
-		case 16:
-		case 15: return serializeTypedArray(ctx, node);
-		case 20: return serializeDataView(ctx, node);
-		case 14: return serializeAggregateError(ctx, node);
-		case 13: return serializeError(ctx, node);
-		case 12: return serializePromise(ctx, node);
-		case 21: return serializeBoxed(ctx, node);
-		case 22: return serializePromiseConstructor(ctx, node);
-		case 25: return serializePlugin(ctx, node);
-		case 26: return SPECIAL_REF_STRING[node.s];
-		case 35: return serializeSequence(ctx, node);
-		case 36: return serializeTemporal(ctx, node);
-		default: throw new SerovalUnsupportedNodeError(node);
-	}
-}
-function serialize$1(ctx, node) {
-	switch (node.t) {
-		case 2: return CONSTANT_STRING[node.s];
-		case 0: return "" + node.s;
-		case 1: return "\"" + node.s + "\"";
-		case 3: return node.s + "n";
-		case 4: return getRefParam(ctx, node.i);
-		case 23: return serializePromiseResolve(ctx, node);
-		case 24: return serializePromiseReject(ctx, node);
-		case 27: return serializeIteratorFactory(ctx, node);
-		case 28: return serializeIteratorFactoryInstance(ctx, node);
-		case 29: return serializeAsyncIteratorFactory(ctx, node);
-		case 30: return serializeAsyncIteratorFactoryInstance(ctx, node);
-		case 31: return serializeStreamConstructor(ctx, node);
-		case 32: return serializeStreamNext(ctx, node);
-		case 33: return serializeStreamThrow(ctx, node);
-		case 34: return serializeStreamReturn(ctx, node);
-		default: return assignIndexedValue(ctx, node.i, serializeAssignable(ctx, node));
-	}
-}
-function serializeTopCross(ctx, tree) {
-	const result = serialize$1(ctx, tree);
-	const id = tree.i;
-	if (id == null) return result;
-	const patches = resolvePatches(ctx.base);
-	const ref = getRefParam(ctx, id);
-	const scopeId = ctx.state.scopeId;
-	const params = scopeId == null ? "" : "$R";
-	const body = patches ? "(" + result + "," + patches + ref + ")" : result;
-	if (params === "") {
-		if (tree.t === 10 && !patches) return "(" + body + ")";
-		return body;
-	}
-	const args = scopeId == null ? "()" : "($R[\"" + serializeString(scopeId) + "\"])";
-	return "(" + createFunction([params], body) + ")" + args;
-}
-var SyncParsePluginContext = class {
-	constructor(_p, depth) {
-		this._p = _p;
-		this.depth = depth;
-	}
-	parse(current) {
-		return parseSOS(this._p, this.depth, current);
+var OpaqueReference = class {
+	constructor(value, replacement) {
+		this.value = value;
+		this.replacement = replacement;
 	}
 };
-var StreamParsePluginContext = class {
-	constructor(_p, depth) {
-		this._p = _p;
-		this.depth = depth;
-	}
-	parse(current) {
-		return parseSOS(this._p, this.depth, current);
-	}
-	parseWithError(current) {
-		return parseWithError(this._p, this.depth, current);
-	}
-	isAlive() {
-		return this._p.state.alive;
-	}
-	pushPendingState() {
-		pushPendingState(this._p);
-	}
-	popPendingState() {
-		popPendingState(this._p);
-	}
-	onParse(node) {
-		onParse(this._p, node);
-	}
-	onError(error) {
-		onError(this._p, error);
-	}
-	addCleanup(callback) {
-		this._p.state.cleanups.push(callback);
-	}
-};
-function createStreamParserState(options) {
-	return {
-		alive: true,
-		pending: 0,
-		initial: true,
-		buffer: [],
-		onParse: options.onParse,
-		onError: options.onError,
-		onDone: options.onDone,
-		cleanups: []
-	};
-}
-function createStreamParserContext(options) {
-	return {
-		type: 2,
-		base: createBaseParserContext(2, options),
-		state: createStreamParserState(options)
-	};
-}
-function parseItems(ctx, depth, current) {
-	const nodes = [];
-	for (let i = 0, len = current.length; i < len; i++) if (i in current) nodes[i] = parseSOS(ctx, depth, current[i]);
-	else nodes[i] = 0;
-	return nodes;
-}
-function parseArray(ctx, depth, id, current) {
-	return createArrayNode(id, current, parseItems(ctx, depth, current));
-}
-function parseProperties(ctx, depth, properties) {
-	const entries = Object.entries(properties);
-	const keyNodes = [];
-	const valueNodes = [];
-	for (let i = 0, len = entries.length; i < len; i++) {
-		keyNodes.push(serializeString(entries[i][0]));
-		valueNodes.push(parseSOS(ctx, depth, entries[i][1]));
-	}
-	if (SYM_ITERATOR in properties) {
-		keyNodes.push(parseWellKnownSymbol(ctx.base, SYM_ITERATOR));
-		valueNodes.push(createIteratorFactoryInstanceNode(parseIteratorFactory(ctx.base), parseSOS(ctx, depth, createSequenceFromIterable(properties))));
-	}
-	if (SYM_ASYNC_ITERATOR in properties) {
-		keyNodes.push(parseWellKnownSymbol(ctx.base, SYM_ASYNC_ITERATOR));
-		valueNodes.push(createAsyncIteratorFactoryInstanceNode(parseAsyncIteratorFactory(ctx.base), parseSOS(ctx, depth, ctx.type === 1 ? createStream() : createStreamFromAsyncIterable(properties, ctx.state.cleanups))));
-	}
-	if (SYM_TO_STRING_TAG in properties) {
-		keyNodes.push(parseWellKnownSymbol(ctx.base, SYM_TO_STRING_TAG));
-		valueNodes.push(createStringNode(properties[SYM_TO_STRING_TAG]));
-	}
-	if (SYM_IS_CONCAT_SPREADABLE in properties) {
-		keyNodes.push(parseWellKnownSymbol(ctx.base, SYM_IS_CONCAT_SPREADABLE));
-		valueNodes.push(properties[SYM_IS_CONCAT_SPREADABLE] ? TRUE_NODE : FALSE_NODE);
-	}
-	return {
-		k: keyNodes,
-		v: valueNodes
-	};
-}
-function parsePlainObject(ctx, depth, id, current, empty) {
-	return createObjectNode(id, current, empty, parseProperties(ctx, depth, current));
-}
-function parseBoxed(ctx, depth, id, current) {
-	return createBoxedNode(id, parseSOS(ctx, depth, current.valueOf()));
-}
-function parseTypedArray(ctx, depth, id, current) {
-	current = getArrayBufferView(ctx.base, current);
-	return createTypedArrayNode(id, current, parseSOS(ctx, depth, current.buffer));
-}
-function parseBigIntTypedArray(ctx, depth, id, current) {
-	current = getArrayBufferView(ctx.base, current);
-	return createBigIntTypedArrayNode(id, current, parseSOS(ctx, depth, current.buffer));
-}
-function parseDataView(ctx, depth, id, current) {
-	current = getArrayBufferView(ctx.base, current);
-	return createDataViewNode(id, current, parseSOS(ctx, depth, current.buffer));
-}
-function parseError(ctx, depth, id, current) {
-	const options = getErrorOptions(current, ctx.base.features);
-	return createErrorNode(id, current, options ? parseProperties(ctx, depth, options) : void 0);
-}
-function parseAggregateError(ctx, depth, id, current) {
-	const options = getErrorOptions(current, ctx.base.features);
-	return createAggregateErrorNode(id, current, options ? parseProperties(ctx, depth, options) : void 0);
-}
-function parseMap(ctx, depth, id, current) {
-	const keyNodes = [];
-	const valueNodes = [];
-	for (const [key, value] of current.entries()) {
-		keyNodes.push(parseSOS(ctx, depth, key));
-		valueNodes.push(parseSOS(ctx, depth, value));
-	}
-	return createMapNode(ctx.base, id, keyNodes, valueNodes);
-}
-function parseSet(ctx, depth, id, current) {
-	const items = [];
-	for (const item of current.keys()) items.push(parseSOS(ctx, depth, item));
-	return createSetNode(id, items);
-}
-function parseStream(ctx, depth, id, current) {
-	const result = createStreamConstructorNode(id, parseSpecialReference(ctx.base, 4), []);
-	if (ctx.type === 1) return result;
-	pushPendingState(ctx);
-	current.on({
-		next: (value) => {
-			if (ctx.state.alive) {
-				const parsed = parseWithError(ctx, depth, value);
-				if (parsed) onParse(ctx, createStreamNextNode(id, parsed));
-			}
-		},
-		throw: (value) => {
-			if (ctx.state.alive) {
-				const parsed = parseWithError(ctx, depth, value);
-				if (parsed) onParse(ctx, createStreamThrowNode(id, parsed));
-			}
-			popPendingState(ctx);
-		},
-		return: (value) => {
-			if (ctx.state.alive) {
-				const parsed = parseWithError(ctx, depth, value);
-				if (parsed) onParse(ctx, createStreamReturnNode(id, parsed));
-			}
-			popPendingState(ctx);
-		}
-	});
-	return result;
-}
-function handlePromiseSuccess(id, depth, data) {
-	if (this.state.alive) {
-		const parsed = parseWithError(this, depth, data);
-		if (parsed) onParse(this, createSerovalNode(23, id, void 0, void 0, void 0, void 0, void 0, [parseSpecialReference(this.base, 2), parsed], void 0, void 0, void 0, void 0));
-		popPendingState(this);
-	}
-}
-function handlePromiseFailure(id, depth, data) {
-	if (this.state.alive) {
-		const parsed = parseWithError(this, depth, data);
-		if (parsed) onParse(this, createSerovalNode(24, id, void 0, void 0, void 0, void 0, void 0, [parseSpecialReference(this.base, 3), parsed], void 0, void 0, void 0, void 0));
-	}
-	popPendingState(this);
-}
-function parsePromise(ctx, depth, id, current) {
-	const resolver = createIndexForValue(ctx.base, {});
-	if (ctx.type === 2) {
-		pushPendingState(ctx);
-		current.then(handlePromiseSuccess.bind(ctx, resolver, depth), handlePromiseFailure.bind(ctx, resolver, depth));
-	}
-	return createPromiseConstructorNode(ctx.base, id, resolver);
-}
-function parsePluginSync(ctx, depth, id, current, currentPlugins) {
-	for (let i = 0, len = currentPlugins.length; i < len; i++) {
-		const plugin = currentPlugins[i];
-		if (plugin.parse.sync && plugin.test(current)) return createPluginNode(id, plugin.tag, plugin.parse.sync(current, new SyncParsePluginContext(ctx, depth), { id }));
-	}
-}
-function parsePluginStream(ctx, depth, id, current, currentPlugins) {
-	for (let i = 0, len = currentPlugins.length; i < len; i++) {
-		const plugin = currentPlugins[i];
-		if (plugin.parse.stream && plugin.test(current)) return createPluginNode(id, plugin.tag, plugin.parse.stream(current, new StreamParsePluginContext(ctx, depth), { id }));
-	}
-}
-function parsePlugin(ctx, depth, id, current) {
-	const currentPlugins = ctx.base.plugins;
-	if (currentPlugins) return ctx.type === 1 ? parsePluginSync(ctx, depth, id, current, currentPlugins) : parsePluginStream(ctx, depth, id, current, currentPlugins);
-}
-function parseSequence(ctx, depth, id, current) {
-	const nodes = [];
-	for (let i = 0, len = current.v.length; i < len; i++) nodes[i] = parseSOS(ctx, depth, current.v[i]);
-	return createSequenceNode(id, nodes, current.t, current.d);
-}
-function parseObjectPhase2(ctx, depth, id, current, currentClass) {
-	switch (currentClass) {
-		case Object: return parsePlainObject(ctx, depth, id, current, false);
-		case void 0: return parsePlainObject(ctx, depth, id, current, true);
-		case Date: return createDateNode(id, current);
-		case Error:
-		case EvalError:
-		case RangeError:
-		case ReferenceError:
-		case SyntaxError:
-		case TypeError:
-		case URIError: return parseError(ctx, depth, id, current);
-		case Number:
-		case Boolean:
-		case String:
-		case BigInt: return parseBoxed(ctx, depth, id, current);
-		case ArrayBuffer: return createArrayBufferNode(ctx.base, id, current);
-		case Int8Array:
-		case Int16Array:
-		case Int32Array:
-		case Uint8Array:
-		case Uint16Array:
-		case Uint32Array:
-		case Uint8ClampedArray:
-		case Float32Array:
-		case Float64Array: return parseTypedArray(ctx, depth, id, current);
-		case DataView: return parseDataView(ctx, depth, id, current);
-		case Map: return parseMap(ctx, depth, id, current);
-		case Set: return parseSet(ctx, depth, id, current);
-	}
-	if (currentClass === Promise || current instanceof Promise) return parsePromise(ctx, depth, id, current);
-	const currentFeatures = ctx.base.features;
-	if (currentFeatures & 32 && currentClass === RegExp) return createRegExpNode(id, current);
-	if (currentFeatures & 16) switch (currentClass) {
-		case BigInt64Array:
-		case BigUint64Array: return parseBigIntTypedArray(ctx, depth, id, current);
-	}
-	if (currentFeatures & 1 && typeof AggregateError !== "undefined" && (currentClass === AggregateError || current instanceof AggregateError)) return parseAggregateError(ctx, depth, id, current);
-	if (currentFeatures & 64 && typeof Temporal !== "undefined") switch (currentClass) {
-		case Temporal.Instant: return createTemporalNode(id, 0, current);
-		case Temporal.Duration: return createTemporalNode(id, 1, current);
-		case Temporal.PlainDate: return createTemporalNode(id, 2, current);
-		case Temporal.PlainDateTime: return createTemporalNode(id, 3, current);
-		case Temporal.PlainMonthDay: return createTemporalNode(id, 4, current);
-		case Temporal.PlainTime: return createTemporalNode(id, 5, current);
-		case Temporal.PlainYearMonth: return createTemporalNode(id, 6, current);
-		case Temporal.ZonedDateTime: return createTemporalNode(id, 7, current);
-	}
-	if (current instanceof Error) return parseError(ctx, depth, id, current);
-	if (SYM_ITERATOR in current || SYM_ASYNC_ITERATOR in current) return parsePlainObject(ctx, depth, id, current, !!currentClass);
-	throw new SerovalUnsupportedTypeError(current);
-}
-function parseObject(ctx, depth, id, current) {
-	if (Array.isArray(current)) return parseArray(ctx, depth, id, current);
-	if (isStream(current)) return parseStream(ctx, depth, id, current);
-	if (isSequence(current)) return parseSequence(ctx, depth, id, current);
-	let currentClass = current.constructor;
-	if (currentClass !== void 0 && typeof currentClass !== "function") {
-		const proto = Object.getPrototypeOf(current);
-		currentClass = proto === null ? void 0 : proto.constructor;
-	}
-	if (currentClass === OpaqueReference) return parseSOS(ctx, depth, current.replacement);
-	const parsed = parsePlugin(ctx, depth, id, current);
-	if (parsed) return parsed;
-	return parseObjectPhase2(ctx, depth, id, current, currentClass);
-}
-function parseFunction(ctx, depth, current) {
-	const ref = getReferenceNode(ctx.base, current);
-	if (ref.type !== 0) return ref.value;
-	const plugin = parsePlugin(ctx, depth, ref.value, current);
-	if (plugin) return plugin;
-	throw new SerovalUnsupportedTypeError(current);
-}
-function parseSOS(ctx, depth, current) {
-	if (depth >= ctx.base.depthLimit) throw new SerovalDepthLimitError(ctx.base.depthLimit);
-	switch (typeof current) {
-		case "boolean": return current ? TRUE_NODE : FALSE_NODE;
-		case "undefined": return UNDEFINED_NODE;
-		case "string": return createStringNode(current);
-		case "number": return createNumberNode(current);
-		case "bigint": return createBigIntNode(current);
-		case "object":
-			if (current) {
-				const ref = getReferenceNode(ctx.base, current);
-				return ref.type === 0 ? parseObject(ctx, depth + 1, ref.value, current) : ref.value;
-			}
-			return NULL_NODE;
-		case "symbol": return parseWellKnownSymbol(ctx.base, current);
-		case "function": return parseFunction(ctx, depth, current);
-		default: throw new SerovalUnsupportedTypeError(current);
-	}
-}
-function onParse(ctx, node) {
-	if (ctx.state.initial) ctx.state.buffer.push(node);
-	else onParseInternal(ctx, node, false);
-}
-function onError(ctx, error) {
-	if (ctx.state.onError) ctx.state.onError(error);
-	else throw error instanceof SerovalParserError ? error : new SerovalParserError(error);
-}
-function onDone(ctx) {
-	if (ctx.state.onDone) ctx.state.onDone();
-	for (let i = 0, len = ctx.state.cleanups.length; i < len; i++) ctx.state.cleanups[i]();
-}
-function onParseInternal(ctx, node, initial) {
-	try {
-		ctx.state.onParse(node, initial);
-	} catch (error) {
-		onError(ctx, error);
-	}
-}
-function pushPendingState(ctx) {
-	ctx.state.pending++;
-}
-function popPendingState(ctx) {
-	if (--ctx.state.pending <= 0) onDone(ctx);
-}
-function parseWithError(ctx, depth, current) {
-	try {
-		return parseSOS(ctx, depth, current);
-	} catch (err) {
-		onError(ctx, err);
-		return;
-	}
-}
-function startStreamParse(ctx, current) {
-	const parsed = parseWithError(ctx, 0, current);
-	if (parsed) {
-		onParseInternal(ctx, parsed, true);
-		ctx.state.initial = false;
-		flushStreamParse(ctx, ctx.state);
-		if (ctx.state.pending <= 0) destroyStreamParse(ctx);
-	}
-}
-function flushStreamParse(ctx, state) {
-	for (let i = 0, len = state.buffer.length; i < len; i++) onParseInternal(ctx, state.buffer[i], false);
-}
-function destroyStreamParse(ctx) {
-	if (ctx.state.alive) {
-		onDone(ctx);
-		ctx.state.alive = false;
-	}
-}
-async function toCrossJSONAsync(source, options = {}) {
-	const plugins = resolvePlugins(options.plugins);
-	return await parseTopAsync(createAsyncParserContext(2, {
-		compactArrayBufferViews: options.compactArrayBufferViews,
-		plugins,
-		disabledFeatures: options.disabledFeatures,
-		refs: options.refs
-	}), source);
-}
-function crossSerializeStream(source, options) {
-	const plugins = resolvePlugins(options.plugins);
-	const ctx = createStreamParserContext({
-		compactArrayBufferViews: options.compactArrayBufferViews,
-		plugins,
-		refs: options.refs,
-		disabledFeatures: options.disabledFeatures,
-		onParse(node, initial) {
-			const serial = createCrossSerializerContext({
-				plugins,
-				features: ctx.base.features,
-				scopeId: options.scopeId,
-				markedRefs: ctx.base.marked
-			});
-			let serialized;
-			try {
-				serialized = serializeTopCross(serial, node);
-			} catch (err) {
-				if (options.onError) options.onError(err);
-				return;
-			}
-			options.onSerialize(serialized, initial);
-		},
-		onError: options.onError,
-		onDone: options.onDone
-	});
-	startStreamParse(ctx, source);
-	return destroyStreamParse.bind(null, ctx);
-}
-function toCrossJSONStream(source, options) {
-	const plugins = resolvePlugins(options.plugins);
-	const ctx = createStreamParserContext({
-		compactArrayBufferViews: options.compactArrayBufferViews,
-		plugins,
-		refs: options.refs,
-		disabledFeatures: options.disabledFeatures,
-		depthLimit: options.depthLimit,
-		onParse: options.onParse,
-		onError: options.onError,
-		onDone: options.onDone
-	});
-	startStreamParse(ctx, source);
-	return destroyStreamParse.bind(null, ctx);
-}
-function fromJSON(source, options = {}) {
-	var _source$f;
-	const plugins = resolvePlugins(options.plugins);
-	const disabledFeatures = options.disabledFeatures || 0;
-	const sourceFeatures = (_source$f = source.f) !== null && _source$f !== void 0 ? _source$f : 127;
-	return deserializeTop(createVanillaDeserializerContext({
-		maxBase64Length: options.maxBase64Length,
-		plugins,
-		markedRefs: source.m,
-		features: sourceFeatures & ~disabledFeatures,
-		disabledFeatures
-	}), source.t);
-}
-//#endregion
-//#region node_modules/react/cjs/react-jsx-runtime.production.js
+// node_modules/react/cjs/react-jsx-runtime.production.js
 /**
 * @license React
 * react-jsx-runtime.production.js
@@ -6711,13 +4663,11 @@ var require_react_jsx_runtime_production = /* @__PURE__ */ __commonJSMin(((expor
 	exports.jsx = jsxProd;
 	exports.jsxs = jsxProd;
 }));
-//#endregion
-//#region node_modules/react/jsx-runtime.js
+// node_modules/react/jsx-runtime.js
 var require_jsx_runtime = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = require_react_jsx_runtime_production();
 }));
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/CatchBoundary.js
+// node_modules/@tanstack/react-router/dist/esm/CatchBoundary.js
 var import_jsx_runtime = require_jsx_runtime();
 var CatchBoundary = class extends import_react.Component {
 	constructor(..._args) {
@@ -6795,8 +4745,7 @@ function ErrorComponent({ error }) {
 		]
 	});
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/ClientOnly.js
+// node_modules/@tanstack/react-router/dist/esm/ClientOnly.js
 var getSnapshot = () => true;
 var getServerSnapshot = () => false;
 /**
@@ -6826,11 +4775,9 @@ function useHydrated(enabled = true) {
 function subscribe() {
 	return () => {};
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/routerContext.js
+// node_modules/@tanstack/react-router/dist/esm/routerContext.js
 var routerContext = import_react.createContext(null);
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/useRouter.js
+// node_modules/@tanstack/react-router/dist/esm/useRouter.js
 /**
 * Access the current TanStack Router instance from React context.
 * Must be used within a `RouterProvider`.
@@ -6846,12 +4793,9 @@ function useRouter(opts) {
 	if (!value);
 	return value;
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/matchContext.js
 var matchContext = import_react.createContext(void 0);
 var dummyMatchContext = import_react.createContext(void 0);
-//#endregion
-//#region node_modules/@tanstack/store/dist/alien.js
+// node_modules/@tanstack/store/dist/alien.js
 /* @__NO_SIDE_EFFECTS__ */
 function createReactiveSystem({ update, notify, unwatched }) {
 	return {
@@ -7044,8 +4988,7 @@ function purgeDeps(sub) {
 	let dep = depsTail !== void 0 ? depsTail.nextDep : sub.deps;
 	while (dep !== void 0) dep = unlink(dep, sub);
 }
-//#endregion
-//#region node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.js
+// node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.js
 /**
 * @license React
 * use-sync-external-store-shim.production.js
@@ -7104,13 +5047,11 @@ var require_use_sync_external_store_shim_production = /* @__PURE__ */ __commonJS
 	var shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
 	exports.useSyncExternalStore = void 0 !== React.useSyncExternalStore ? React.useSyncExternalStore : shim;
 }));
-//#endregion
-//#region node_modules/use-sync-external-store/shim/index.js
+// node_modules/use-sync-external-store/shim/index.js
 var require_shim = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = require_use_sync_external_store_shim_production();
 }));
-//#endregion
-//#region node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.production.js
+// node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.production.js
 /**
 * @license React
 * use-sync-external-store-shim/with-selector.production.js
@@ -7202,8 +5143,7 @@ function useMatch(opts) {
 		return opts.select ? opts.select(match) : match;
 	}
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/useLoaderData.js
+// node_modules/@tanstack/react-router/dist/esm/useLoaderData.js
 /**
 * Read and select the current route's loader data with type‑safety.
 *
@@ -7225,8 +5165,7 @@ function useLoaderData(opts) {
 		}
 	});
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/useLoaderDeps.js
+// node_modules/@tanstack/react-router/dist/esm/useLoaderDeps.js
 /**
 * Read and select the current route's loader dependencies object.
 *
@@ -7247,8 +5186,7 @@ function useLoaderDeps(opts) {
 		}
 	});
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/useParams.js
+// node_modules/@tanstack/react-router/dist/esm/useParams.js
 /**
 * Access the current route's path parameters with type-safety.
 *
@@ -7273,8 +5211,7 @@ function useParams(opts) {
 		}
 	});
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/useSearch.js
+// node_modules/@tanstack/react-router/dist/esm/useSearch.js
 /**
 * Read and select the current route's search parameters with type-safety.
 *
@@ -7298,8 +5235,7 @@ function useSearch(opts) {
 		}
 	});
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/useNavigate.js
+// node_modules/@tanstack/react-router/dist/esm/useNavigate.js
 /**
 * Imperative navigation hook.
 *
@@ -7323,8 +5259,7 @@ function useNavigate(_defaultOpts) {
 		});
 	}, [_defaultOpts?.from, router]);
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/useRouteContext.js
+// node_modules/@tanstack/react-router/dist/esm/useRouteContext.js
 function useRouteContext(opts) {
 	return useMatch({
 		...opts,
@@ -7337,15 +5272,14 @@ function resolveExternalLink(to, protocolAllowlist) {
 	if (!protocolAllowlist.has(scheme)) return null;
 	return to;
 }
-function resolveIsActive(location, next, activeOptions, basepath, isHydrated) {
+function resolveIsActive(location, next, activeOptions, basepath) {
 	const currentPath = removeTrailingSlash(location.pathname, basepath);
 	const nextPath = removeTrailingSlash(next.pathname, basepath);
 	if (activeOptions?.exact ? currentPath !== nextPath : !(currentPath.startsWith(nextPath) && (currentPath.length === nextPath.length || currentPath[nextPath.length] === "/"))) return false;
 	if (activeOptions?.includeSearch ?? true) {
 		if (!deepEqual(location.search, next.search, !activeOptions?.exact, activeOptions?.explicitUndefined)) return false;
 	}
-	if (activeOptions?.includeHash) return isHydrated && location.hash === next.hash;
-	return true;
+	return !activeOptions?.includeHash || location.hash === next.hash;
 }
 function useLinkProps(options, forwardedRef, host) {
 	return getServerLinkProps(useRouter(), options, forwardedRef, host);
@@ -7361,7 +5295,6 @@ var ROUTER_OPTION_KEYS = /* @__PURE__ */ new Set([
 	"mask",
 	"from",
 	"unsafeRelative",
-	"_fromLocation",
 	"reloadDocument",
 	"preload",
 	"preloadDelay",
@@ -7422,7 +5355,7 @@ function getServerLinkProps(router, options, forwardedRef, host) {
 		props.href = externalLink;
 		return props;
 	}
-	return applyLinkState(props, options, !!next && !(!disabled && !hrefOption) && resolveIsActive(router.stores.location.get(), next, activeOptions, router.basepath, false), hrefOption, linkDisabled, host);
+	return applyLinkState(props, options, !!next && !(!disabled && !hrefOption) && !activeOptions?.includeHash && resolveIsActive(router.stores.location.get(), next, activeOptions, router.basepath), hrefOption, linkDisabled, host);
 }
 function getHrefOption(next, router, disabled) {
 	if (disabled) return;
@@ -7463,8 +5396,7 @@ function areLinkPropsEqual(prev, next) {
 	for (const _key in prev) extraKeys--;
 	return extraKeys === 0;
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/route.js
+// node_modules/@tanstack/react-router/dist/esm/route.js
 var Route = class extends BaseRoute {
 	/**
 	* @deprecated Use the `createRoute` function instead.
@@ -7600,8 +5532,7 @@ var RootRoute = class extends BaseRootRoute {
 function createRootRoute(options) {
 	return new RootRoute(options);
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/fileRoute.js
+// node_modules/@tanstack/react-router/dist/esm/fileRoute.js
 /**
 * Creates a file-based Route factory for a given path.
 *
@@ -7620,8 +5551,7 @@ function createFileRoute(path) {
 		return route;
 	};
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/lazyRouteComponent.js
+// node_modules/@tanstack/react-router/dist/esm/lazyRouteComponent.js
 /**
 * Wrap a dynamic import to create a route component that supports
 * `.preload()` and friendly reload-on-module-missing behavior.
@@ -7652,15 +5582,16 @@ function lazyRouteComponent(importer, exportName) {
 			if (isModuleNotFoundError(error) && false);
 			throw error;
 		}
-		if (!comp) if (reactUse) reactUse(load());
-		else throw load();
+		if (!comp) {
+			if (reactUse) reactUse(load());
+			else throw load();
+		}
 		return import_react.createElement(comp, props);
 	};
 	lazyComp.preload = load;
 	return lazyComp;
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/not-found.js
+// node_modules/@tanstack/react-router/dist/esm/not-found.js
 function CatchNotFound(props) {
 	const router = useRouter();
 	{
@@ -7682,8 +5613,7 @@ function CatchNotFound(props) {
 function DefaultGlobalNotFound() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Not Found" });
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/ScriptOnce.js
+// node_modules/@tanstack/react-router/dist/esm/ScriptOnce.js
 /**
 * Server-only helper to emit a script tag exactly once during SSR.
 */
@@ -7694,8 +5624,7 @@ function ScriptOnce({ children }) {
 		dangerouslySetInnerHTML: { __html: children + ";document.currentScript.remove()" }
 	});
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/renderRouteNotFound.js
+// node_modules/@tanstack/react-router/dist/esm/renderRouteNotFound.js
 /**
 * Renders a not found component for a route when no matching route is found.
 *
@@ -7711,11 +5640,9 @@ function renderRouteNotFound(router, route, data) {
 	}
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(route.options.notFoundComponent, { ...data });
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/scroll-restoration-inline.js
+// node_modules/@tanstack/router-core/dist/esm/scroll-restoration-inline.js
 var scroll_restoration_inline_default = "function(a,f){let l;try{l=JSON.parse(sessionStorage.getItem(a)||\"{}\")}catch{return}const n=l?.[f||history.state?.__TSR_key];let c=!1;for(const t in n){const e=n[t],o=e?.scrollX,s=e?.scrollY;if(Number.isFinite(o)&&Number.isFinite(s)){if(t===\"window\")scrollTo(o,s),c=!0;else if(t)try{const r=document.querySelector(t);r&&(r.scrollLeft=o,r.scrollTop=s)}catch{}}}if(c)return;const i=location.hash.slice(1);if(i){const t=history.state?.__hashScrollIntoViewOptions??!0;if(t){const e=document.getElementById(i);e&&e.scrollIntoView(t)}return}scrollTo(0,0)}";
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/scroll-restoration-script/server.js
+// node_modules/@tanstack/router-core/dist/esm/scroll-restoration-script/server.js
 var defaultInlineScrollRestorationScript = `(${scroll_restoration_inline_default})(${escapeHtml(JSON.stringify(storageKey))})`;
 function getScrollRestorationScript(key) {
 	if (key === void 0) return defaultInlineScrollRestorationScript;
@@ -7730,15 +5657,13 @@ function getScrollRestorationScriptForRouter(router) {
 	if (userKey === defaultGetScrollRestorationKey(location)) return defaultInlineScrollRestorationScript;
 	return getScrollRestorationScript(userKey);
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/scroll-restoration.js
+// node_modules/@tanstack/react-router/dist/esm/scroll-restoration.js
 function ScrollRestoration() {
 	const script = getScrollRestorationScriptForRouter(useRouter());
 	if (!script) return null;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScriptOnce, { children: script });
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/Match.js
+// node_modules/@tanstack/react-router/dist/esm/Match.js
 function renderPending(router, route) {
 	const PendingComponent = route?.options.pendingComponent ?? router.options.defaultPendingComponent;
 	if (!PendingComponent) return null;
@@ -7747,12 +5672,9 @@ function renderPending(router, route) {
 var canWrapInSuspense = (router, route, ssr) => !route.isRoot || route.options.shellComponent || route.options.wrapInSuspense || ssr === false || ssr === "data-only" || false;
 var Match = import_react.memo(function MatchImpl({ routeId }) {
 	const router = useRouter();
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MatchView, {
-		router,
-		match: router.stores.byRoute.get(routeId).get()
-	});
+	return matchView(router, router.stores.byRoute.get(routeId).get());
 });
-function MatchView({ router, match }) {
+function matchView(router, match) {
 	const route = router.routesById[match.routeId];
 	const pendingElement = renderPending(router, route);
 	const routeErrorComponent = route.options.errorComponent ?? router.options.defaultErrorComponent;
@@ -7790,10 +5712,13 @@ function MatchView({ router, match }) {
 		children: content
 	});
 	const scrollRestoration = route.parentRoute?.id === "__root__" && router.options.scrollRestoration ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScrollRestoration, {}) : null;
-	const ShellComponent = route.isRoot ? route.options.shellComponent : void 0;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(matchContext.Provider, {
+	const ShellComponent = route.isRoot && route.options.shellComponent;
+	return ShellComponent ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(matchContext.Provider, {
 		value: match.routeId,
-		children: ShellComponent ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ShellComponent, { children: [content, scrollRestoration] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [content, scrollRestoration] })
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ShellComponent, { children: [content, scrollRestoration] })
+	}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(matchContext.Provider, {
+		value: match.routeId,
+		children: [content, scrollRestoration]
 	});
 }
 var MatchInner = import_react.memo(function MatchInnerImpl({ match }) {
@@ -7830,11 +5755,14 @@ var MatchInner = import_react.memo(function MatchInnerImpl({ match }) {
 		return renderPending(router, route);
 	}
 	if (match.status === "notFound") return renderRouteNotFound(router, route, match.error);
-	if (match.status === "error") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)((route.options.errorComponent ?? router.options.defaultErrorComponent) || ErrorComponent, {
-		error: match.error,
-		reset: void 0,
-		info: { componentStack: "" }
-	});
+	if (match.status === "error") {
+		const RouteErrorComponent = (route.options.errorComponent ?? router.options.defaultErrorComponent) || ErrorComponent;
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RouteErrorComponent, {
+			error: match.error,
+			reset: void 0,
+			info: { componentStack: "" }
+		});
+	}
 	return out;
 });
 /**
@@ -7866,15 +5794,13 @@ var Outlet = import_react.memo(function OutletImpl() {
 	});
 	return nextMatch;
 });
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/Transitioner.js
+// node_modules/@tanstack/react-router/dist/esm/Transitioner.js
 function settleOwner(owner, rendered) {
 	const settle = owner[1];
 	owner.length = 0;
 	settle?.(rendered);
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/Matches.js
+// node_modules/@tanstack/react-router/dist/esm/Matches.js
 /**
 * Internal component that renders the router's active match tree with
 * suspense, error, and not-found boundaries. Rendered by `RouterProvider`.
@@ -7902,8 +5828,7 @@ function MatchesInner() {
 		children: matchComponent
 	});
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/routerStores.js
+// node_modules/@tanstack/react-router/dist/esm/routerStores.js
 var getStoreFactory = (opts) => {
 	return {
 		createMutableStore: createNonReactiveMutableStore,
@@ -7911,8 +5836,7 @@ var getStoreFactory = (opts) => {
 		batch: (fn) => fn()
 	};
 };
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/router.js
+// node_modules/@tanstack/react-router/dist/esm/router.js
 /**
 * Creates a new Router instance for React.
 *
@@ -7932,8 +5856,7 @@ var Router = class extends RouterCore {
 		super(options, getStoreFactory);
 	}
 };
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/RouterProvider.js
+// node_modules/@tanstack/react-router/dist/esm/RouterProvider.js
 /**
 * Low-level provider that places the router into React context and optionally
 * updates router options from props. Most apps should use `RouterProvider`.
@@ -7970,8 +5893,7 @@ function RouterProvider({ router, ...rest }) {
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Matches, {})
 	});
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/Asset.js
+// node_modules/@tanstack/react-router/dist/esm/Asset.js
 var noopScriptHandler = () => {};
 function setScriptAttrs(script, attrs) {
 	if (!attrs) return;
@@ -8066,8 +5988,7 @@ function Script({ attrs, children, preventScriptHoist }) {
 	});
 	return null;
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/headContentUtils.js
+// node_modules/@tanstack/react-router/dist/esm/headContentUtils.js
 function buildTagsFromMatches(router, nonce, matches, assetCrossOrigin) {
 	matches = _getAssetMatches(matches);
 	const routeMeta = matches.map((match) => match.meta).filter((meta) => meta !== void 0);
@@ -8094,8 +6015,10 @@ function buildTagsFromMatches(router, nonce, matches, assetCrossOrigin) {
 			} catch {}
 			else {
 				const attribute = m.name ?? m.property;
-				if (attribute) if (metaByAttribute[attribute]) continue;
-				else metaByAttribute[attribute] = true;
+				if (attribute) {
+					if (metaByAttribute[attribute]) continue;
+					else metaByAttribute[attribute] = true;
+				}
 				resultMeta.push({
 					tag: "meta",
 					attrs: {
@@ -8196,8 +6119,7 @@ var useTags = (assetCrossOrigin) => {
 	const nonce = router.options.ssr?.nonce;
 	return buildTagsFromMatches(router, nonce, router.stores.matches.get(), assetCrossOrigin);
 };
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/HeadContent.js
+// node_modules/@tanstack/react-router/dist/esm/HeadContent.js
 /**
 * Render route-managed head tags (title, meta, links, styles, head scripts).
 * Place inside the document head of your app shell.
@@ -8212,8 +6134,7 @@ function HeadContent(props) {
 		nonce
 	})) });
 }
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/Scripts.js
+// node_modules/@tanstack/react-router/dist/esm/Scripts.js
 var routeScriptAttrs = { suppressHydrationWarning: true };
 /**
 * Render body script tags collected from route matches and SSR manifests.
@@ -8239,14 +6160,11 @@ function renderScripts(scripts) {
 		key: `tsr-scripts-${asset.tag}-${i}`
 	})) });
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/ssr/constants.js
+// node_modules/@tanstack/router-core/dist/esm/ssr/constants.js
 var GLOBAL_TSR = "$_TSR";
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/ssr/tsrScript.js
+// node_modules/@tanstack/router-core/dist/esm/ssr/tsrScript.js
 var tsrScript_default = "self.$_TSR={h(){this.hydrated=!0,this.c()},e(){this.streamEnded=!0,this.c()},c(){this.hydrated&&this.streamEnded&&(delete self.$_TSR,delete self.$R.tsr)},p(e){this.initialized?e():this.buffer.push(e)},buffer:[]}";
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/ssr/htmlBoundaryScanner.js
+// node_modules/@tanstack/router-core/dist/esm/ssr/htmlBoundaryScanner.js
 var textEncoder = new TextEncoder();
 var DOCUMENT_CLOSE = "</body></html>";
 var SCRIPT_CLOSE = "<\/script>";
@@ -8264,18 +6182,20 @@ function advanceByteMatcher(matcher, value, startIndex = 0, findLast = false) {
 	let lastMatchEnd;
 	let index = startIndex;
 	while (index < value.length) {
-		if (matched === 0) if (anchorIndex > 0 && index < value.length - anchorIndex) {
-			const anchor = value.indexOf(pattern[anchorIndex], index + anchorIndex);
-			if (anchor < 0) {
-				index = value.length - anchorIndex;
-				continue;
-			}
-			index = anchor - anchorIndex;
-		} else {
-			index = value.indexOf(pattern[0], index);
-			if (index < 0) {
-				matcher.matched = matched;
-				return lastMatchEnd;
+		if (matched === 0) {
+			if (anchorIndex > 0 && index < value.length - anchorIndex) {
+				const anchor = value.indexOf(pattern[anchorIndex], index + anchorIndex);
+				if (anchor < 0) {
+					index = value.length - anchorIndex;
+					continue;
+				}
+				index = anchor - anchorIndex;
+			} else {
+				index = value.indexOf(pattern[0], index);
+				if (index < 0) {
+					matcher.matched = matched;
+					return lastMatchEnd;
+				}
 			}
 		}
 		const byte = value[index];
@@ -8318,8 +6238,7 @@ function getExactBytesPrefixAtEnd(value, pattern, startIndex = 0) {
 		return candidateStart;
 	}
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/ssr/hydrationScripts.js
+// node_modules/@tanstack/router-core/dist/esm/ssr/hydrationScripts.js
 var encoder = new TextEncoder();
 var SOURCE_SEPARATOR = ";";
 var MAX_INITIAL_SOURCE_CODE_UNITS = 16384;
@@ -8694,8 +6613,7 @@ var HydrationScriptsOwner = class {
 function createHydrationScripts(nonce, initialSources) {
 	return new HydrationScriptsOwner(nonce, initialSources);
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/ssr/handlerCallback.js
+// node_modules/@tanstack/router-core/dist/esm/ssr/handlerCallback.js
 function isSsrResponse(value) {
 	if (typeof value !== "object" || value === null || !("response" in value) || !(value.response instanceof Response) || !("serverSsrCleanup" in value)) return false;
 	if (value.serverSsrCleanup === "none") return true;
@@ -8762,13 +6680,6 @@ function bindSsrResponseToRequest(router, result, signal) {
 	});
 	return ssrResponse;
 }
-function replaceSsrResponse(result, response, reason) {
-	disposeSsrResponse(result, reason);
-	return {
-		response,
-		serverSsrCleanup: "none"
-	};
-}
 function stripSsrResponseBody(result, reason) {
 	const ssrResponse = normalizeSsrResponse(result);
 	disposeSsrResponse(ssrResponse, reason);
@@ -8780,8 +6691,7 @@ function stripSsrResponseBody(result, reason) {
 function defineHandlerCallback(handler) {
 	return handler;
 }
-//#endregion
-//#region node_modules/@tanstack/router-core/dist/esm/ssr/transformStreamWithRouter.js
+// node_modules/@tanstack/router-core/dist/esm/ssr/transformStreamWithRouter.js
 var DEFAULT_SERIALIZATION_TIMEOUT_MS = 6e4;
 var MIN_APPLICATION_STRING_CHUNK_BYTES = 256;
 var MAX_APPLICATION_STRING_CHUNK_BYTES = 65536;
@@ -9272,8 +7182,7 @@ function makeMergeStream(serverSsr, reader, hydrationOutput, opts) {
 	disarmLifecycle = armStreamLifecycle(serverSsr, opts, () => terminal, terminate);
 	return stream;
 }
-//#endregion
-//#region node_modules/react-dom/cjs/react-dom.production.js
+// node_modules/react-dom/cjs/react-dom.production.js
 /**
 * @license React
 * react-dom.production.js
@@ -9423,10 +7332,9 @@ var require_react_dom_production = /* @__PURE__ */ __commonJSMin(((exports) => {
 	exports.useFormStatus = function() {
 		return ReactSharedInternals.H.useHostTransitionStatus();
 	};
-	exports.version = "19.3.0";
+	exports.version = "19.3.1";
 }));
-//#endregion
-//#region node_modules/react-dom/index.js
+// node_modules/react-dom/index.js
 var require_react_dom = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	function checkDCE() {
 		if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === "undefined" || typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== "function") return;
@@ -9439,8 +7347,7 @@ var require_react_dom = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	checkDCE();
 	module.exports = require_react_dom_production();
 }));
-//#endregion
-//#region node_modules/react-dom/cjs/react-dom-server-legacy.node.production.js
+// node_modules/react-dom/cjs/react-dom-server-legacy.node.production.js
 /**
 * @license React
 * react-dom-server-legacy.node.production.js
@@ -13531,10 +11438,9 @@ var require_react_dom_server_legacy_node_production = /* @__PURE__ */ __commonJS
 	exports.renderToString = function(children, options) {
 		return renderToStringImpl(children, options, !1, "The server used \"renderToString\" which does not support Suspense. If you intended for this Suspense boundary to render the fallback content on the server consider throwing an Error somewhere within the Suspense boundary. If you intended to have the server wait for the suspended component please switch to \"renderToPipeableStream\" which supports Suspense on the server");
 	};
-	exports.version = "19.3.0";
+	exports.version = "19.3.1";
 }));
-//#endregion
-//#region node_modules/react-dom/cjs/react-dom-server.node.production.js
+// node_modules/react-dom/cjs/react-dom-server.node.production.js
 /**
 * @license React
 * react-dom-server.node.production.js
@@ -13577,6 +11483,8 @@ var require_react_dom_server_node_production = /* @__PURE__ */ __commonJSMin(((e
 	}
 	var REACT_OPTIMISTIC_KEY = Symbol.for("react.optimistic_key");
 	var isArrayImpl = Array.isArray;
+	var hasOwnProperty = Object.prototype.hasOwnProperty;
+	var supportsArrayBufferDetached = hasOwnProperty.call(ArrayBuffer.prototype, "detached");
 	var scheduleMicrotask = queueMicrotask;
 	function flushBuffered(destination) {
 		"function" === typeof destination.flush && destination.flush();
@@ -13596,7 +11504,9 @@ var require_react_dom_server_node_production = /* @__PURE__ */ __commonJSMin(((e
 				read < chunk.length && (writeToDestination(destination, currentView.subarray(0, writtenBytes)), currentView = /* @__PURE__ */ new Uint8Array(4096), writtenBytes = textEncoder.encodeInto(chunk.slice(read), currentView).written);
 				4096 === writtenBytes && (writeToDestination(destination, currentView), currentView = /* @__PURE__ */ new Uint8Array(4096), writtenBytes = 0);
 			}
-		} else 0 !== chunk.byteLength && (4096 < chunk.byteLength ? (0 < writtenBytes && (writeToDestination(destination, currentView.subarray(0, writtenBytes)), currentView = /* @__PURE__ */ new Uint8Array(4096), writtenBytes = 0), writeToDestination(destination, chunk)) : (target = currentView.length - writtenBytes, target < chunk.byteLength && (0 === target ? writeToDestination(destination, currentView) : (currentView.set(chunk.subarray(0, target), writtenBytes), writtenBytes += target, writeToDestination(destination, currentView), chunk = chunk.subarray(target)), currentView = /* @__PURE__ */ new Uint8Array(4096), writtenBytes = 0), currentView.set(chunk, writtenBytes), writtenBytes += chunk.byteLength, 4096 === writtenBytes && (writeToDestination(destination, currentView), currentView = /* @__PURE__ */ new Uint8Array(4096), writtenBytes = 0)));
+		} else if (0 === chunk.byteLength) {
+			if (supportsArrayBufferDetached && chunk.buffer.detached) throw Error("Cannot transport a detached buffer. This usually happens when trying to transport multiple buffer-spanning views on the same underyling buffer. Either reuse the exact same view by identity or copy the underlying buffer manually via `view.slice()`.");
+		} else 4096 < chunk.byteLength ? (0 < writtenBytes && (writeToDestination(destination, currentView.subarray(0, writtenBytes)), currentView = /* @__PURE__ */ new Uint8Array(4096), writtenBytes = 0), writeToDestination(destination, chunk)) : (target = currentView.length - writtenBytes, target < chunk.byteLength && (0 === target ? writeToDestination(destination, currentView) : (currentView.set(chunk.subarray(0, target), writtenBytes), writtenBytes += target, writeToDestination(destination, currentView), chunk = chunk.subarray(target)), currentView = /* @__PURE__ */ new Uint8Array(4096), writtenBytes = 0), currentView.set(chunk, writtenBytes), writtenBytes += chunk.byteLength, 4096 === writtenBytes && (writeToDestination(destination, currentView), currentView = /* @__PURE__ */ new Uint8Array(4096), writtenBytes = 0));
 	}
 	function writeToDestination(destination, view) {
 		destination = destination.write(view);
@@ -13620,7 +11530,6 @@ var require_react_dom_server_node_production = /* @__PURE__ */ __commonJSMin(((e
 		return "string" === typeof chunk ? Buffer.byteLength(chunk, "utf8") : chunk.byteLength;
 	}
 	var assign = Object.assign;
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	var VALID_ATTRIBUTE_NAME_REGEX = RegExp("^[:A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD][:A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD\\-.0-9\\u00B7\\u0300-\\u036F\\u203F-\\u2040]*$");
 	var illegalAttributeNameCache = {};
 	var validatedAttributeNameCache = {};
@@ -17875,7 +15784,7 @@ var require_react_dom_server_node_production = /* @__PURE__ */ __commonJSMin(((e
 	}
 	function ensureCorrectIsomorphicReactVersion() {
 		var isomorphicReactPackageVersion = React.version;
-		if ("19.3.0" !== isomorphicReactPackageVersion) throw Error("Incompatible React versions: The \"react\" and \"react-dom\" packages must have the exact same version. Instead got:\n  - react:      " + (isomorphicReactPackageVersion + "\n  - react-dom:  19.3.0\nLearn more: https://react.dev/warnings/version-mismatch"));
+		if ("19.3.1" !== isomorphicReactPackageVersion) throw Error("Incompatible React versions: The \"react\" and \"react-dom\" packages must have the exact same version. Instead got:\n  - react:      " + (isomorphicReactPackageVersion + "\n  - react-dom:  19.3.1\nLearn more: https://react.dev/warnings/version-mismatch"));
 	}
 	ensureCorrectIsomorphicReactVersion();
 	function createDrainHandler(destination, request) {
@@ -18127,10 +16036,9 @@ var require_react_dom_server_node_production = /* @__PURE__ */ __commonJSMin(((e
 			}
 		};
 	};
-	exports.version = "19.3.0";
+	exports.version = "19.3.1";
 }));
-//#endregion
-//#region node_modules/isbot/index.mjs
+// node_modules/isbot/index.mjs
 var import_server_node = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((exports) => {
 	var l = require_react_dom_server_legacy_node_production();
 	var s = require_react_dom_server_node_production();
@@ -18142,7 +16050,7 @@ var import_server_node = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(
 	exports.resumeToPipeableStream = s.resumeToPipeableStream;
 	exports.resume = s.resume;
 })))(), 1);
-var fullPattern = " daum[ /]| deusu/|(?:^|[^g])news(?!sapphire)|(?<! channel/|google/)google(?!(?:wv|app|/google| pixel))|(?<! cu)bots?(?:\\b|_)|(?<!cam)scan|(?<!lib)http|24x7|;\\s\\w+;$|@[a-z][\\w-]+\\.|\\(\\)|\\.com\\b|\\b\\w+/1\\.0;|\\bbw/|\\bdlc\\b|\\bort/|\\bperl\\b|\\btime/|\\||^[<\\(;]|^[\\w \\.\\-\\(?:\\):%]+(?:/v?\\d+(?:\\.\\d+)?(?:\\.\\d{1,10})*?)?(?:,|$)|^[\\w\\-]+/[\\w]+$|^[^ ]{50,}$|^\\d+\\b|^\\w*search\\b|^\\w+/[\\w\\(\\)]*$|^\\w+/\\d\\.\\d\\s\\([\\w@]+\\)$|^active|^ad muncher|^amaya|^apache/|^avsdevicesdk/|^azure|^biglotron|^blackbox exporter|^bot|^clamav[ /]|^claude-code/|^client/|^cobweb/|^custom|^ddg[_-]android|^discourse|^dispatch/\\d|^downcast/|^duckduckgo|^email|^exodusmovement|^facebook|^getright/|^gozilla/|^hobbit|^hotzonu|^hwcdn/|^igetter/|^jeode/|^jetty/|^jigsaw|^microsoft bits|^movabletype|^mozilla/\\d\\.\\d\\s[\\w\\.-]+$|^mozilla/\\d\\.\\d\\s\\((?:compatible;)?(?:\\s?[\\w\\d-.]+\\/\\d+\\.\\d+)?\\)$|^navermailapp|^netsurf|^offline|^openai/|^owler|^php|^postman|^ps_daily/|^python|^rank|^read|^reed|^remove\\.bg/|^rest|^rss|^snapchat|^sora |^space bison|^stape/|^svn|^swcd |^taringa|^thumbor/|^track|^w3c|^webbandit/|^webcopier|^wget|^whatsapp|^wordpress|^xenu link sleuth|^yahoo|^yandex|^zdm/\\d|^zoom marketplace/|abuse|advisor|agent\\b|analyzer|archive|ask jeeves/teoma|attracta|audit|bluecoat drtr|browsex|burpcollaborator|capture|catch|check\\b|checker|chrome-lighthouse|chromeframe|classifier|cloudflare|collapsify\\b|convertify|cookiehubverify/|crawl|cursor/|cypress/|dareboost|datanyze|dejaclick|detect|discovery|dmbrowser|download|exaleadcloudview|feed|firephp|foregenix|functionize|grab|hardenize\\b|headless|hotjar|httrack|hubspot marketing grader|ibisbrowser|infrawatch|insight|inspect|iplabel|java(?!;)|library|linkcheck|linktiger|mail\\.ru/|manager|manus-user/|marketgoo/|measure|monitor\\b|neustar wpm|node\\b|nutch|offbyone|openvas|optimize|pageburst|pagespeed|parser|phantomjs|pingdom|playwright|powermarks|preview|productfinder|prospectingstudio|proxy|ptst[ /]\\d|radar|readable/|retriever|rexx;|rigor|rss\\b|scrape|securityheaders|selenium|server|silktide|sindup/|sogou|sparkler/|speedcurve|spider|splash|statuscake|supercleaner|synapse|synthetic|testlocally|tools|torrent|transcoder|url|validator|virtuoso|wappalyzer|watchtowr|webglance|webkit2png|whatcms/|xtate/";
+var fullPattern = " daum[ /]| deusu/|(?:^|[^g])news(?!sapphire)|(?<! channel/|google/)google(?!(?:wv|app|/google| pixel))|(?<! cu)bots?(?:\\b|_)|(?<!cam)scan|(?<!lib)http|24x7|;\\s\\w+;$|@[a-z][\\w-]+\\.|\\(\\)|\\.com\\b|\\b\\w+/1\\.0;|\\bbw/|\\bdlc\\b|\\bort/|\\bperl\\b|\\btime/|\\||^[<\\(;]|^[\\w \\.\\-\\(?:\\):%]+(?:/v?\\d+(?:\\.\\d+)?(?:\\.\\d{1,10})*?)?(?:,|$)|^[\\w\\-]+/[\\w]+$|^[^ ]{50,}$|^\\d+\\b|^\\w*search\\b|^\\w+/[\\w\\(\\)]*$|^\\w+/\\d\\.\\d\\s\\([\\w@]+\\)$|^active|^ad muncher|^amaya|^apache/|^avsdevicesdk/|^azure|^biglotron|^blackbox exporter|^bot|^clamav[ /]|^claude-code/|^client/|^cobweb/|^custom|^ddg[_-]android|^discourse|^dispatch/\\d|^downcast/|^duckduckgo|^email|^exodusmovement|^facebook|^getright/|^gozilla/|^hobbit|^hotzonu|^hwcdn/|^igetter/|^jeode/|^jetty/|^jigsaw|^microsoft bits|^movabletype|^mozilla/\\d\\.\\d\\s[\\w\\.-]+$|^mozilla/\\d\\.\\d\\s\\((?:compatible;)?(?:\\s?[\\w\\d-.]+[\\s/]\\d+\\.\\d+)?\\)$|^navermailapp|^netsurf|^offline|^openai/|^owler|^php|^postman|^ps_daily/|^python|^rank|^read|^reed|^remove\\.bg/|^rest|^rss|^snapchat|^sora |^space bison|^stape/|^svn|^swcd |^taringa|^thumbor/|^track|^w3c|^webbandit/|^webcopier|^wget|^whatsapp|^wordpress|^xenu link sleuth|^yahoo|^yandex|^zdm/\\d|^zoom marketplace/|abuse|advisor|agent\\b|analyzer|archive|ask jeeves/teoma|attracta|audit|bluecoat drtr|browsex|burpcollaborator|capture|catch|check\\b|checker|chrome-lighthouse|chromeframe|classifier|cloudflare|collapsify\\b|convertify|cookiehubverify/|crawl|cursor/|cypress/|dareboost|datanyze|dejaclick|detect|discovery|dmbrowser|download|exaleadcloudview|feed|firephp|foregenix|functionize|grab|hardenize\\b|headless|hotjar|httrack|hubspot marketing grader|ibisbrowser|infrawatch|insight|inspect|iplabel|java(?!;)|library|linkcheck|linktiger|mail\\.ru/|manus-user/|marketgoo/|measure|monitor\\b|neustar wpm|node\\b|nutch|offbyone|openvas|optimize|pageburst|pagespeed|parser|phantomjs|pingdom|playwright|powermarks|preview|productfinder|prospectingstudio|proxy|ptst[ /]\\d|radar|readable/|retriever|rexx;|rigor|rss\\b|scrape|securityheaders|selenium|server|silktide|sindup/|sogou|sparkler/|speedcurve|spider|splash|statuscake|supercleaner|synapse|synthetic|testlocally|tools|torrent|transcoder|url|validator|virtuoso|wappalyzer|watchtowr|webglance|webkit2png|whatcms/|xtate/";
 var naivePattern = /bot|crawl|http|lighthouse|scan|search|spider/i;
 var pattern;
 function getPattern() {
@@ -18159,8 +16067,7 @@ function isBot(userAgent) {
 	return isNonEmptyString(userAgent) && getPattern().test(userAgent);
 }
 var isbot = isBot;
-//#endregion
-//#region node_modules/@tanstack/react-router/dist/esm/ssr/renderRouterToStream.js
+// node_modules/@tanstack/react-router/dist/esm/ssr/renderRouterToStream.js
 var renderRouterToStream = async ({ request, router, responseHeaders, children }) => {
 	const signal = request.signal;
 	if (signal.aborted) {
@@ -18241,5 +16148,4 @@ var renderRouterToStream = async ({ request, router, responseHeaders, children }
 		throw error;
 	}
 };
-//#endregion
-export { getScriptPreloadAttrs as A, isDangerousProtocol as B, crossSerializeStream as C, toCrossJSONStream as D, toCrossJSONAsync as E, _getRenderedMatches as F, rootRouteId as G, dehydrateSsrMatchId as H, executeRewriteInput as I, isNotFound as K, invariant as L, resolveManifestAssetLink as M, resolveManifestCssLink as N, createInlineCssPlaceholderAsset as O, waitForReason as P, createSieveCache as R, createStream as S, isStream as T, isRedirect as U, isPromise as V, parseRedirect as W, createFileRoute as _, isSsrResponse as a, require_jsx_runtime as b, stripSsrResponseBody as c, Scripts as d, HeadContent as f, lazyRouteComponent as g, Outlet as h, disposeSsrResponse as i, getStylesheetHref as j, createInlineCssStyleAsset as k, createHydrationScripts as l, createRouter as m, bindSsrResponseToRequest as n, normalizeSsrResponse as o, RouterProvider as p, require_react as q, defineHandlerCallback as r, replaceSsrResponse as s, renderRouterToStream as t, GLOBAL_TSR as u, createRootRoute as v, fromJSON as w, createPlugin as x, useRouter as y, decodePath as z };
+export { SerovalUnsupportedTypeError as $, SERIALIZED_ASYNC_ITERATOR_CONSTRUCTOR as A, _getRenderedMatches as At, SYM_ITERATOR as B, isNotFound as Bt, ERROR_CONSTRUCTOR as C, createInlineCssPlaceholderAsset as Ct, PROMISE_CONSTRUCTOR as D, resolveManifestAssetLink as Dt, OpaqueReference as E, getStylesheetHref as Et, SERIALIZED_STREAM_CONSTRUCTOR as F, isPromise as Ft, SerovalMalformedNodeError as G, SerovalConflictedNodeIdError as H, SYMBOL_REF as I, dehydrateSsrMatchId as It, SerovalParserError as J, SerovalMissingInstanceError as K, SYMBOL_STRING as L, isRedirect as Lt, SERIALIZED_PROMISE_CONSTRUCTOR as M, createSieveCache as Mt, SERIALIZED_PROMISE_FAILURE as N, decodePath as Nt, REFERENCES_KEY as O, resolveManifestCssLink as Ot, SERIALIZED_PROMISE_SUCCESS as P, isDangerousProtocol as Pt, SerovalUnsupportedNodeError as Q, SYM_ASYNC_ITERATOR as R, parseRedirect as Rt, CONSTANT_VAL as S, string as St, INV_SYMBOL_REF as T, getScriptPreloadAttrs as Tt, SerovalDepthLimitError as U, SYM_TO_STRING_TAG as V, require_react as Vt, SerovalDeserializationError as W, SerovalSerializationError as X, SerovalPluginValidationError as Y, SerovalUnknownTypedArrayError as Z, createRootRoute as _, boolean as _t, isSsrResponse as a, createStream as at, ARRAY_BUFFER_CONSTRUCTOR as b, object as bt, createHydrationScripts as c, getReference as ct, HeadContent as d, isSequence as dt, Stream as et, RouterProvider as f, isStream as ft, createFileRoute as g, streamToAsyncIterable as gt, lazyRouteComponent as h, serializeString as ht, disposeSsrResponse as i, createSequenceFromIterable as it, SERIALIZED_ITERATOR_CONSTRUCTOR as j, invariant as jt, SERIALIZED_ARRAY_BUFFER_CONSTRUCTOR as k, waitForReason as kt, GLOBAL_TSR as l, getReferenceID as lt, Outlet as m, sequenceToIterator as mt, bindSsrResponseToRequest as n, createPlugin as nt, normalizeSsrResponse as o, deserializeString as ot, createRouter as p, resolvePlugins as pt, SerovalMissingPluginError as q, defineHandlerCallback as r, createSequence as rt, stripSsrResponseBody as s, getPlainObjectPlugins as st, renderRouterToStream as t, TEMPORAL_TYPE_NAME as tt, Scripts as u, isLiveStream as ut, useRouter as v, instanceOf as vt, ERROR_CONSTRUCTOR_STRING as w, createInlineCssStyleAsset as wt, CONSTANT_STRING as x, optional as xt, require_jsx_runtime as y, number as yt, SYM_IS_CONCAT_SPREADABLE as z, rootRouteId as zt };

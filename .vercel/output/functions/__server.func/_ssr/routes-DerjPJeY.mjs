@@ -1,5 +1,5 @@
 import { n as createServerFn, r as TSS_SERVER_FUNCTION } from "./ssr.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-BjFOF2Lv.js
+// node_modules/.nitro/vite/services/ssr/assets/routes-DerjPJeY.js
 var createServerRpc = (serverFnMeta, splitImportFn) => {
 	const url = "/_serverFn/" + serverFnMeta.id;
 	return Object.assign(splitImportFn, {
@@ -17,5 +17,4 @@ var getSiteOrigin = createServerFn({ method: "GET" }).handler(getSiteOrigin_crea
 	const { getRequestUrl } = await import("./ssr.mjs").then((n) => n.o).then((n) => n.t);
 	return getRequestUrl().origin;
 });
-//#endregion
 export { getSiteOrigin_createServerFn_handler };

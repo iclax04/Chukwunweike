@@ -11,6 +11,7 @@ import {
   parseAppEnv,
   projectRoot,
   readAppEnv,
+  resolveCommand,
 } from "./with-app-env.mjs";
 
 const execFileAsync = promisify(execFile);
@@ -61,6 +62,15 @@ test("an explicit process-env override wins over the file", () => {
 
 test("the template ships auth off", () => {
   assert.deepEqual(readAppEnv(projectRoot()), { VITE_AUTH_ENABLED: "false" });
+});
+
+test("local bin commands are resolved from the project without relying on PATH", () => {
+  const root = makeWorkspace();
+  const binDir = join(root, "node_modules", ".bin");
+  mkdirSync(binDir, { recursive: true });
+  const cmd = process.platform === "win32" ? "vite.cmd" : "vite";
+  writeFileSync(join(binDir, cmd), "#!/bin/sh\nexit 0\n");
+  assert.equal(resolveCommand("vite", root), join(binDir, cmd));
 });
 
 test("vite loadEnv resolves the wrapped value", () => {
@@ -117,7 +127,13 @@ test("the CLI still runs when invoked through a symlinked path", async () => {
   // node realpaths import.meta.url but not process.argv[1], so a raw comparison
   // turns the wrapper into a no-op that exits 0 without starting anything.
   const link = join(mkdtempSync(join(tmpdir(), "app-env-link-")), "scripts");
-  symlinkSync(join(projectRoot(), "scripts"), link);
+  const target = join(projectRoot(), "scripts");
+  try {
+    symlinkSync(target, link, process.platform === "win32" ? "junction" : "dir");
+  } catch {
+    // Some Windows/OneDrive setups reject symlinks but allow junctions.
+    mkdirSync(link, { recursive: true });
+  }
   const { stdout } = await execFileAsync(process.execPath, [
     join(link, "with-app-env.mjs"),
     process.execPath,

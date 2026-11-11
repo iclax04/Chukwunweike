@@ -1,8 +1,8 @@
 import { i as __toESM } from "../_runtime.mjs";
-import { b as require_jsx_runtime, q as require_react } from "../_libs/@tanstack/react-router+[...].mjs";
+import { a as CATEGORIES, c as whatsappLink, i as ADDRESS, l as Route$2, n as jsonLd, o as PRODUCTS, r as mapsUrl, s as WHATSAPP } from "./router-CPPP45KV.mjs";
+import { Vt as require_react, y as require_jsx_runtime } from "../_libs/@tanstack/react-router+[...].mjs";
 import { a as MessageCircle, i as ShieldCheck, o as Menu, r as Store, s as MapPin, t as X } from "../_libs/lucide-react.mjs";
-import { a as CATEGORIES, c as whatsappLink, i as ADDRESS, l as Route$2, n as jsonLd, o as PRODUCTS, r as mapsUrl, s as WHATSAPP } from "./router-CShxFwO2.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-qRLAP52D.js
+// node_modules/.nitro/vite/services/ssr/assets/routes-U_9o0xYw.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function Home() {
@@ -403,5 +403,4 @@ function Home() {
 		]
 	});
 }
-//#endregion
 export { Home as component };

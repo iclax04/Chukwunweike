@@ -20,9 +20,9 @@
  * `process.env`, which is why the merge has to happen before Vite starts.
  */
 import { spawn } from "node:child_process";
-import { readFileSync, realpathSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, realpathSync } from "node:fs";
 import { constants as osConstants } from "node:os";
-import { dirname, join } from "node:path";
+import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const APP_ENV_REL_PATH = ".grok/app-env.json";
@@ -88,6 +88,76 @@ export function projectRoot() {
 }
 
 /**
+ * Resolve a project-local binary before falling back to PATH.
+ *
+ * `npm run` injects node_modules/.bin into PATH, but direct CLI launches or
+ * subprocesses spawned from other shells can lose that PATH mutation, which
+ * causes `spawn('vite')` to throw `ENOENT` even though the dependency exists.
+ */
+export function resolveCommand(command, root = projectRoot()) {
+  if (!command || command.includes("/") || command.includes("\\")) return command;
+
+  const binDir = join(root, "node_modules", ".bin");
+  const candidates = process.platform === "win32"
+    ? [
+        join(binDir, `${command}.cmd`),
+        join(binDir, `${command}.exe`),
+        join(binDir, `${command}.ps1`),
+        join(binDir, `${command}.bat`),
+        join(binDir, command),
+      ]
+    : [join(binDir, command), join(binDir, `${command}.js`), join(binDir, command)];
+
+  for (const candidate of candidates) {
+    if (existsSync(candidate)) return candidate;
+  }
+
+  return command;
+}
+
+export function resolveNodeEntry(command, root = projectRoot()) {
+  const modulesDir = join(root, "node_modules");
+  if (!existsSync(modulesDir)) return null;
+
+  function inspectPackageDir(pkgDir) {
+    const pkgJsonPath = join(pkgDir, "package.json");
+    if (!existsSync(pkgJsonPath)) return null;
+    try {
+      const pkgJson = JSON.parse(readFileSync(pkgJsonPath, "utf8"));
+      const bin = pkgJson.bin;
+      if (!bin) return null;
+      if (typeof bin === "string") {
+        const pkgName = pkgJson.name || basename(pkgDir);
+        const normalized = pkgName.split("/").at(-1);
+        if (normalized !== command && basename(pkgDir) !== command) return null;
+        return join(pkgDir, bin);
+      }
+      const entry = bin[command];
+      if (!entry) return null;
+      return join(pkgDir, entry);
+    } catch {
+      return null;
+    }
+  }
+
+  for (const entry of readdirSync(modulesDir, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const pkgDir = join(modulesDir, entry.name);
+    const scoped = entry.name.startsWith("@") ? readdirSync(pkgDir, { withFileTypes: true }) : null;
+    if (scoped) {
+      for (const nested of scoped) {
+        if (!nested.isDirectory()) continue;
+        const resolved = inspectPackageDir(join(pkgDir, nested.name));
+        if (resolved) return resolved;
+      }
+    }
+    const resolved = inspectPackageDir(pkgDir);
+    if (resolved) return resolved;
+  }
+  return null;
+}
+
+/**
  * Whether `moduleUrl` is the script node was asked to run.
  *
  * Both sides are resolved through symlinks: node realpaths `import.meta.url`
@@ -110,8 +180,16 @@ function main(argv) {
     console.error("usage: node scripts/with-app-env.mjs <command> [args…]");
     process.exit(2);
   }
-  const env = mergeAppEnv(readAppEnv(projectRoot()), process.env);
-  const child = spawn(command, args, { stdio: "inherit", env });
+  const root = projectRoot();
+  const env = mergeAppEnv(readAppEnv(root), process.env);
+  const resolvedCommand = resolveCommand(command, root);
+  const jsEntry = resolveNodeEntry(command, root);
+  let child;
+  if (process.platform === "win32" && resolvedCommand.toLowerCase().endsWith(".cmd") && jsEntry) {
+    child = spawn(process.execPath, [jsEntry, ...args], { stdio: "inherit", env });
+  } else {
+    child = spawn(resolvedCommand, args, { stdio: "inherit", env });
+  }
   // The dev server is long-running and is stopped by signalling this wrapper.
   for (const signal of ["SIGINT", "SIGTERM", "SIGHUP"]) {
     process.on(signal, () => child.kill(signal));
