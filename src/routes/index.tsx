@@ -48,7 +48,7 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const shell = "mx-auto w-full max-w-3xl px-4 sm:px-6";
+const shell = "px-4";
 
 function Home() {
   const origin = Route.useLoaderData();
@@ -61,10 +61,11 @@ function Home() {
   );
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-paper">
+      <div className="mx-auto min-h-screen w-full max-w-[390px] bg-paper">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(origin) }} />
       <div className="bg-primary text-card">
-        <div className={`${shell} flex flex-col gap-1 py-2 text-sm sm:flex-row sm:items-center sm:justify-between`}>
+        <div className={`${shell} flex flex-col gap-1 py-2 text-sm`}>
           <p className="flex items-center gap-2">
             <MapPin className="size-4 shrink-0" aria-hidden />
             <span>
@@ -91,14 +92,9 @@ function Home() {
               <span className="block text-xs text-muted">Phone accessories & gadgets</span>
             </span>
           </a>
-          <nav className="hidden items-center gap-5 text-sm font-semibold text-ink md:flex">
-            <a href="#collection" className="hover:text-primary">Collection</a>
-            <a href="#visit" className="hover:text-primary">Visit</a>
-            <a href="#about" className="hover:text-primary">About</a>
-          </nav>
           <button
             type="button"
-            className="grid size-11 shrink-0 place-items-center rounded-lg border border-line md:hidden"
+            className="grid size-11 shrink-0 place-items-center rounded-lg border border-line"
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((value) => !value)}
           >
@@ -106,7 +102,7 @@ function Home() {
           </button>
         </div>
         {open ? (
-          <nav className={`${shell} flex flex-col gap-1 border-t border-line py-3 text-base font-semibold md:hidden`}>
+          <nav className={`${shell} flex flex-col gap-1 border-t border-line py-3 text-base font-semibold`}>
             <a className="rounded-lg px-2 py-3 hover:bg-paper" href="#collection" onClick={() => setOpen(false)}>
               Collection
             </a>
@@ -121,17 +117,17 @@ function Home() {
       </header>
 
       <main id="top">
-        <section className={`${shell} py-10 sm:py-12`}>
+        <section className={`${shell} py-10`}>
           <p className="mb-3 text-sm font-semibold tracking-wide text-primary uppercase">
             Asaba · City View Mall
           </p>
-          <h1 className="text-3xl leading-tight font-semibold text-ink sm:text-4xl">
+          <h1 className="text-3xl leading-tight font-semibold text-ink">
             Welcome to Chukwunweike
           </h1>
-          <p className="mt-4 text-base text-muted sm:text-lg">
+          <p className="mt-4 text-base text-muted">
             A straightforward shop for iPhone 18 Pro Max, iPhone 16 Pro Max, iPhone 17 Air, Google Pixel, PS5 controllers, AirPods, and Apple Watch. Nothing is priced on this page — send a WhatsApp and we will tell you what is available.
           </p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-6 flex flex-col gap-3">
             <a
               href="#collection"
               className="inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-5 font-semibold text-card hover:bg-primary-dark"
@@ -149,8 +145,8 @@ function Home() {
             </a>
           </div>
           <img
-            src="/catalog/shop.jpg"
-            alt="Chukwunweike Phones and Accessories, with AirPods Max boxes under the shop sign"
+            src="/catalog/headphones-keyboards.jpg"
+            alt="AirPods Max headsets on the counter at Chukwunweike"
             className="mt-8 aspect-[4/3] w-full rounded-card bg-paper object-cover object-center shadow-sm"
           />
         </section>
@@ -182,7 +178,7 @@ function Home() {
         </section>
 
         <section id="collection" className={`${shell} py-12`}>
-          <h2 className="text-2xl font-semibold text-ink sm:text-3xl">The collection</h2>
+            <h2 className="text-2xl font-semibold text-ink">The collection</h2>
           <p className="mt-1 text-muted">Prices are not listed. Tap Inquire and we will reply on WhatsApp.</p>
           <div className="mt-4 flex flex-wrap gap-2" role="tablist" aria-label="Product categories">
             {CATEGORIES.map((category) => {
@@ -228,7 +224,7 @@ function Home() {
 
         <section id="about" className="bg-card">
           <div className={`${shell} py-12`}>
-            <h2 className="text-2xl font-semibold text-ink sm:text-3xl">A straightforward shop</h2>
+            <h2 className="text-2xl font-semibold text-ink">A straightforward shop</h2>
             <p className="mt-3 text-muted">
               We are a neighbourhood phone shop in Asaba. Come in, look at the phones, and leave with
               something that works. If you are not nearby, send a WhatsApp and we will confirm what is on the
@@ -238,16 +234,16 @@ function Home() {
               We carry iPhone 18 Pro Max, iPhone 16 Pro Max, iPhone 17 Air, Google Pixel phones, PS5 controllers, AirPods, and Apple Watch. Come in and look, or send a WhatsApp first.
             </p>
             <img
-              src="/catalog/headphones-keyboards.jpg"
-              alt="AirPods Max and iPad Magic Keyboard boxes on the counter"
+              src="/catalog/shop.jpg"
+              alt="Chukwunweike Phones and Accessories, with AirPods Max boxes under the shop sign"
               className="mt-8 aspect-[4/3] w-full rounded-card bg-paper object-cover object-center"
             />
           </div>
         </section>
 
         <section id="visit" className={`${shell} py-12`}>
-          <div className="rounded-card border border-line bg-card p-5 sm:p-6">
-            <h2 className="text-2xl font-semibold text-ink sm:text-3xl">Visit the shop</h2>
+          <div className="rounded-card border border-line bg-card p-5">
+            <h2 className="text-2xl font-semibold text-ink">Visit the shop</h2>
             <address className="mt-4 text-lg leading-relaxed text-ink not-italic">
               <strong className="font-semibold">{ADDRESS.shop}</strong>
               <br />
@@ -270,7 +266,7 @@ function Home() {
               href={whatsappLink("Hello Chukwunweike, I am coming to Shop 3, City View Mall.")}
               target="_blank"
               rel="noreferrer"
-              className="mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-whatsapp px-5 font-semibold text-card sm:w-auto"
+              className="mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-whatsapp px-5 font-semibold text-card"
             >
               <MessageCircle className="size-4" aria-hidden />
               Message on WhatsApp
@@ -295,16 +291,21 @@ function Home() {
           </p>
         </div>
       </footer>
+      </div>
 
-      <a
-        href={whatsappLink("Hello Chukwunweike")}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Chat on WhatsApp"
-        className="fixed right-4 bottom-4 z-30 grid size-14 place-items-center rounded-full bg-whatsapp text-card shadow-lg"
-      >
-        <MessageCircle className="size-7" />
-      </a>
+      <div className="pointer-events-none fixed inset-x-0 bottom-4 z-30">
+        <div className="mx-auto flex w-full max-w-[390px] justify-end px-4">
+          <a
+            href={whatsappLink("Hello Chukwunweike")}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Chat on WhatsApp"
+            className="pointer-events-auto grid size-14 place-items-center rounded-full bg-whatsapp text-card shadow-lg"
+          >
+            <MessageCircle className="size-7" />
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
