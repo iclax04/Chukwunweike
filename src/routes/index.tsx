@@ -35,7 +35,7 @@ export const Route = createFileRoute("/")({
         {
           name: "description",
           content:
-            "Original iPhones, Samsung Galaxy phones, PlayStation 5 consoles and games, and gadgets at Shop 3, City View Mall, Nnebisi Road, Asaba. Ask on WhatsApp. No prices listed online.",
+            "iPhone 18 Pro Max, iPhone 16 Pro Max, iPhone 17 Air, Google Pixel, PS5 controllers, AirPods, and Apple Watch at Shop 3, City View Mall, Nnebisi Road, Asaba. Ask on WhatsApp. No prices listed online.",
         },
       ],
       links: [
@@ -143,9 +143,7 @@ function Home() {
               Welcome to Chukwunweike
             </h1>
             <p className="mt-4 max-w-lg text-lg text-muted">
-              A straightforward shop for new iPhones, Samsung Galaxy phones, PlayStation consoles and games, and
-              everyday gadgets. Nothing is priced on this page — send a WhatsApp and we will tell you what is
-              available.
+              A straightforward shop for iPhone 18 Pro Max, iPhone 16 Pro Max, iPhone 17 Air, Google Pixel, PS5 controllers, AirPods, and Apple Watch. Nothing is priced on this page — send a WhatsApp and we will tell you what is available.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
@@ -167,7 +165,7 @@ function Home() {
           </div>
           <img
             src="/catalog/shop.jpg"
-            alt="The phone display inside Chukwunweike at City View Mall"
+            alt="Chukwunweike Phones and Accessories, with AirPods Max boxes under the shop sign"
             className="aspect-[16/10] w-full rounded-card object-cover shadow-sm"
           />
         </section>
@@ -257,13 +255,12 @@ function Home() {
                 shelf before you make the trip.
               </p>
               <p className="mt-3 text-muted">
-                We carry new iPhones, Samsung Galaxy phones, PlayStation 5 consoles and games, and everyday
-                gadgets — cases, cables, power banks, and earbuds.
+                We carry iPhone 18 Pro Max, iPhone 16 Pro Max, iPhone 17 Air, Google Pixel phones, PS5 controllers, AirPods, and Apple Watch. Come in and look, or send a WhatsApp first.
               </p>
             </div>
             <img
-              src="/catalog/accessories.jpg"
-              alt="Cases, a cable, and a power bank on the counter"
+              src="/catalog/headphones-keyboards.jpg"
+              alt="AirPods Max and iPad Magic Keyboard boxes on the counter"
               className="aspect-[4/3] w-full rounded-card object-cover"
             />
           </div>

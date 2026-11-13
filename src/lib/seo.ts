@@ -3,7 +3,7 @@ import { ADDRESS, PRODUCTS, WHATSAPP } from "@/lib/catalog";
 export const SITE_NAME = "Chukwunweike Phone Accessories & Gadgets";
 
 export const SITE_DESCRIPTION =
-  "Original iPhones, Samsung Galaxy phones, PlayStation 5 consoles and games, and gadgets at Shop 3, City View Mall, Nnebisi Road, Asaba. Ask on WhatsApp. No prices listed online.";
+  "iPhone 18 Pro Max, iPhone 16 Pro Max, iPhone 17 Air, Google Pixel, PS5 controllers, AirPods, and Apple Watch at Shop 3, City View Mall, Nnebisi Road, Asaba. Ask on WhatsApp. No prices listed online.";
 
 const MAPS_QUERY = encodeURIComponent(
   "Shop 3, City View Mall, Nnebisi Road, opposite Konwea Plaza, Asaba, Delta State, Nigeria",
@@ -38,6 +38,7 @@ export function structuredData(origin: string) {
         name: SITE_NAME,
         description: SITE_DESCRIPTION,
         url: page,
+        logo: `${origin}/logo.svg`,
         image: images,
         telephone: `+${WHATSAPP}`,
         currenciesAccepted: "NGN",
