@@ -10,7 +10,8 @@
   --color-primary-dark: #0b5340;
   --color-whatsapp: #1a9e4a;
   --font-sans: "Inter", "Segoe UI", sans-serif;
-  --radius-card: 0.75rem;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --radius-card: 0.375rem;
 }
 
 @layer base {
