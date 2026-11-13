@@ -242,48 +242,10 @@ function Home() {
             />
           </div>
         </section>
-
-        <section id="visit" className={`${shell} py-12 sm:py-16`}>
-          <div className="rounded-card border border-line bg-card p-5 sm:p-8">
-            <h2 className="font-serif text-3xl text-ink">Visit the shop</h2>
-            <address className="mt-4 text-lg leading-relaxed text-ink not-italic">
-              <strong className="font-semibold">{ADDRESS.shop}</strong>
-              <br />
-              {ADDRESS.street}
-              <br />
-              {ADDRESS.city}
-            </address>
-            <p className="mt-4 text-muted">
-              WhatsApp{" "}
-              <a className="font-semibold text-primary" href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noreferrer">
-                +234 913 208 3551
-              </a>
-            </p>
-            <p className="mt-2 text-sm">
-              <a className="font-semibold text-primary" href={mapsUrl()} target="_blank" rel="noreferrer">
-                Open in Google Maps
-              </a>
-            </p>
-            <a
-              href={whatsappLink("Hello Chukwunweike, I am coming to Shop 3, City View Mall.")}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-whatsapp px-5 font-semibold text-card"
-            >
-              <MessageCircle className="size-4" aria-hidden />
-              Message on WhatsApp
-            </a>
-            <div className="mt-6 border-t border-line pt-6">
-              <p className="font-serif text-2xl text-ink">City View Mall</p>
-              <p className="mt-2 text-muted">Nnebisi Road, Asaba</p>
-              <p className="mt-1 text-sm text-muted">Directly opposite Konwea Plaza</p>
-            </div>
-          </div>
-        </section>
       </main>
 
-      <footer className="border-t border-line bg-ink pb-24 text-card">
-        <div className={`${shell} py-10`}>
+      <footer id="visit" className="border-t border-line bg-ink pb-24 text-card">
+        <div className={`${shell} py-12`}>
           <div className="grid gap-8 sm:grid-cols-3">
             <div>
               <p className="flex items-center gap-2 font-serif text-2xl">
@@ -293,7 +255,7 @@ function Home() {
               <p className="mt-3 text-sm text-paper/80">Phone accessories and gadgets in Asaba.</p>
             </div>
             <div>
-              <p className="text-xs font-semibold tracking-widest text-paper/60 uppercase">Visit</p>
+              <h2 className="font-serif text-2xl">Visit the shop</h2>
               <address className="mt-3 text-sm leading-relaxed not-italic">
                 {ADDRESS.shop}
                 <br />
@@ -304,25 +266,29 @@ function Home() {
             </div>
             <div>
               <p className="text-xs font-semibold tracking-widest text-paper/60 uppercase">Contact</p>
-              <ul className="mt-3 space-y-2 text-sm">
-                <li>
-                  <a className="hover:underline" href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noreferrer">
-                    WhatsApp +234 913 208 3551
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:underline" href={mapsUrl()} target="_blank" rel="noreferrer">
-                    Google Maps
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:underline" href="#collection">Collection</a>
-                </li>
-              </ul>
+              <p className="mt-3 text-sm">
+                <a className="hover:underline" href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noreferrer">
+                  WhatsApp +234 913 208 3551
+                </a>
+              </p>
+              <p className="mt-2 text-sm">
+                <a className="hover:underline" href={mapsUrl()} target="_blank" rel="noreferrer">
+                  Open in Google Maps
+                </a>
+              </p>
+              <a
+                href={whatsappLink("Hello Chukwunweike, I am coming to Shop 3, City View Mall.")}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-whatsapp px-5 text-sm font-semibold text-card"
+              >
+                <MessageCircle className="size-4" aria-hidden />
+                Message on WhatsApp
+              </a>
             </div>
           </div>
-          <p className="mt-8 border-t border-white/15 pt-4 text-sm text-paper/70">
-            © {new Date().getFullYear()} Chukwunweike. Shop 3, City View Mall, Asaba.
+          <p className="mt-10 border-t border-white/15 pt-4 text-sm text-paper/70">
+            © {new Date().getFullYear()} Chukwunweike
           </p>
         </div>
       </footer>
