@@ -145,9 +145,9 @@ function Home() {
             </a>
           </div>
           <img
-            src="/catalog/headphones-keyboards.jpg"
-            alt="AirPods Max headsets on the counter at Chukwunweike"
-            className="mt-8 aspect-[4/3] w-full rounded-card bg-paper object-cover object-center shadow-sm"
+            src="/catalog/welcome.jpg"
+            alt="AirPods Max on display under the Chukwunweike sign"
+            className="mt-8 w-full rounded-card"
           />
         </section>
 
