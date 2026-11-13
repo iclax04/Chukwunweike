@@ -178,7 +178,7 @@ function Home() {
           <img
             src="/catalog/shop.jpg"
             alt="Chukwunweike Phones and Accessories, with AirPods Max boxes under the shop sign"
-            className="aspect-[4/3] max-h-80 w-full rounded-card object-cover shadow-sm"
+            className="aspect-[4/3] w-full rounded-card object-cover shadow-sm sm:max-h-80"
           />
         </section>
 
@@ -238,7 +238,7 @@ function Home() {
           <ul className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
             {products.map((product) => (
               <li key={product.id} id={product.id} className="flex flex-col overflow-hidden rounded-card border border-line bg-card">
-                <img src={product.image} alt={product.name} className="h-56 w-full bg-paper object-contain sm:h-64" />
+                <img src={product.image} alt={product.name} className="aspect-[4/5] w-full bg-paper object-contain sm:aspect-auto sm:h-64" />
                 <div className="flex flex-1 flex-col p-4 sm:p-5">
                   <p className="text-xs font-semibold tracking-wide text-primary uppercase">{product.note}</p>
                   <h3 className="mt-1 font-semibold text-xl text-ink">{product.name}</h3>
