@@ -48,7 +48,7 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const shell = "mx-auto w-full max-w-5xl px-4 sm:px-6";
+const shell = "px-4";
 
 function Home() {
   const origin = Route.useLoaderData();
@@ -61,10 +61,11 @@ function Home() {
   );
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-paper">
+      <div className="mx-auto min-h-screen w-full max-w-md">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(origin) }} />
       <div className="bg-primary text-card">
-        <div className={`${shell} flex flex-col gap-1 py-2 text-xs sm:flex-row sm:items-center sm:justify-between sm:text-sm`}>
+        <div className={`${shell} flex flex-col gap-1 py-2 text-sm`}>
           <p className="flex items-center gap-2">
             <MapPin className="size-4 shrink-0" aria-hidden />
             <span>
@@ -85,35 +86,15 @@ function Home() {
       <header className="sticky top-0 z-20 border-b border-line bg-card/95 backdrop-blur">
         <div className={`${shell} flex items-center justify-between gap-3 py-3`}>
           <a href="#top" className="flex min-w-0 items-center gap-3">
-            <img src="/logo.svg" alt="" width={44} height={44} className="size-10 shrink-0 rounded-lg sm:size-11" />
+            <img src="/logo.svg" alt="" width={44} height={44} className="size-10 shrink-0 rounded-lg" />
             <span className="min-w-0">
-              <span className="block truncate font-semibold text-base leading-none text-ink sm:text-lg">Chukwunweike</span>
-              <span className="hidden text-xs text-muted min-[420px]:block">Phone accessories & gadgets</span>
+              <span className="block truncate font-semibold text-base leading-none text-ink">Chukwunweike</span>
+              <span className="block text-xs text-muted">Phone accessories & gadgets</span>
             </span>
           </a>
-          <nav className="hidden items-center gap-5 text-sm font-semibold text-ink md:flex">
-            <a href="#collection" className="hover:text-primary">
-              Collection
-            </a>
-            <a href="#visit" className="hover:text-primary">
-              Visit
-            </a>
-            <a href="#about" className="hover:text-primary">
-              About
-            </a>
-            <a
-              href={whatsappLink("Hello Chukwunweike, I would like to chat about a product.")}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-whatsapp px-4 text-card"
-            >
-              <MessageCircle className="size-4" aria-hidden />
-              Chat
-            </a>
-          </nav>
           <button
             type="button"
-            className="grid size-11 shrink-0 place-items-center rounded-lg border border-line md:hidden"
+            className="grid size-11 shrink-0 place-items-center rounded-lg border border-line"
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((value) => !value)}
           >
@@ -121,7 +102,7 @@ function Home() {
           </button>
         </div>
         {open ? (
-          <nav className="flex flex-col gap-1 border-t border-line px-4 py-3 text-base font-semibold md:hidden">
+          <nav className="flex flex-col gap-1 border-t border-line px-4 py-3 text-base font-semibold">
             <a className="rounded-lg px-2 py-3 hover:bg-paper" href="#collection" onClick={() => setOpen(false)}>
               Collection
             </a>
@@ -146,18 +127,18 @@ function Home() {
       </header>
 
       <main id="top">
-        <section className={`${shell} grid items-center gap-8 py-10 md:grid-cols-2 md:py-16 lg:gap-12`}>
+        <section className={`${shell} grid gap-8 py-10`}>
           <div>
             <p className="mb-3 text-sm font-semibold tracking-wide text-primary uppercase">
               Asaba · City View Mall
             </p>
-            <h1 className="text-3xl leading-tight font-semibold text-ink sm:text-4xl">
+            <h1 className="text-3xl leading-tight font-semibold text-ink">
               Welcome to Chukwunweike
             </h1>
-            <p className="mt-4 max-w-xl text-base text-muted sm:text-lg">
+            <p className="mt-4 text-base text-muted">
               A straightforward shop for iPhone 18 Pro Max, iPhone 16 Pro Max, iPhone 17 Air, Google Pixel, PS5 controllers, AirPods, and Apple Watch. Nothing is priced on this page — send a WhatsApp and we will tell you what is available.
             </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <div className="mt-6 flex flex-col gap-3">
               <a
                 href="#collection"
                 className="inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-5 font-semibold text-card hover:bg-primary-dark"
@@ -178,12 +159,12 @@ function Home() {
           <img
             src="/catalog/shop.jpg"
             alt="Chukwunweike Phones and Accessories, with AirPods Max boxes under the shop sign"
-            className="aspect-[4/3] w-full rounded-card object-cover shadow-sm sm:max-h-80"
+            className="aspect-[4/3] w-full rounded-card object-cover shadow-sm"
           />
         </section>
 
         <section className="border-y border-line bg-card">
-          <ul className={`${shell} grid gap-6 py-6 sm:grid-cols-2 lg:grid-cols-3`}>
+          <ul className={`${shell} grid gap-6 py-6`}>
             <li className="flex items-start gap-3">
               <ShieldCheck className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden />
               <div>
@@ -198,7 +179,7 @@ function Home() {
                 <p className="text-sm text-muted">Shop 3, opposite Konwea Plaza.</p>
               </div>
             </li>
-            <li className="flex items-start gap-3 sm:col-span-2 lg:col-span-1">
+            <li className="flex items-start gap-3">
               <MessageCircle className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden />
               <div>
                 <p className="font-semibold text-ink">Ask before you come</p>
@@ -208,10 +189,10 @@ function Home() {
           </ul>
         </section>
 
-        <section id="collection" className={`${shell} py-12 lg:py-16`}>
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <section id="collection" className={`${shell} py-12`}>
+          <div className="flex flex-col gap-4">
             <div>
-              <h2 className="font-semibold text-2xl text-ink sm:text-3xl">The collection</h2>
+              <h2 className="font-semibold text-2xl text-ink">The collection</h2>
               <p className="mt-1 text-muted">Prices are not listed. Tap Inquire and we will reply on WhatsApp.</p>
             </div>
             <div className="flex flex-wrap gap-2" role="tablist" aria-label="Product categories">
@@ -235,11 +216,11 @@ function Home() {
             </div>
           </div>
 
-          <ul className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <ul className="mt-8 grid grid-cols-1 gap-5">
             {products.map((product) => (
               <li key={product.id} id={product.id} className="flex flex-col overflow-hidden rounded-card border border-line bg-card">
-                <img src={product.image} alt={product.name} className="aspect-[4/5] w-full bg-paper object-contain sm:aspect-auto sm:h-64" />
-                <div className="flex flex-1 flex-col p-4 sm:p-5">
+                <img src={product.image} alt={product.name} className="aspect-[4/5] w-full bg-paper object-contain" />
+                <div className="flex flex-1 flex-col p-4">
                   <p className="text-xs font-semibold tracking-wide text-primary uppercase">{product.note}</p>
                   <h3 className="mt-1 font-semibold text-xl text-ink">{product.name}</h3>
                   <p className="mt-1 flex-1 text-sm text-muted">{product.blurb}</p>
@@ -258,9 +239,9 @@ function Home() {
         </section>
 
         <section id="about" className="bg-card">
-          <div className={`${shell} grid gap-8 py-12 md:grid-cols-2 md:items-center lg:py-16`}>
+          <div className={`${shell} grid gap-8 py-12`}>
             <div>
-              <h2 className="font-semibold text-2xl text-ink sm:text-3xl">A straightforward shop</h2>
+              <h2 className="font-semibold text-2xl text-ink">A straightforward shop</h2>
               <p className="mt-3 text-muted">
                 We are a neighbourhood phone shop in Asaba. Come in, look at the phones, and leave with
                 something that works. If you are not nearby, send a WhatsApp and we will confirm what is on the
@@ -278,10 +259,10 @@ function Home() {
           </div>
         </section>
 
-        <section id="visit" className={`${shell} py-12 lg:py-16`}>
-          <div className="grid gap-6 rounded-card border border-line bg-card p-5 sm:p-6 md:grid-cols-2">
+        <section id="visit" className={`${shell} py-12`}>
+          <div className="grid gap-6 rounded-card border border-line bg-card p-5">
             <div>
-              <h2 className="font-semibold text-2xl text-ink sm:text-3xl">Visit the shop</h2>
+              <h2 className="font-semibold text-2xl text-ink">Visit the shop</h2>
               <address className="mt-4 not-italic text-lg leading-relaxed text-ink">
                 <strong className="font-semibold">{ADDRESS.shop}</strong>
                 <br />
@@ -304,7 +285,7 @@ function Home() {
                 href={whatsappLink("Hello Chukwunweike, I am coming to Shop 3, City View Mall.")}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-whatsapp px-5 font-semibold text-card sm:w-auto"
+                className="mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-whatsapp px-5 font-semibold text-card"
               >
                 <MessageCircle className="size-4" aria-hidden />
                 Message on WhatsApp
@@ -319,8 +300,8 @@ function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-line bg-ink pb-24 text-card md:pb-8">
-        <div className={`${shell} flex flex-col gap-2 py-8 text-sm md:flex-row md:items-center md:justify-between`}>
+      <footer className="border-t border-line bg-ink pb-24 text-card">
+        <div className={`${shell} flex flex-col gap-2 py-8 text-sm`}>
           <p className="flex items-center gap-2 font-semibold text-lg">
             <img src="/logo.svg" alt="" width={28} height={28} className="size-7 rounded-md" />
             Chukwunweike
@@ -330,16 +311,21 @@ function Home() {
           </p>
         </div>
       </footer>
+      </div>
 
-      <a
-        href={whatsappLink("Hello Chukwunweike")}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Chat on WhatsApp"
-        className="fixed right-4 bottom-4 grid size-14 place-items-center rounded-full bg-whatsapp text-card shadow-lg"
-      >
-        <MessageCircle className="size-7" />
-      </a>
+      <div className="pointer-events-none fixed inset-x-0 bottom-4 z-30">
+        <div className="mx-auto flex w-full max-w-md justify-end px-4">
+          <a
+            href={whatsappLink("Hello Chukwunweike")}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Chat on WhatsApp"
+            className="pointer-events-auto grid size-14 place-items-center rounded-full bg-whatsapp text-card shadow-lg"
+          >
+            <MessageCircle className="size-7" />
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
