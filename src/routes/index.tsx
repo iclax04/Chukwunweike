@@ -48,7 +48,7 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const shell = "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8";
+const shell = "mx-auto w-full max-w-5xl px-4 sm:px-6";
 
 function Home() {
   const origin = Route.useLoaderData();
@@ -91,7 +91,7 @@ function Home() {
               <span className="hidden text-xs text-muted min-[420px]:block">Phone accessories & gadgets</span>
             </span>
           </a>
-          <nav className="hidden items-center gap-6 text-sm font-semibold text-ink lg:flex">
+          <nav className="hidden items-center gap-5 text-sm font-semibold text-ink md:flex">
             <a href="#collection" className="hover:text-primary">
               Collection
             </a>
@@ -113,7 +113,7 @@ function Home() {
           </nav>
           <button
             type="button"
-            className="grid size-11 shrink-0 place-items-center rounded-lg border border-line lg:hidden"
+            className="grid size-11 shrink-0 place-items-center rounded-lg border border-line md:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((value) => !value)}
           >
@@ -121,7 +121,7 @@ function Home() {
           </button>
         </div>
         {open ? (
-          <nav className="flex flex-col gap-1 border-t border-line px-4 py-3 text-base font-semibold lg:hidden">
+          <nav className="flex flex-col gap-1 border-t border-line px-4 py-3 text-base font-semibold md:hidden">
             <a className="rounded-lg px-2 py-3 hover:bg-paper" href="#collection" onClick={() => setOpen(false)}>
               Collection
             </a>
@@ -151,7 +151,7 @@ function Home() {
             <p className="mb-3 text-sm font-semibold tracking-wide text-primary uppercase">
               Asaba · City View Mall
             </p>
-            <h1 className="text-3xl leading-tight font-semibold text-ink sm:text-4xl lg:text-5xl">
+            <h1 className="text-3xl leading-tight font-semibold text-ink sm:text-4xl">
               Welcome to Chukwunweike
             </h1>
             <p className="mt-4 max-w-xl text-base text-muted sm:text-lg">
@@ -178,7 +178,7 @@ function Home() {
           <img
             src="/catalog/shop.jpg"
             alt="Chukwunweike Phones and Accessories, with AirPods Max boxes under the shop sign"
-            className="aspect-[4/3] w-full rounded-card object-cover shadow-sm md:aspect-[16/10]"
+            className="aspect-[4/3] max-h-80 w-full rounded-card object-cover shadow-sm"
           />
         </section>
 
@@ -209,7 +209,7 @@ function Home() {
         </section>
 
         <section id="collection" className={`${shell} py-12 lg:py-16`}>
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="font-semibold text-2xl text-ink sm:text-3xl">The collection</h2>
               <p className="mt-1 text-muted">Prices are not listed. Tap Inquire and we will reply on WhatsApp.</p>
@@ -235,10 +235,10 @@ function Home() {
             </div>
           </div>
 
-          <ul className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          <ul className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
             {products.map((product) => (
               <li key={product.id} id={product.id} className="flex flex-col overflow-hidden rounded-card border border-line bg-card">
-                <img src={product.image} alt={product.name} className="aspect-[4/5] w-full bg-paper object-contain" />
+                <img src={product.image} alt={product.name} className="h-56 w-full bg-paper object-contain sm:h-64" />
                 <div className="flex flex-1 flex-col p-4 sm:p-5">
                   <p className="text-xs font-semibold tracking-wide text-primary uppercase">{product.note}</p>
                   <h3 className="mt-1 font-semibold text-xl text-ink">{product.name}</h3>
@@ -279,7 +279,7 @@ function Home() {
         </section>
 
         <section id="visit" className={`${shell} py-12 lg:py-16`}>
-          <div className="grid gap-6 rounded-card border border-line bg-card p-5 sm:p-6 lg:grid-cols-2 lg:p-8">
+          <div className="grid gap-6 rounded-card border border-line bg-card p-5 sm:p-6 md:grid-cols-2">
             <div>
               <h2 className="font-semibold text-2xl text-ink sm:text-3xl">Visit the shop</h2>
               <address className="mt-4 not-italic text-lg leading-relaxed text-ink">
@@ -319,7 +319,7 @@ function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-line bg-ink pb-24 text-card lg:pb-8">
+      <footer className="border-t border-line bg-ink pb-24 text-card md:pb-8">
         <div className={`${shell} flex flex-col gap-2 py-8 text-sm md:flex-row md:items-center md:justify-between`}>
           <p className="flex items-center gap-2 font-semibold text-lg">
             <img src="/logo.svg" alt="" width={28} height={28} className="size-7 rounded-md" />
