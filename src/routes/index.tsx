@@ -149,7 +149,7 @@ function Home() {
           <img
             src="/catalog/welcome.jpg"
             alt="AirPods Max on display under the Chukwunweike sign"
-            className="mt-8 w-full rounded-card border border-line"
+            className="mx-auto mt-8 block max-h-80 w-auto max-w-full rounded-card border border-line sm:max-h-96"
           />
         </section>
 
@@ -202,10 +202,10 @@ function Home() {
             })}
           </div>
 
-          <ul className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <ul className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((product) => (
               <li key={product.id} id={product.id} className="overflow-hidden rounded-card border border-line bg-card">
-                <img src={product.image} alt={product.name} className="aspect-[4/5] w-full bg-paper object-contain object-center" />
+                <img src={product.image} alt={product.name} className="h-48 w-full bg-paper object-contain object-center sm:h-56" />
                 <div className="border-t border-line p-4">
                   <p className="text-xs font-semibold tracking-widest text-primary uppercase">{product.note}</p>
                   <h3 className="mt-1 font-serif text-2xl text-ink">{product.name}</h3>
@@ -238,7 +238,7 @@ function Home() {
             <img
               src="/catalog/headphones-keyboards.jpg"
               alt="AirPods Max and iPad Magic Keyboard boxes on the counter"
-              className="mt-8 w-full rounded-card border border-line"
+              className="mx-auto mt-8 block max-h-80 w-auto max-w-full rounded-card border border-line"
             />
           </div>
         </section>
