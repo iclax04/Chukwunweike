@@ -283,13 +283,46 @@ function Home() {
       </main>
 
       <footer className="border-t border-line bg-ink pb-24 text-card">
-        <div className={`${shell} flex flex-col gap-2 py-8 text-sm sm:flex-row sm:items-center sm:justify-between`}>
-          <p className="flex items-center gap-2 font-serif text-xl">
-            <img src="/logo.svg" alt="" width={28} height={28} className="size-7 rounded-md" />
-            Chukwunweike
-          </p>
-          <p className="text-paper/80">
-            {ADDRESS.shop}, {ADDRESS.city}
+        <div className={`${shell} py-10`}>
+          <div className="grid gap-8 sm:grid-cols-3">
+            <div>
+              <p className="flex items-center gap-2 font-serif text-2xl">
+                <img src="/logo.svg" alt="" width={32} height={32} className="size-8 rounded-md" />
+                Chukwunweike
+              </p>
+              <p className="mt-3 text-sm text-paper/80">Phone accessories and gadgets in Asaba.</p>
+            </div>
+            <div>
+              <p className="text-xs font-semibold tracking-widest text-paper/60 uppercase">Visit</p>
+              <address className="mt-3 text-sm leading-relaxed not-italic">
+                {ADDRESS.shop}
+                <br />
+                {ADDRESS.street}
+                <br />
+                {ADDRESS.city}
+              </address>
+            </div>
+            <div>
+              <p className="text-xs font-semibold tracking-widest text-paper/60 uppercase">Contact</p>
+              <ul className="mt-3 space-y-2 text-sm">
+                <li>
+                  <a className="hover:underline" href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noreferrer">
+                    WhatsApp +234 913 208 3551
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:underline" href={mapsUrl()} target="_blank" rel="noreferrer">
+                    Google Maps
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:underline" href="#collection">Collection</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <p className="mt-8 border-t border-white/15 pt-4 text-sm text-paper/70">
+            © {new Date().getFullYear()} Chukwunweike. Shop 3, City View Mall, Asaba.
           </p>
         </div>
       </footer>
