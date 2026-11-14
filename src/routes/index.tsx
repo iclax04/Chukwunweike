@@ -48,7 +48,7 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const shell = "mx-auto w-full max-w-5xl px-4 sm:px-6";
+const shell = "mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8";
 
 function Home() {
   const origin = Route.useLoaderData();
@@ -121,40 +121,42 @@ function Home() {
       </header>
 
       <main id="top">
-        <section className={`${shell} py-10 sm:py-14`}>
-          <p className="text-sm font-semibold tracking-widest text-primary uppercase">Asaba · City View Mall</p>
-          <h1 className="mt-3 max-w-2xl font-serif text-4xl leading-tight text-ink sm:text-5xl">
-            Welcome to Chukwunweike
-          </h1>
-          <p className="mt-4 max-w-2xl text-base text-muted sm:text-lg">
-            A straightforward shop for iPhone 18 Pro Max, iPhone 16 Pro Max, iPhone 17 Air, Google Pixel, PS5 controllers, AirPods, and Apple Watch. Nothing is priced on this page — send a WhatsApp and we will tell you what is available.
-          </p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="#collection"
-              className="inline-flex min-h-11 items-center justify-center rounded-md bg-primary px-5 font-semibold text-card hover:bg-primary-dark"
-            >
-              See the collection
-            </a>
-            <a
-              href={whatsappLink("Hello Chukwunweike, what phones do you have in stock?")}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-line bg-card px-5 font-semibold text-ink"
-            >
-              <MessageCircle className="size-4 text-whatsapp" aria-hidden />
-              WhatsApp us
-            </a>
+        <section className={`${shell} grid items-center gap-8 py-10 md:py-14 lg:grid-cols-2 lg:py-16`}>
+          <div>
+            <p className="text-sm font-semibold tracking-widest text-primary uppercase">Asaba · City View Mall</p>
+            <h1 className="mt-3 font-serif text-3xl leading-tight text-ink sm:text-4xl lg:text-5xl">
+              Welcome to Chukwunweike
+            </h1>
+            <p className="mt-4 text-base text-muted sm:text-lg">
+              A straightforward shop for iPhone 18 Pro Max, iPhone 16 Pro Max, iPhone 17 Air, Google Pixel, PS5 controllers, AirPods, and Apple Watch. Nothing is priced on this page — send a WhatsApp and we will tell you what is available.
+            </p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <a
+                href="#collection"
+                className="inline-flex min-h-11 items-center justify-center rounded-md bg-primary px-5 font-semibold text-card hover:bg-primary-dark"
+              >
+                See the collection
+              </a>
+              <a
+                href={whatsappLink("Hello Chukwunweike, what phones do you have in stock?")}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-line bg-card px-5 font-semibold text-ink"
+              >
+                <MessageCircle className="size-4 text-whatsapp" aria-hidden />
+                WhatsApp us
+              </a>
+            </div>
           </div>
           <img
             src="/catalog/welcome.jpg"
             alt="AirPods Max on display under the Chukwunweike sign"
-            className="mx-auto mt-8 block max-h-80 w-auto max-w-full rounded-card border border-line sm:max-h-96"
+            className="mx-auto block w-full max-w-md rounded-card border border-line object-contain lg:max-w-none lg:max-h-[32rem]"
           />
         </section>
 
         <section className="border-y border-line bg-card">
-          <ul className={`${shell} grid gap-6 py-6 sm:grid-cols-3`}>
+          <ul className={`${shell} grid gap-6 py-6 md:grid-cols-3`}>
             <li className="flex items-start gap-3">
               <ShieldCheck className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden />
               <div>
@@ -202,19 +204,19 @@ function Home() {
             })}
           </div>
 
-          <ul className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
             {products.map((product) => (
-              <li key={product.id} id={product.id} className="overflow-hidden rounded-card border border-line bg-card">
-                <img src={product.image} alt={product.name} className="h-48 w-full bg-paper object-contain object-center sm:h-56" />
-                <div className="border-t border-line p-4">
+              <li key={product.id} id={product.id} className="flex flex-col overflow-hidden rounded-card border border-line bg-card">
+                <img src={product.image} alt={product.name} className="h-72 w-full bg-paper object-contain object-center md:h-64 xl:h-72" />
+                <div className="flex flex-1 flex-col border-t border-line p-5">
                   <p className="text-xs font-semibold tracking-widest text-primary uppercase">{product.note}</p>
-                  <h3 className="mt-1 font-serif text-2xl text-ink">{product.name}</h3>
-                  <p className="mt-1 text-sm text-muted">{product.blurb}</p>
+                  <h3 className="mt-2 font-serif text-2xl text-ink">{product.name}</h3>
+                  <p className="mt-2 flex-1 text-sm text-muted">{product.blurb}</p>
                   <a
                     href={whatsappLink(`Hello Chukwunweike, I'm interested in the ${product.name}. Is it available?`)}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-primary text-sm font-semibold text-card hover:bg-primary-dark"
+                    className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-primary text-sm font-semibold text-card hover:bg-primary-dark"
                   >
                     Inquire
                   </a>
@@ -225,20 +227,22 @@ function Home() {
         </section>
 
         <section id="about" className="border-t border-line bg-card">
-          <div className={`${shell} py-12 sm:py-16`}>
-            <h2 className="font-serif text-3xl text-ink">A straightforward shop</h2>
-            <p className="mt-3 max-w-2xl text-muted">
-              We are a neighbourhood phone shop in Asaba. Come in, look at the phones, and leave with
-              something that works. If you are not nearby, send a WhatsApp and we will confirm what is on the
-              shelf before you make the trip.
-            </p>
-            <p className="mt-3 max-w-2xl text-muted">
-              We carry iPhone 18 Pro Max, iPhone 16 Pro Max, iPhone 17 Air, Google Pixel phones, PS5 controllers, AirPods, and Apple Watch. Come in and look, or send a WhatsApp first.
-            </p>
+          <div className={`${shell} grid items-center gap-8 py-12 md:py-16 lg:grid-cols-2`}>
+            <div>
+              <h2 className="font-serif text-3xl text-ink">A straightforward shop</h2>
+              <p className="mt-3 text-muted">
+                We are a neighbourhood phone shop in Asaba. Come in, look at the phones, and leave with
+                something that works. If you are not nearby, send a WhatsApp and we will confirm what is on the
+                shelf before you make the trip.
+              </p>
+              <p className="mt-3 text-muted">
+                We carry iPhone 18 Pro Max, iPhone 16 Pro Max, iPhone 17 Air, Google Pixel phones, PS5 controllers, AirPods, and Apple Watch. Come in and look, or send a WhatsApp first.
+              </p>
+            </div>
             <img
               src="/catalog/headphones-keyboards.jpg"
               alt="AirPods Max and iPad Magic Keyboard boxes on the counter"
-              className="mx-auto mt-8 block max-h-80 w-auto max-w-full rounded-card border border-line"
+              className="mx-auto block w-full max-w-md rounded-card border border-line lg:max-w-none"
             />
           </div>
         </section>
@@ -246,7 +250,7 @@ function Home() {
 
       <footer id="visit" className="border-t border-line bg-ink pb-24 text-card">
         <div className={`${shell} py-12`}>
-          <div className="grid gap-8 sm:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3">
             <div>
               <p className="flex items-center gap-2 font-serif text-2xl">
                 <img src="/logo.svg" alt="" width={32} height={32} className="size-8 rounded-md" />
